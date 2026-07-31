@@ -43,6 +43,14 @@ logs/*
 results/raw/
 results/predictions/
 
+# Local smoke-test inputs and temporary downloads
+data/test/demo.jpeg
+*.tmp
+*.temp
+*.part
+*.download
+*.crdownload
+
 # System files
 .DS_Store
 Thumbs.db

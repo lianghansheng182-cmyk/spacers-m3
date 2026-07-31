@@ -1,51 +1,75 @@
-# SpaceRS-M3
+# Qwen3-VL Single Image Smoke Test
 
-项目简介：
+项目绝对路径：`/home/lhs/spacers_m3`
 
-面向太空智算的轻量化多模态遥感大模型应用探索。
+## 文件路径
 
-当前技术路线：
+- 虚拟环境：`/home/lhs/spacers_m3/.venv`
+- 推理脚本：`/home/lhs/spacers_m3/src/inference/run_single.py`
+- 运行脚本：`/home/lhs/spacers_m3/scripts/run_single.sh`
+- 测试图片：`/home/lhs/spacers_m3/data/test/demo.jpeg`
+- 本地模型目录：`/home/lhs/spacers_m3/models/Qwen3-VL-2B-Instruct`
+- 结果 JSON：`/home/lhs/spacers_m3/results/smoke_test.json`
+- 环境检查日志：`/home/lhs/spacers_m3/logs/environment_check.txt`
+- 依赖列表：`/home/lhs/spacers_m3/requirements.txt`
+- pip freeze：`/home/lhs/spacers_m3/logs/pip_freeze.txt`
 
-- Qwen3-VL-2B-Instruct
-- VRSBench
-- 遥感图像描述
-- 视觉问答
-- 目标定位
-- 后续开展 LoRA 微调
-- 后续开展 INT8/INT4 量化
-- 后续验证 SlimSAM 可插拔分割模块
+## 激活环境
 
-成员分工：
-
-- 梁瀚升：组长，主模型、训练、量化、系统集成和技术报告
-- 胡杨：VRSBench 数据、评测和 SlimSAM 验证
-- 朱福康：工程复现、资源统计、实验记录和提交封装
-
-第一阶段目标：
-
-- 跑通 Qwen3-VL-2B 单图推理
-- 整理 30 条 VRSBench 联调样本
-- 记录推理时间和峰值显存
-- 建立统一 Git 协作流程
-
-Windows 工作区路径：
-
-```text
-\\wsl.localhost\Ubuntu-20.04\home\lhs\spacers_m3
+```bash
+cd /home/lhs/spacers_m3
+source /home/lhs/spacers_m3/.venv/bin/activate
 ```
 
-Linux 项目路径：
+## GPU 检查
 
-```text
-/home/lhs/spacers_m3
+```bash
+nvidia-smi
+python - <<'PY'
+import torch
+print(torch.__version__)
+print(torch.cuda.is_available())
+print(torch.version.cuda)
+print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else "NO CUDA")
+PY
 ```
 
-打开目录的方式：
+## 单图推理
 
-在 Windows 版 VS Code 中通过 File -> Open Folder 打开：
-
-```text
-\\wsl.localhost\Ubuntu-20.04\home\lhs\spacers_m3
+```bash
+bash /home/lhs/spacers_m3/scripts/run_single.sh
 ```
 
-不要要求用户使用 Remote WSL。
+运行脚本默认从 `/home/lhs/spacers_m3/models/Qwen3-VL-2B-Instruct` 加载模型；如需改用其他本地模型目录：
+
+```bash
+SPACERS_M3_MODEL_PATH=/path/to/Qwen3-VL-2B-Instruct bash /home/lhs/spacers_m3/scripts/run_single.sh
+```
+
+或直接调用：
+
+```bash
+/home/lhs/spacers_m3/.venv/bin/python /home/lhs/spacers_m3/src/inference/run_single.py \
+  --image /home/lhs/spacers_m3/data/test/demo.jpeg \
+  --question "请详细描述图像中的主要场景、物体及其空间位置关系。" \
+  --output /home/lhs/spacers_m3/results/smoke_test.json
+```
+
+## 替换测试图片
+
+把新的本地图片复制或移动到：
+
+```bash
+/home/lhs/spacers_m3/data/test/demo.jpeg
+```
+
+也可以保留原文件，直接在命令中把 `--image` 改成你的图片绝对路径。
+
+## 常见报错处理
+
+- `图片不存在或不是文件`：检查 `--image` 是否为真实文件路径。
+- `CUDA 显存不足`：关闭其他 GPU 进程后重试，或使用分辨率更小的图片；本项目不使用量化。
+- `torch.cuda.is_available() == False`：检查 Windows NVIDIA 驱动、WSL GPU 支持和 `nvidia-smi` 是否正常。
+- `ModuleNotFoundError`：确认已激活 `/home/lhs/spacers_m3/.venv`，必要时运行 `python -m pip install -r /home/lhs/spacers_m3/requirements.txt`。
+- 模型下载失败：检查 Hugging Face 网络访问，删除未完成缓存后重试运行脚本。
+- 结果 JSON 缺少字段：重新运行 `bash /home/lhs/spacers_m3/scripts/run_single.sh`，并检查终端错误输出。
