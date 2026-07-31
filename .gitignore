@@ -1,0 +1,48 @@
+# Python virtual environments
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+
+# Editor settings
+.vscode/
+.idea/
+
+# Secrets
+.env
+*.key
+*.pem
+
+# Models and weights
+checkpoints/*
+!checkpoints/.gitkeep
+models/
+weights/
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.safetensors
+*.onnx
+*.gguf
+
+# Full datasets
+datasets/*
+!datasets/README.md
+!datasets/mini_eval/
+!datasets/mini_eval/**
+
+# Logs and large inference outputs
+logs/*
+!logs/.gitkeep
+results/raw/
+results/predictions/
+
+# System files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,2 @@
+experiment_id,date,operator,git_commit,model,precision,dataset,task,image_count,image_size,max_new_tokens,latency_mean_s,latency_p95_s,peak_vram_mb,model_size_mb,metric_name,metric_score,status,result_file,notes
+EXP-001,2026-07-31,梁瀚升,,Qwen3-VL-2B-Instruct,BF16,VRSBench,smoke_test,1,unknown,128,,,,,,pending,,等待首次模型推理
