@@ -1,37 +1,56 @@
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
+# Python virtual environments
+.venv/
+venv/
 
-# Python
+# Python cache
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
-.Python
-*.so
-*.egg
-*.egg-info/
-dist/
-build/
-*.whl
+.pytest_cache/
+.mypy_cache/
 
-# 虚拟环境
-venv/
-env/
-ENV/
-.venv
+# Editor settings
+.vscode/
+.idea/
 
-# 日志和临时文件
-*.log
-*.tmp
-
-# 操作系统
-.DS_Store
-Thumbs.db
-
-# 密钥和敏感信息
+# Secrets
 .env
 *.key
 *.pem
+
+# Models and weights
+checkpoints/*
+!checkpoints/.gitkeep
+models/
+weights/
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.safetensors
+*.onnx
+*.gguf
+
+# Full datasets
+datasets/*
+!datasets/README.md
+!datasets/mini_eval/
+!datasets/mini_eval/**
+
+# Logs and large inference outputs
+logs/*
+!logs/.gitkeep
+results/raw/
+results/predictions/
+
+# Local smoke-test inputs and temporary downloads
+data/test/demo.jpeg
+*.tmp
+*.temp
+*.part
+*.download
+*.crdownload
+
+# System files
+.DS_Store
+Thumbs.db
