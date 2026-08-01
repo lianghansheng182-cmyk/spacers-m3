@@ -1,0 +1,2 @@
+experiment_id,date,operator,model,precision,dataset,task,image_count,latency_mean_s,peak_vram_mb,metric_name,metric_score,status,result_file,notes
+EXP-001,2026-08-01,朱福康,resource-monitor-test,FP32,none,test,1,0.000,0.0,none,,success,logs/environment_info.txt,资源统计工具测试
