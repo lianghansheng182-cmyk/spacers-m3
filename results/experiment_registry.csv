@@ -1,2 +1,4 @@
 experiment_id,date,operator,model,precision,dataset,task,image_count,latency_mean_s,peak_vram_mb,metric_name,metric_score,status,result_file,notes
 EXP-001,2026-08-01,朱福康,resource-monitor-test,FP32,none,test,1,0.000,0.0,none,,success,logs/environment_info.txt,资源统计工具测试
+EXP-002,2026-08-02,朱福康,check-environment,FP32,none,environment-check,0,0.000,0.0,none,,success,logs/environment_info.txt,环境检查脚本修复：Path定位项目根目录与换行输出
+EXP-003,2026-08-02,朱福康,resource-monitor,FP32,none,unit-test,8,0.501,0.0,test_pass_rate,1.0,success,tests/test_resource_monitor.py,资源监控工具测试：计时/显存/mock无GPU/异常finally

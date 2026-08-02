@@ -1,8 +1,11 @@
-import time
-import torch
 import gc
+import time
 from contextlib import contextmanager
-from typing import Dict, Any
+from typing import Any, Callable, Dict, Tuple, TypeVar
+
+import torch
+
+T = TypeVar("T")
 
 
 class ResourceMonitor:
@@ -26,6 +29,7 @@ class ResourceMonitor:
 
     def _reset_peak(self):
         if self.device == "cuda":
+            torch.cuda.synchronize()
             torch.cuda.reset_peak_memory_stats()
             torch.cuda.empty_cache()
         gc.collect()
@@ -33,11 +37,15 @@ class ResourceMonitor:
 
     def start(self):
         self._reset_peak()
+        if self.device == "cuda":
+            torch.cuda.synchronize()
         self.start_time = time.perf_counter()
         self.end_time = None
         return self
 
     def stop(self):
+        if self.device == "cuda":
+            torch.cuda.synchronize()
         self.end_time = time.perf_counter()
         if self.device == "cuda":
             self.peak_vram_mb = self._get_peak_vram_mb()
@@ -45,6 +53,7 @@ class ResourceMonitor:
 
     def _get_peak_vram_mb(self) -> float:
         if self.device == "cuda":
+            torch.cuda.synchronize()
             return torch.cuda.max_memory_allocated() / 1024**2
         return 0.0
 
@@ -73,9 +82,11 @@ def monitor_inference():
         monitor.stop()
 
 
-def monitor_run(func, *args, **kwargs):
+def monitor_run(func: Callable[..., T], *args, **kwargs) -> Tuple[T, Dict[str, Any]]:
     monitor = ResourceMonitor()
     monitor.start()
-    result = func(*args, **kwargs)
-    monitor.stop()
+    try:
+        result = func(*args, **kwargs)
+    finally:
+        monitor.stop()
     return result, monitor.get_report()
