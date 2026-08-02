@@ -1,0 +1,9 @@
+models/ 
+huggingface_cache/ 
+__pycache__/ 
+*.pyc 
+*.log 
+Images_train.zip 
+Images_train/ 
+Images_val.zip 
+Images_val/ 
