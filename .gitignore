@@ -38,8 +38,8 @@ datasets/*
 !datasets/mini_eval/**
 
 # Logs and large inference outputs
-logs/*
-!logs/.gitkeep
+logs/
+scripts/logs/
 results/raw/
 results/predictions/
 
