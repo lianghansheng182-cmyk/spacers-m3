@@ -1,0 +1,333 @@
+{
+  "input_path": "/home/lhs/spacers_m3/datasets/mini_eval/mini_eval.jsonl",
+  "output_dir": "/home/lhs/spacers_m3/results/vrsbench_mini/qwen3_vl_2b_zero_shot",
+  "predictions_path": "/home/lhs/spacers_m3/results/vrsbench_mini/qwen3_vl_2b_zero_shot/predictions.jsonl",
+  "metrics_path": "/home/lhs/spacers_m3/results/vrsbench_mini/qwen3_vl_2b_zero_shot/metrics.json",
+  "error_cases_path": "/home/lhs/spacers_m3/results/vrsbench_mini/qwen3_vl_2b_zero_shot/error_cases.jsonl",
+  "run_config_path": "/home/lhs/spacers_m3/results/vrsbench_mini/qwen3_vl_2b_zero_shot/run_config.json",
+  "sample_count": 30,
+  "success_count": 30,
+  "failure_count": 0,
+  "total_runtime_s": 134.944193,
+  "model_load_time_s": 5.963733,
+  "latency_mean_s": 4.203245,
+  "latency_p95_s": 12.125152,
+  "peak_vram_mb": 4184.17,
+  "precision": "BF16",
+  "batch_size": 1,
+  "max_new_tokens": 256,
+  "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+  "torch_version": "2.13.0+cu130",
+  "cuda_version": "13.0",
+  "metrics": {
+    "sample_count": 30,
+    "prediction_count": 30,
+    "success_count": 30,
+    "failure_count": 0,
+    "caption": {
+      "count": 10,
+      "metric": null,
+      "note": "Caption predictions are saved only; no automatic caption metric is reported for this run."
+    },
+    "vqa": {
+      "count": 10,
+      "correct": 5,
+      "accuracy": 0.5,
+      "normalization": "NFKC, lowercase, punctuation-to-space, whitespace collapse, number words 0-10"
+    },
+    "grounding": {
+      "count": 10,
+      "parsed_count": 1,
+      "mean_iou": 0.000156,
+      "acc_at_0_5": 0.0,
+      "acc_at_0_7": 0.0
+    },
+    "per_sample": [
+      {
+        "id": "cap_001",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_002",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_003",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_004",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_005",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_006",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_007",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_008",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_009",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_010",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "vqa_001",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "blue structure",
+        "normalized_answer": "expressway toll station",
+        "exact_match": false
+      },
+      {
+        "id": "vqa_002",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "yes",
+        "normalized_answer": "yes",
+        "exact_match": true
+      },
+      {
+        "id": "vqa_003",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "1",
+        "normalized_answer": "1",
+        "exact_match": true
+      },
+      {
+        "id": "vqa_004",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "rural",
+        "normalized_answer": "rural",
+        "exact_match": true
+      },
+      {
+        "id": "vqa_005",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "residential",
+        "normalized_answer": "urban",
+        "exact_match": false
+      },
+      {
+        "id": "vqa_006",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "train station",
+        "normalized_answer": "train station",
+        "exact_match": true
+      },
+      {
+        "id": "vqa_007",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "1",
+        "normalized_answer": "1",
+        "exact_match": true
+      },
+      {
+        "id": "vqa_008",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "bottom",
+        "normalized_answer": "middle",
+        "exact_match": false
+      },
+      {
+        "id": "vqa_009",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "no",
+        "normalized_answer": "yes",
+        "exact_match": false
+      },
+      {
+        "id": "vqa_010",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "cooling tower",
+        "normalized_answer": "chimney",
+        "exact_match": false
+      },
+      {
+        "id": "grounding_001",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": null,
+        "target_bbox": [
+          25,
+          40,
+          33,
+          60
+        ],
+        "iou": 0.0,
+        "acc_at_0_5": false,
+        "acc_at_0_7": false
+      },
+      {
+        "id": "grounding_002",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": null,
+        "target_bbox": [
+          11,
+          96,
+          24,
+          100
+        ],
+        "iou": 0.0,
+        "acc_at_0_5": false,
+        "acc_at_0_7": false
+      },
+      {
+        "id": "grounding_003",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": null,
+        "target_bbox": [
+          87,
+          29,
+          92,
+          36
+        ],
+        "iou": 0.0,
+        "acc_at_0_5": false,
+        "acc_at_0_7": false
+      },
+      {
+        "id": "grounding_004",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": null,
+        "target_bbox": [
+          86,
+          82,
+          91,
+          90
+        ],
+        "iou": 0.0,
+        "acc_at_0_5": false,
+        "acc_at_0_7": false
+      },
+      {
+        "id": "grounding_005",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": null,
+        "target_bbox": [
+          1,
+          40,
+          9,
+          60
+        ],
+        "iou": 0.0,
+        "acc_at_0_5": false,
+        "acc_at_0_7": false
+      },
+      {
+        "id": "grounding_006",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": null,
+        "target_bbox": [
+          63,
+          29,
+          68,
+          36
+        ],
+        "iou": 0.0,
+        "acc_at_0_5": false,
+        "acc_at_0_7": false
+      },
+      {
+        "id": "grounding_007",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": null,
+        "target_bbox": [
+          62,
+          82,
+          66,
+          90
+        ],
+        "iou": 0.0,
+        "acc_at_0_5": false,
+        "acc_at_0_7": false
+      },
+      {
+        "id": "grounding_008",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": null,
+        "target_bbox": [
+          25,
+          5,
+          35,
+          10
+        ],
+        "iou": 0.0,
+        "acc_at_0_5": false,
+        "acc_at_0_7": false
+      },
+      {
+        "id": "grounding_009",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": [
+          3.0,
+          56.0,
+          100.0,
+          100.0
+        ],
+        "target_bbox": [
+          5,
+          24,
+          12,
+          57
+        ],
+        "iou": 0.001558,
+        "acc_at_0_5": false,
+        "acc_at_0_7": false
+      },
+      {
+        "id": "grounding_010",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": null,
+        "target_bbox": [
+          78,
+          59,
+          84,
+          94
+        ],
+        "iou": 0.0,
+        "acc_at_0_5": false,
+        "acc_at_0_7": false
+      }
+    ]
+  }
+}
