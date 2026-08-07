@@ -1,0 +1,511 @@
+{
+  "sample_count": 30,
+  "prediction_count": 30,
+  "success_count": 30,
+  "failure_count": 0,
+  "caption": {
+    "count": 10,
+    "metric": null,
+    "note": "Caption predictions are saved only; no automatic caption metric is reported for this run."
+  },
+  "vqa": {
+    "count": 10,
+    "correct": 5,
+    "accuracy": 0.5,
+    "normalization": "NFKC, lowercase, punctuation-to-space, whitespace collapse, number words 0-10"
+  },
+  "grounding": {
+    "count": 10,
+    "parsed_count": 10,
+    "mean_iou": 0.565188,
+    "acc_at_0_5": 0.7,
+    "acc_at_0_7": 0.4
+  },
+  "error_case_count": 8,
+  "error_case_counts": {
+    "grounding_low_iou": 3,
+    "vqa_wrong": 5
+  },
+  "per_sample": [
+    {
+      "id": "cap_001",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_002",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_003",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_004",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_005",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_006",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_007",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_008",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_009",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_010",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "vqa_001",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "blue structure",
+      "normalized_answer": "expressway toll station",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_002",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "yes",
+      "normalized_answer": "yes",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_003",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "1",
+      "normalized_answer": "1",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_004",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "rural",
+      "normalized_answer": "rural",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_005",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "residential",
+      "normalized_answer": "urban",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_006",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "train station",
+      "normalized_answer": "train station",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_007",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "1",
+      "normalized_answer": "1",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_008",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "bottom",
+      "normalized_answer": "middle",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_009",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "no",
+      "normalized_answer": "yes",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_010",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "cooling tower",
+      "normalized_answer": "chimney",
+      "exact_match": false
+    },
+    {
+      "id": "grounding_001",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        25.6,
+        42.4,
+        33.6,
+        58.4
+      ],
+      "target_bbox": [
+        25,
+        40,
+        33,
+        60
+      ],
+      "iou": 0.698113,
+      "acc_at_0_5": true,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        256.0,
+        424.0,
+        336.0,
+        584.0
+      ],
+      "normalized_bbox_0_100": [
+        25.6,
+        42.4,
+        33.6,
+        58.4
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_002",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        0.0,
+        89.9,
+        11.3,
+        100.0
+      ],
+      "target_bbox": [
+        11,
+        96,
+        24,
+        100
+      ],
+      "iou": 0.007276,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        0.0,
+        899.0,
+        113.0,
+        1000.0
+      ],
+      "normalized_bbox_0_100": [
+        0.0,
+        89.9,
+        11.3,
+        100.0
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_003",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        86.9,
+        29.8,
+        92.4,
+        36.3
+      ],
+      "target_bbox": [
+        87,
+        29,
+        92,
+        36
+      ],
+      "iou": 0.779874,
+      "acc_at_0_5": true,
+      "acc_at_0_7": true,
+      "raw_parsed_bbox": [
+        869.0,
+        298.0,
+        924.0,
+        363.0
+      ],
+      "normalized_bbox_0_100": [
+        86.9,
+        29.8,
+        92.4,
+        36.3
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_004",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        86.2,
+        79.8,
+        92.5,
+        90.2
+      ],
+      "target_bbox": [
+        86,
+        82,
+        91,
+        90
+      ],
+      "iou": 0.57211,
+      "acc_at_0_5": true,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        862.0,
+        798.0,
+        925.0,
+        902.0
+      ],
+      "normalized_bbox_0_100": [
+        86.2,
+        79.8,
+        92.5,
+        90.2
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_005",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        1.2,
+        39.5,
+        10.3,
+        60.7
+      ],
+      "target_bbox": [
+        1,
+        40,
+        9,
+        60
+      ],
+      "iou": 0.7922,
+      "acc_at_0_5": true,
+      "acc_at_0_7": true,
+      "raw_parsed_bbox": [
+        12.0,
+        395.0,
+        103.0,
+        607.0
+      ],
+      "normalized_bbox_0_100": [
+        1.2,
+        39.5,
+        10.3,
+        60.7
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_006",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        62.9,
+        29.7,
+        68.5,
+        36.4
+      ],
+      "target_bbox": [
+        63,
+        29,
+        68,
+        36
+      ],
+      "iou": 0.767918,
+      "acc_at_0_5": true,
+      "acc_at_0_7": true,
+      "raw_parsed_bbox": [
+        629.0,
+        297.0,
+        685.0,
+        364.0
+      ],
+      "normalized_bbox_0_100": [
+        62.9,
+        29.7,
+        68.5,
+        36.4
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_007",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        61.8,
+        80.3,
+        67.5,
+        89.0
+      ],
+      "target_bbox": [
+        62,
+        82,
+        66,
+        90
+      ],
+      "iou": 0.522486,
+      "acc_at_0_5": true,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        618.0,
+        803.0,
+        675.0,
+        890.0
+      ],
+      "normalized_bbox_0_100": [
+        61.8,
+        80.3,
+        67.5,
+        89.0
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_008",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        26.4,
+        4.8,
+        35.3,
+        9.9
+      ],
+      "target_bbox": [
+        25,
+        5,
+        35,
+        10
+      ],
+      "iou": 0.791362,
+      "acc_at_0_5": true,
+      "acc_at_0_7": true,
+      "raw_parsed_bbox": [
+        264.0,
+        48.0,
+        353.0,
+        99.0
+      ],
+      "normalized_bbox_0_100": [
+        26.4,
+        4.8,
+        35.3,
+        9.9
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_009",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        5.6,
+        37.2,
+        15.4,
+        55.6
+      ],
+      "target_bbox": [
+        5,
+        24,
+        12,
+        57
+      ],
+      "iou": 0.401145,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        56.0,
+        372.0,
+        154.0,
+        556.0
+      ],
+      "normalized_bbox_0_100": [
+        5.6,
+        37.2,
+        15.4,
+        55.6
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_010",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        77.9,
+        59.9,
+        96.1,
+        94.8
+      ],
+      "target_bbox": [
+        78,
+        59,
+        84,
+        94
+      ],
+      "iou": 0.319398,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        779.0,
+        599.0,
+        961.0,
+        948.0
+      ],
+      "normalized_bbox_0_100": [
+        77.9,
+        59.9,
+        96.1,
+        94.8
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    }
+  ]
+}
