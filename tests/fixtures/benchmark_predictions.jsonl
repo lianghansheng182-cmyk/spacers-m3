@@ -1,0 +1,6 @@
+{"id": "cap_001", "task": "caption", "success": true, "latency_s": 10.0, "peak_vram_mb": 100.0, "prediction": "one two three four", "max_new_tokens": 128}
+{"id": "cap_002", "task": "caption", "success": false, "latency_s": 1.0, "peak_vram_mb": 90.0, "prediction": "", "error": "failed", "max_new_tokens": 128}
+{"id": "vqa_001", "task": "vqa", "success": true, "latency_s": 4.0, "peak_vram_mb": 95.0, "prediction": "yes", "max_new_tokens": 64}
+{"id": "vqa_002", "task": "vqa", "success": true, "latency_s": 6.0, "peak_vram_mb": 96.0, "prediction": "no", "max_new_tokens": 64}
+{"id": "grd_001", "task": "grounding", "success": true, "latency_s": 8.0, "peak_vram_mb": 98.0, "prediction": "{10 20 30 40}", "max_new_tokens": 64}
+{"id": "grd_002", "task": "grounding", "success": true, "latency_s": 12.0, "peak_vram_mb": 99.0, "prediction": "{11 21 31 41}", "max_new_tokens": 64}
