@@ -1,0 +1,12 @@
+{
+  "sample_count": 6,
+  "prediction_count": 6,
+  "per_sample": [
+    {"id": "vqa_001", "task": "vqa", "success": true, "exact_match": true},
+    {"id": "vqa_002", "task": "vqa", "success": true, "exact_match": false},
+    {"id": "grd_001", "task": "grounding", "success": true, "iou": 0.7},
+    {"id": "grd_002", "task": "grounding", "success": true, "iou": 0.65}
+  ],
+  "vqa": {"count": 2, "accuracy": 0.5},
+  "grounding": {"count": 2, "mean_iou": 0.675, "acc_at_0_5": 1.0, "acc_at_0_7": 0.5}
+}
