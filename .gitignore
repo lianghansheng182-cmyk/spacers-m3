@@ -38,7 +38,10 @@ datasets/
 !datasets/mini_eval/**
 !datasets/mini_eval/images/
 !datasets/mini_eval/images/*
-!datasets/mini_eval/images/*.png
+!datasets/vrsbench_eval_v1/
+!datasets/vrsbench_eval_v1/**
+!datasets/vrsbench_eval_v1/images/
+!datasets/vrsbench_eval_v1/images/*
 
 # Logs and large inference outputs
 logs/
