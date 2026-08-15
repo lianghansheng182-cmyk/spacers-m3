@@ -3,65 +3,75 @@
 This document defines the unified benchmark report produced by
 `src/utils/benchmark_metrics.py`.
 
-## Input Sources
+## Input sources
 
-The tool reads existing batch inference outputs under:
+The report is generated from existing inference outputs under:
 
 ```text
 results/vrsbench_mini/qwen3_vl_2b_zero_shot/
 ```
 
-Primary files:
+Primary inputs:
 
 | File | Purpose |
-|------|---------|
-| `predictions.jsonl` | Per-sample latency, VRAM, predictions |
-| `summary.json` | Run-level aggregates and environment |
-| `run_config.json` | Model and inference configuration |
-| `metrics.json` | VQA / grounding evaluation metrics |
+|---|---|
+| `predictions.jsonl` | Per-sample latency, VRAM and prediction text |
+| `summary.json` | Run-level timing and recorded inference environment |
+| `run_config.json` | Model and inference configuration recorded at run time |
+| `metrics.json` | VQA and grounding evaluation metrics |
 
-The tool does not rerun inference and does not modify evaluation logic.
+The report generator does **not** rerun inference and does not modify evaluation logic.
 
-## Output
+## Environment provenance
 
-```text
-results/vrsbench_mini/qwen3_vl_2b_zero_shot/benchmark_report.json
-```
+Environment fields in `benchmark_report.json` must describe the machine that
+actually ran inference. The report generator therefore reads GPU / PyTorch /
+CUDA and other available fields from `summary.json` and `run_config.json`.
 
-Sections:
+It must **not** overwrite those fields using the computer that later runs
+`generate_benchmark_report.py`.
 
-- `overall`
-- `caption`
-- `vqa`
-- `grounding`
-- `environment`
-- `model_config`
-- `metadata`
+For the current baseline, GPU / PyTorch / CUDA were recorded, while OS, CPU,
+Python and driver version were not recorded during inference. Missing fields
+remain `null` instead of being filled with values from another computer.
 
-## Metrics
+## Token and throughput fields
 
-### Implemented
+Tokenizer token counts are reported only when inference explicitly recorded
+`output_tokens` or `generated_tokens`.
+
+For the current 30-sample baseline, token counts were not recorded. Therefore:
+
+- `total_output_tokens`: `null`
+- `token_speed_tokens_per_s`: `null`
+- `token_count_coverage`: `0.0`
+
+The report also provides `estimated_output_words` and
+`estimated_words_per_s`, calculated using whitespace-separated prediction
+words. These are diagnostic estimates only and **must not be presented as
+token counts or token/s**.
+
+## Implemented metrics
 
 - Model load time
 - Per-sample inference latency
 - Mean / P95 latency
 - Peak VRAM
-- Estimated output token count when explicit counts are absent
-- Token generation speed
 - Total runtime
 - Success / failure / failure rate
 - Caption / VQA / grounding task breakdown
-- VQA accuracy and grounding IoU from `metrics.json`
-- GPU / CPU / OS / PyTorch / CUDA version
-- Precision / batch size / max_new_tokens / image resolution
+- VQA accuracy
+- Grounding mean IoU / Acc@0.5 / Acc@0.7
+- Recorded GPU / PyTorch / CUDA metadata
+- Precision / batch size / max_new_tokens / max_pixels
+- Explicit token throughput when true token counts exist
+- Diagnostic word-count throughput when true token counts are unavailable
 
-### Not Implemented
+## Not implemented
 
-- `ttft_s` is always `"暂未实现"`
-- Input token counts remain `null` unless present in source data
-
-When `output_tokens` is missing from predictions, the tool estimates it
-using whitespace-separated word count from the prediction text.
+- TTFT: stored as `"暂未实现"`
+- Input token count unless the inference code records it
+- Driver / OS / CPU / Python for historical runs that did not record them
 
 ## Usage
 
@@ -77,8 +87,9 @@ python scripts/generate_benchmark_report.py \
   --output results/vrsbench_mini/qwen3_vl_2b_zero_shot/benchmark_report.json
 ```
 
-## Notes
+## Reproducibility notes
 
-- Metadata paths are stored relative to the project root.
+- Paths stored in metadata are project-relative when possible.
 - Empty result directories produce a valid zero-sample report.
-- The module resolves project paths via `Path(__file__)`, so it works from any working directory.
+- The module resolves the project root from `__file__`, so it can be invoked
+  from another working directory.
