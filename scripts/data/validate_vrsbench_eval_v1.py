@@ -1,110 +1,216 @@
+#!/usr/bin/env python3
+"""Validate the 90-sample VRSBench internal evaluation package."""
+
+from __future__ import annotations
+
+import argparse
 import json
-import os
-import sys
+from collections import Counter
+from pathlib import Path
+from typing import Any
 
-print("=" * 50)
-print("VRSBench 扩大验证集校验工具")
-print("=" * 50)
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_MANIFEST = PROJECT_ROOT / "datasets" / "vrsbench_eval_v1" / "candidate_manifest.jsonl"
+DEFAULT_REPAIRS = PROJECT_ROOT / "datasets" / "vrsbench_eval_v1" / "bbox_repairs.json"
+EXPECTED_COUNTS = {"caption": 30, "vqa": 30, "grounding": 30}
+VALID_SPLITS = {"train", "val", "test"}
 
-# 路径
-jsonl_path = "datasets/vrsbench_eval_v1/candidate_manifest.jsonl"
-errors = []
-
-# 1. 检查文件是否存在
-if not os.path.exists(jsonl_path):
-    print("❌ 错误: 找不到 candidate_manifest.jsonl")
-    sys.exit(1)
-
-# 2. 读取并解析 JSONL
-print(f"\n📂 读取: {jsonl_path}")
-samples = []
-with open(jsonl_path, 'r', encoding='utf-8') as f:
-    for line_num, line in enumerate(f, 1):
-        line = line.strip()
-        if not line:
-            continue
-        try:
-            sample = json.loads(line)
-            samples.append(sample)
-        except json.JSONDecodeError as e:
-            errors.append(f"第 {line_num} 行 JSON 格式错误: {e}")
-
-print(f"   读取了 {len(samples)} 条样本")
-
-# 3. 检查总数是否为 90
-if len(samples) != 90:
-    errors.append(f"样本数量应为 90 条，实际为 {len(samples)} 条")
-
-# 4. 检查三类任务是否各 30 条
-task_counts = {}
-for s in samples:
-    task = s.get('task')
-    task_counts[task] = task_counts.get(task, 0) + 1
-
-for task, count in task_counts.items():
-    print(f"   - {task}: {count} 条")
-
-if task_counts.get('caption', 0) != 30:
-    errors.append(f"Caption 应为 30 条，实际为 {task_counts.get('caption', 0)} 条")
-if task_counts.get('vqa', 0) != 30:
-    errors.append(f"VQA 应为 30 条，实际为 {task_counts.get('vqa', 0)} 条")
-if task_counts.get('grounding', 0) != 30:
-    errors.append(f"Grounding 应为 30 条，实际为 {task_counts.get('grounding', 0)} 条")
-
-# 5. 检查 ID 是否重复
-ids = [s.get('id') for s in samples]
-if len(set(ids)) != len(ids):
-    errors.append(f"存在重复 ID，总样本数 {len(ids)}，唯一 ID 数 {len(set(ids))}")
-
-# 6. 必需字段检查
-required_fields = {
-    'caption': ['id', 'task', 'image', 'question', 'answer', 'source_split'],
-    'vqa': ['id', 'task', 'image', 'question', 'answer', 'question_type', 'source_split'],
-    'grounding': ['id', 'task', 'image', 'question', 'target', 'bbox', 'bbox_format', 'bbox_space', 'source_split']
+REQUIRED_FIELDS = {
+    "caption": {"id", "task", "image", "question", "answer", "source_split"},
+    "vqa": {"id", "task", "image", "question", "answer", "question_type", "source_split"},
+    "grounding": {
+        "id", "task", "image", "question", "target", "bbox",
+        "bbox_format", "bbox_space", "source_split",
+    },
 }
 
-for sample in samples:
-    task = sample.get('task')
-    if task in required_fields:
-        for field in required_fields[task]:
-            if field not in sample:
-                errors.append(f"样本 {sample.get('id', 'unknown')} 缺少字段: {field}")
 
-# 7. Grounding bbox 格式检查
-for sample in samples:
-    if sample.get('task') == 'grounding':
-        bbox = sample.get('bbox')
-        if bbox is None:
-            errors.append(f"样本 {sample.get('id', 'unknown')} 缺少 bbox")
-        elif not isinstance(bbox, list) or len(bbox) != 4:
-            errors.append(f"样本 {sample.get('id', 'unknown')} 的 bbox 格式错误，应为 4 个数字的列表")
+def load_jsonl(path: Path) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    with path.open("r", encoding="utf-8") as handle:
+        for line_no, line in enumerate(handle, 1):
+            if not line.strip():
+                continue
+            try:
+                value = json.loads(line)
+            except json.JSONDecodeError as exc:
+                raise ValueError(f"{path}:{line_no} JSON格式错误: {exc}") from exc
+            if not isinstance(value, dict):
+                raise ValueError(f"{path}:{line_no} 必须是JSON对象")
+            rows.append(value)
+    return rows
+
+
+def load_repairs(path: Path) -> dict[str, dict[str, Any]]:
+    if not path.exists():
+        return {}
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} 必须是JSON对象")
+    repairs = value.get("bbox_repairs", {})
+    if not isinstance(repairs, dict):
+        raise ValueError("bbox_repairs 必须是对象")
+    return repairs
+
+
+def bbox_error(bbox: Any) -> str | None:
+    if not isinstance(bbox, list) or len(bbox) != 4:
+        return "bbox必须是4个数字组成的列表"
+    if any(isinstance(v, bool) or not isinstance(v, (int, float)) for v in bbox):
+        return "bbox必须全部为数字"
+    x1, y1, x2, y2 = map(float, bbox)
+    if any(v < 0 or v > 100 for v in (x1, y1, x2, y2)):
+        return "bbox坐标必须位于0-100"
+    if not x1 < x2:
+        return f"必须满足x1<x2，当前{x1}>={x2}"
+    if not y1 < y2:
+        return f"必须满足y1<y2，当前{y1}>={y2}"
+    return None
+
+
+def validate(
+    manifest: Path,
+    repairs_path: Path,
+    project_root: Path,
+) -> tuple[list[str], list[str]]:
+    errors: list[str] = []
+    warnings: list[str] = []
+
+    if not manifest.exists():
+        return [f"找不到manifest: {manifest}"], warnings
+
+    try:
+        samples = load_jsonl(manifest)
+        repairs = load_repairs(repairs_path)
+    except ValueError as exc:
+        return [str(exc)], warnings
+
+    if len(samples) != 90:
+        errors.append(f"总样本应为90，实际为{len(samples)}")
+
+    ids = [str(row.get("id") or "") for row in samples]
+    if any(not sample_id for sample_id in ids):
+        errors.append("存在空id")
+    duplicates = [k for k, v in Counter(ids).items() if k and v > 1]
+    if duplicates:
+        errors.append(f"存在重复id: {duplicates}")
+
+    counts = Counter(str(row.get("task") or "") for row in samples)
+    for task, expected in EXPECTED_COUNTS.items():
+        if counts.get(task, 0) != expected:
+            errors.append(f"{task}应为{expected}条，实际为{counts.get(task, 0)}条")
+    unknown_tasks = sorted(set(counts) - set(EXPECTED_COUNTS))
+    if unknown_tasks:
+        errors.append(f"存在未知任务类型: {unknown_tasks}")
+
+    sample_ids = set(ids)
+    unused_repairs = sorted(set(repairs) - sample_ids)
+    if unused_repairs:
+        errors.append(f"bbox_repairs包含不存在的样本: {unused_repairs}")
+
+    repaired_count = 0
+    for row in samples:
+        sample_id = str(row.get("id") or "<unknown>")
+        task = str(row.get("task") or "")
+
+        required = REQUIRED_FIELDS.get(task)
+        if required:
+            missing = sorted(field for field in required if field not in row)
+            if missing:
+                errors.append(f"{sample_id} 缺少字段: {missing}")
+
+        split = row.get("source_split")
+        if split not in VALID_SPLITS:
+            errors.append(f"{sample_id} source_split无效: {split!r}")
+
+        image_value = row.get("image")
+        if not isinstance(image_value, str) or not image_value.strip():
+            errors.append(f"{sample_id} image字段为空")
         else:
-            for val in bbox:
-                if not isinstance(val, (int, float)) or val < 0 or val > 100:
-                    errors.append(f"样本 {sample.get('id', 'unknown')} 的 bbox 值 {val} 超出 0-100 范围")
+            image_path = Path(image_value)
+            if image_path.is_absolute():
+                errors.append(f"{sample_id} image必须使用项目相对路径: {image_value}")
+            else:
+                resolved = (project_root / image_path).resolve()
+                try:
+                    resolved.relative_to(project_root.resolve())
+                except ValueError:
+                    errors.append(f"{sample_id} image路径越出项目目录: {image_value}")
+                else:
+                    if not resolved.is_file():
+                        errors.append(f"{sample_id} 图片不存在: {image_value}")
 
-# 8. source_split 检查
-for sample in samples:
-    if 'source_split' not in sample:
-        errors.append(f"样本 {sample.get('id', 'unknown')} 缺少 source_split")
-    else:
-        if sample['source_split'] not in ['train', 'val', 'test']:
-            errors.append(f"样本 {sample.get('id', 'unknown')} 的 source_split 无效: {sample['source_split']}")
+        if task != "grounding":
+            continue
 
-# 9. 输出结果
-print("\n" + "=" * 50)
-if errors:
-    print(f"❌ 发现 {len(errors)} 个错误:")
-    for e in errors:
-        print(f"   - {e}")
-    print("\n校验失败 ❌")
-    sys.exit(1)
-else:
-    print("✅ 所有校验通过！")
-    print("   - 总数: 90 条")
-    print("   - 三类任务各 30 条")
-    print("   - 无 ID 重复")
-    print("   - 所有必需字段齐全")
-    print("   - Grounding bbox 格式正确")
-    print("   - source_split 有效")
-    sys.exit(0)
+        if row.get("bbox_format") != "xyxy":
+            errors.append(f"{sample_id} bbox_format必须为xyxy")
+        if row.get("bbox_space") != "normalized_0_100":
+            errors.append(f"{sample_id} bbox_space必须为normalized_0_100")
+
+        raw_bbox = row.get("bbox")
+        issue = bbox_error(raw_bbox)
+        if issue is None:
+            continue
+
+        repair = repairs.get(sample_id)
+        if not repair:
+            errors.append(f"{sample_id} {issue}，且没有显式bbox修复记录")
+            continue
+
+        if repair.get("source_bbox") != raw_bbox:
+            errors.append(f"{sample_id} bbox修复记录的source_bbox与manifest不一致")
+            continue
+
+        effective_bbox = repair.get("effective_bbox")
+        effective_issue = bbox_error(effective_bbox)
+        if effective_issue:
+            errors.append(f"{sample_id} effective_bbox仍无效: {effective_issue}")
+            continue
+
+        repaired_count += 1
+        warnings.append(
+            f"{sample_id} 原始官方归一化bbox退化为{raw_bbox}；"
+            f"内部评测使用显式修复{effective_bbox}"
+        )
+
+    if repaired_count:
+        warnings.append(f"共{repaired_count}条Grounding使用显式bbox修复记录")
+
+    return errors, warnings
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
+    parser.add_argument("--repairs", type=Path, default=DEFAULT_REPAIRS)
+    parser.add_argument("--project-root", type=Path, default=PROJECT_ROOT)
+    args = parser.parse_args(argv)
+
+    errors, warnings = validate(
+        args.manifest.resolve(),
+        args.repairs.resolve(),
+        args.project_root.resolve(),
+    )
+
+    print("=" * 60)
+    print("VRSBench eval_v1 validation")
+    print("=" * 60)
+    for warning in warnings:
+        print(f"[WARN] {warning}")
+
+    if errors:
+        for error in errors:
+            print(f"[FAIL] {error}")
+        print(f"[FAIL] validation failed: {len(errors)} error(s)")
+        return 1
+
+    print("[PASS] 90 samples")
+    print("[PASS] caption/vqa/grounding = 30/30/30")
+    print("[PASS] IDs, fields, source_split and image paths")
+    print("[PASS] Grounding bbox format/range/non-zero area")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
