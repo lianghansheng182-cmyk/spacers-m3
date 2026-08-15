@@ -32,10 +32,16 @@ weights/
 *.gguf
 
 # Full datasets
-datasets/*
+datasets/
 !datasets/README.md
 !datasets/mini_eval/
 !datasets/mini_eval/**
+!datasets/mini_eval/images/
+!datasets/mini_eval/images/*
+!datasets/vrsbench_eval_v1/
+!datasets/vrsbench_eval_v1/**
+!datasets/vrsbench_eval_v1/images/
+!datasets/vrsbench_eval_v1/images/*
 
 # Logs and large inference outputs
 logs/

@@ -1,0 +1,9 @@
+{
+  "bbox_repairs": {
+    "grounding_ext_004": {
+      "source_bbox": [14, 46, 20, 46],
+      "effective_bbox": [14, 46, 20, 47],
+      "reason": "VRSBench官方0-100整数归一化后该框高度退化为0。为内部IoU评测保留原始框并采用最小确定性修复：仅将y2扩展1个归一化单位。"
+    }
+  }
+}
