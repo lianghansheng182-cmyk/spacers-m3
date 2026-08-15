@@ -1,24 +1,16 @@
-"""Unified benchmark metrics aggregation for batch inference results."""
+"""Aggregate benchmark metrics from already-produced inference outputs."""
 
 from __future__ import annotations
 
 import json
 import math
-import platform
 import statistics
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Iterable, Mapping, Sequence
-
-try:
-    import torch
-except ImportError:  # pragma: no cover
-    torch = None  # type: ignore[assignment]
+from typing import Any, Mapping, Sequence
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_RESULTS_DIR = (
-    PROJECT_ROOT / "results" / "vrsbench_mini" / "qwen3_vl_2b_zero_shot"
-)
+DEFAULT_RESULTS_DIR = PROJECT_ROOT / "results" / "vrsbench_mini" / "qwen3_vl_2b_zero_shot"
 DEFAULT_REPORT_PATH = DEFAULT_RESULTS_DIR / "benchmark_report.json"
 TTFT_NOT_IMPLEMENTED = "暂未实现"
 TASK_TYPES = ("caption", "vqa", "grounding")
@@ -33,195 +25,141 @@ class SampleRecord:
     peak_vram_mb: float | None
     input_tokens: int | None
     output_tokens: int | None
+    estimated_output_words: int | None
     model_load_time_s: float | None
     vqa_accuracy: float | None
     grounding_iou: float | None
     error: str | None
-    precision: str | None
-    batch_size: int | None
-    max_new_tokens: int | None
     image_resolution: str | None
-    prompt_version: str | None
     raw: Mapping[str, Any]
 
 
-def _as_float(value: Any) -> float | None:
-    if value is None or value == "":
-        return None
-    try:
-        number = float(value)
-    except (TypeError, ValueError):
-        return None
-    if math.isnan(number) or math.isinf(number):
-        return None
-    return number
-
-
-def _as_int(value: Any) -> int | None:
-    if value is None or value == "":
-        return None
-    try:
-        return int(value)
-    except (TypeError, ValueError):
-        return None
-
-
-def _first_present(record: Mapping[str, Any], *keys: str) -> Any:
+def _first(record: Mapping[str, Any], *keys: str) -> Any:
     for key in keys:
         if key in record and record[key] not in (None, ""):
             return record[key]
     return None
 
 
-def _relative_to_project(path: Path) -> str:
-    project_root = PROJECT_ROOT.resolve()
-    candidate = path if path.is_absolute() else (Path.cwd() / path)
-    resolved = candidate.resolve()
+def _float(value: Any) -> float | None:
     try:
-        return resolved.relative_to(project_root).as_posix()
+        value = float(value)
+    except (TypeError, ValueError):
+        return None
+    return None if math.isnan(value) or math.isinf(value) else value
+
+
+def _int(value: Any) -> int | None:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _relative(path: Path) -> str:
+    resolved = (path if path.is_absolute() else Path.cwd() / path).resolve()
+    try:
+        return resolved.relative_to(PROJECT_ROOT.resolve()).as_posix()
     except ValueError:
-        if not resolved.is_absolute():
-            return path.as_posix()
-        return Path(path).as_posix()
-
-
-def _estimate_output_tokens(record: Mapping[str, Any]) -> int | None:
-    explicit = _as_int(_first_present(record, "output_tokens", "generated_tokens"))
-    if explicit is not None:
-        return explicit
-    prediction = _first_present(record, "prediction")
-    if isinstance(prediction, str) and prediction.strip():
-        return len(prediction.split())
-    return None
+        return path.as_posix()
 
 
 def normalize_sample(record: Mapping[str, Any]) -> SampleRecord:
-    success_value = _first_present(record, "success", "status")
-    if isinstance(success_value, bool):
-        status = "success" if success_value else "failed"
+    success = _first(record, "success", "status")
+    if isinstance(success, bool):
+        status = "success" if success else "failed"
     else:
-        status = str(success_value or "success").lower()
-        if status in {"true", "ok"}:
-            status = "success"
-        elif status in {"false", "error"}:
-            status = "failed"
-
-    if _first_present(record, "error", "error_message"):
+        status = str(success or "success").lower()
+        status = {"true": "success", "ok": "success", "false": "failed", "error": "failed"}.get(status, status)
+    error = str(_first(record, "error", "error_message") or "") or None
+    if error:
         status = "failed"
 
-    task = str(_first_present(record, "task", "task_type", "type") or "unknown").lower()
+    prediction = _first(record, "prediction")
+    estimated_words = len(prediction.split()) if isinstance(prediction, str) and prediction.strip() else None
+
+    # Do not fabricate tokenizer token counts from whitespace word counts.
+    output_tokens = _int(_first(record, "output_tokens", "generated_tokens"))
 
     return SampleRecord(
-        sample_id=str(_first_present(record, "sample_id", "id", "image_id") or ""),
-        task=task,
+        sample_id=str(_first(record, "sample_id", "id", "image_id") or ""),
+        task=str(_first(record, "task", "task_type", "type") or "unknown").lower(),
         status=status,
-        latency_s=_as_float(_first_present(record, "latency_s", "inference_time_s", "latency")),
-        peak_vram_mb=_as_float(_first_present(record, "peak_vram_mb", "peak_vram", "vram_mb")),
-        input_tokens=_as_int(_first_present(record, "input_tokens", "prompt_tokens")),
-        output_tokens=_estimate_output_tokens(record),
-        model_load_time_s=_as_float(
-            _first_present(record, "model_load_time_s", "model_load_s", "load_time_s")
-        ),
-        vqa_accuracy=_as_float(_first_present(record, "vqa_accuracy", "accuracy")),
-        grounding_iou=_as_float(_first_present(record, "grounding_iou", "iou", "mean_iou")),
-        error=str(_first_present(record, "error", "error_message") or "") or None,
-        precision=str(_first_present(record, "precision", "dtype") or "") or None,
-        batch_size=_as_int(_first_present(record, "batch_size")),
-        max_new_tokens=_as_int(_first_present(record, "max_new_tokens")),
-        image_resolution=str(_first_present(record, "image_resolution", "resolution") or "")
-        or None,
-        prompt_version=str(_first_present(record, "prompt_version", "prompt") or "") or None,
+        latency_s=_float(_first(record, "latency_s", "inference_time_s", "latency")),
+        peak_vram_mb=_float(_first(record, "peak_vram_mb", "peak_vram", "vram_mb")),
+        input_tokens=_int(_first(record, "input_tokens", "prompt_tokens")),
+        output_tokens=output_tokens,
+        estimated_output_words=estimated_words,
+        model_load_time_s=_float(_first(record, "model_load_time_s", "model_load_s", "load_time_s")),
+        vqa_accuracy=_float(_first(record, "vqa_accuracy", "accuracy")),
+        grounding_iou=_float(_first(record, "grounding_iou", "iou", "mean_iou")),
+        error=error,
+        image_resolution=str(_first(record, "image_resolution", "resolution") or "") or None,
         raw=record,
     )
 
 
 def load_json(path: Path) -> dict[str, Any]:
-    payload = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(payload, dict):
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
         raise ValueError(f"Expected JSON object in {path}")
-    return payload
+    return value
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
-    records: list[dict[str, Any]] = []
-    for line_no, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
-        stripped = line.strip()
-        if not stripped:
+    rows: list[dict[str, Any]] = []
+    for line_no, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
             continue
         try:
-            item = json.loads(stripped)
+            value = json.loads(line)
         except json.JSONDecodeError as exc:
             raise ValueError(f"Invalid JSONL at {path}:{line_no}: {exc}") from exc
-        if not isinstance(item, dict):
+        if not isinstance(value, dict):
             raise ValueError(f"Expected JSON object at {path}:{line_no}")
-        records.append(item)
-    return records
+        rows.append(value)
+    return rows
 
 
 def discover_prediction_files(results_dir: Path) -> list[Path]:
     if not results_dir.exists():
         return []
-
     candidates: list[Path] = []
-    for pattern in (
-        "predictions.jsonl",
-        "sample_results.jsonl",
-        "batch_results.jsonl",
-        "inference_results.jsonl",
-        "*.jsonl",
-    ):
+    for pattern in ("predictions.jsonl", "sample_results.jsonl", "batch_results.jsonl", "inference_results.jsonl", "*.jsonl"):
         for path in sorted(results_dir.glob(pattern)):
-            if path.name in {"benchmark_report.json", "error_cases.jsonl"}:
+            if path.name in {"benchmark_report.json", "error_cases.jsonl"} or path in candidates:
                 continue
-            if path not in candidates:
-                candidates.append(path)
+            candidates.append(path)
     return candidates
 
 
-def _metrics_lookup(metrics: Mapping[str, Any] | None) -> dict[tuple[str, str], dict[str, Any]]:
+def _metric_lookup(metrics: Mapping[str, Any]) -> dict[tuple[str, str], dict[str, Any]]:
     lookup: dict[tuple[str, str], dict[str, Any]] = {}
-    if not metrics:
-        return lookup
-    for item in metrics.get("per_sample", []):
-        if not isinstance(item, dict):
-            continue
-        sample_id = str(item.get("id") or "")
-        task = str(item.get("task") or "")
-        if sample_id and task:
-            lookup[(sample_id, task)] = item
+    for row in metrics.get("per_sample", []):
+        if isinstance(row, dict) and row.get("id") and row.get("task"):
+            lookup[(str(row["id"]), str(row["task"]))] = row
     return lookup
 
 
-def enrich_sample(
-    record: Mapping[str, Any], metrics_item: Mapping[str, Any] | None
-) -> dict[str, Any]:
-    enriched = dict(record)
-    if not metrics_item:
-        return enriched
-
-    if metrics_item.get("task") == "vqa" and "exact_match" in metrics_item:
-        enriched["vqa_accuracy"] = 1.0 if metrics_item["exact_match"] else 0.0
-    if metrics_item.get("task") == "grounding" and metrics_item.get("iou") is not None:
-        enriched["grounding_iou"] = metrics_item["iou"]
-    return enriched
-
-
 def load_samples(results_dir: Path) -> tuple[list[SampleRecord], list[Path], dict[str, Any]]:
-    files = discover_prediction_files(results_dir)
-    metrics_payload: dict[str, Any] = {}
     metrics_path = results_dir / "metrics.json"
-    if metrics_path.exists():
-        metrics_payload = load_json(metrics_path)
-    metrics_lookup = _metrics_lookup(metrics_payload)
-
+    metrics = load_json(metrics_path) if metrics_path.exists() else {}
+    lookup = _metric_lookup(metrics)
+    files = discover_prediction_files(results_dir)
     samples: list[SampleRecord] = []
-    for file_path in files:
-        for record in load_jsonl(file_path):
-            sample_id = str(_first_present(record, "sample_id", "id") or "")
-            task = str(_first_present(record, "task", "task_type") or "")
-            metrics_item = metrics_lookup.get((sample_id, task))
-            samples.append(normalize_sample(enrich_sample(record, metrics_item)))
-    return samples, files, metrics_payload
+    for path in files:
+        for row in load_jsonl(path):
+            sample_id = str(_first(row, "sample_id", "id") or "")
+            task = str(_first(row, "task", "task_type") or "")
+            enriched = dict(row)
+            metric = lookup.get((sample_id, task))
+            if metric:
+                if task == "vqa" and "exact_match" in metric:
+                    enriched["vqa_accuracy"] = 1.0 if metric["exact_match"] else 0.0
+                if task == "grounding" and metric.get("iou") is not None:
+                    enriched["grounding_iou"] = metric["iou"]
+            samples.append(normalize_sample(enriched))
+    return samples, files, metrics
 
 
 def percentile(values: Sequence[float], pct: float = 95.0) -> float | None:
@@ -229,153 +167,97 @@ def percentile(values: Sequence[float], pct: float = 95.0) -> float | None:
         return None
     if len(values) == 1:
         return round(values[0], 6)
-
     ordered = sorted(values)
-    rank = (len(ordered) - 1) * (pct / 100.0)
-    lower = math.floor(rank)
-    upper = math.ceil(rank)
-    if lower == upper:
-        return round(ordered[lower], 6)
-
-    weight = rank - lower
-    value = ordered[lower] * (1 - weight) + ordered[upper] * weight
-    return round(value, 6)
+    rank = (len(ordered) - 1) * pct / 100.0
+    lo, hi = math.floor(rank), math.ceil(rank)
+    if lo == hi:
+        return round(ordered[lo], 6)
+    weight = rank - lo
+    return round(ordered[lo] * (1 - weight) + ordered[hi] * weight, 6)
 
 
 def safe_rate(numerator: float, denominator: float) -> float | None:
-    if denominator <= 0:
-        return None
-    return round(numerator / denominator, 6)
+    return None if denominator <= 0 else round(numerator / denominator, 6)
 
 
-def _collect_latencies(samples: Iterable[SampleRecord]) -> list[float]:
-    latencies: list[float] = []
-    for sample in samples:
-        if sample.status == "success" and sample.latency_s is not None:
-            latencies.append(sample.latency_s)
-    return latencies
+def _summarize(samples: Sequence[SampleRecord], task_metrics: bool = False) -> dict[str, Any]:
+    ok = [s for s in samples if s.status == "success"]
+    latencies = [s.latency_s for s in ok if s.latency_s is not None]
+    vrams = [s.peak_vram_mb for s in samples if s.peak_vram_mb is not None]
 
+    token_rows = [s for s in ok if s.output_tokens is not None and s.latency_s is not None]
+    token_total = sum(s.output_tokens for s in token_rows) if token_rows else None
+    token_latency = sum(s.latency_s for s in token_rows) if token_rows else 0.0
 
-def _collect_peak_vram(samples: Iterable[SampleRecord]) -> float | None:
-    values = [sample.peak_vram_mb for sample in samples if sample.peak_vram_mb is not None]
-    if not values:
-        return None
-    return round(max(values), 2)
+    word_rows = [s for s in ok if s.estimated_output_words is not None and s.latency_s is not None]
+    word_total = sum(s.estimated_output_words for s in word_rows) if word_rows else None
+    word_latency = sum(s.latency_s for s in word_rows) if word_rows else 0.0
 
-
-def _collect_output_tokens(samples: Iterable[SampleRecord]) -> list[int]:
-    tokens: list[int] = []
-    for sample in samples:
-        if sample.status == "success" and sample.output_tokens is not None:
-            tokens.append(sample.output_tokens)
-    return tokens
-
-
-def _summarize_group(
-    samples: Sequence[SampleRecord],
-    *,
-    include_task_metrics: bool = False,
-) -> dict[str, Any]:
-    latencies = _collect_latencies(samples)
-    output_tokens = _collect_output_tokens(samples)
-    success_count = sum(1 for sample in samples if sample.status == "success")
-    failure_count = sum(1 for sample in samples if sample.status != "success")
-    total_count = len(samples)
-
-    total_output_tokens = sum(output_tokens) if output_tokens else 0
-    total_latency = sum(latencies) if latencies else 0.0
-    token_speed = safe_rate(total_output_tokens, total_latency)
-
-    summary: dict[str, Any] = {
-        "sample_count": total_count,
-        "success_count": success_count,
-        "failure_count": failure_count,
-        "failure_rate": safe_rate(failure_count, total_count) or 0.0,
+    result: dict[str, Any] = {
+        "sample_count": len(samples),
+        "success_count": len(ok),
+        "failure_count": len(samples) - len(ok),
+        "failure_rate": safe_rate(len(samples) - len(ok), len(samples)) or 0.0,
         "mean_latency_s": round(statistics.mean(latencies), 6) if latencies else None,
-        "p95_latency_s": percentile(latencies, 95.0),
-        "per_sample_latency_s": [round(value, 6) for value in latencies],
-        "peak_vram_mb": _collect_peak_vram(samples),
-        "total_output_tokens": total_output_tokens,
-        "mean_output_tokens": round(statistics.mean(output_tokens), 6) if output_tokens else None,
-        "token_speed_tokens_per_s": token_speed,
+        "p95_latency_s": percentile(latencies),
+        "per_sample_latency_s": [round(v, 6) for v in latencies],
+        "peak_vram_mb": round(max(vrams), 2) if vrams else None,
+        "total_output_tokens": token_total,
+        "mean_output_tokens": round(statistics.mean([s.output_tokens for s in token_rows]), 6) if token_rows else None,
+        "token_count_coverage": safe_rate(len(token_rows), len(ok)) if ok else 0.0,
+        "token_speed_tokens_per_s": safe_rate(token_total, token_latency) if token_total is not None else None,
+        "estimated_output_words": word_total,
+        "mean_estimated_output_words": round(statistics.mean([s.estimated_output_words for s in word_rows]), 6) if word_rows else None,
+        "estimated_words_per_s": safe_rate(word_total, word_latency) if word_total is not None else None,
         "ttft_s": TTFT_NOT_IMPLEMENTED,
     }
-
-    if include_task_metrics:
-        vqa_scores = [
-            sample.vqa_accuracy
-            for sample in samples
-            if sample.vqa_accuracy is not None and sample.task == "vqa"
-        ]
-        if vqa_scores:
-            summary["vqa_accuracy"] = round(statistics.mean(vqa_scores), 6)
-
-        grounding_scores = [
-            sample.grounding_iou
-            for sample in samples
-            if sample.grounding_iou is not None and sample.task == "grounding"
-        ]
-        if grounding_scores:
-            summary["grounding_mean_iou"] = round(statistics.mean(grounding_scores), 6)
-
-    return summary
+    if task_metrics:
+        vqa = [s.vqa_accuracy for s in samples if s.task == "vqa" and s.vqa_accuracy is not None]
+        grounding = [s.grounding_iou for s in samples if s.task == "grounding" and s.grounding_iou is not None]
+        if vqa:
+            result["vqa_accuracy"] = round(statistics.mean(vqa), 6)
+        if grounding:
+            result["grounding_mean_iou"] = round(statistics.mean(grounding), 6)
+    return result
 
 
-def collect_environment(
-    summary: Mapping[str, Any] | None = None,
-    run_config: Mapping[str, Any] | None = None,
-) -> dict[str, Any]:
-    summary = summary or {}
-    run_config = run_config or {}
+def collect_environment(summary: Mapping[str, Any] | None = None, run_config: Mapping[str, Any] | None = None) -> dict[str, Any]:
+    """Use inference-time metadata only; never substitute the report machine."""
+    summary, run_config = summary or {}, run_config or {}
 
-    env: dict[str, Any] = {
-        "os": platform.platform(),
-        "python_version": platform.python_version(),
-        "cpu": platform.processor() or platform.machine(),
-        "gpu_name": summary.get("gpu_name") or run_config.get("gpu_name") or "N/A",
-        "driver_version": "N/A",
-        "torch_version": summary.get("torch_version") or run_config.get("torch_version") or "N/A",
-        "cuda_version": summary.get("cuda_version") or run_config.get("cuda_version") or "N/A",
-        "cuda_available": False,
+    def pick(*keys: str) -> Any:
+        for source in (summary, run_config):
+            value = _first(source, *keys)
+            if value not in (None, ""):
+                return value
+        return None
+
+    gpu, cuda = pick("gpu_name"), pick("cuda_version")
+    cuda_available = pick("cuda_available")
+    if cuda_available is None:
+        cuda_available = bool(gpu and cuda)
+    return {
+        "os": pick("os", "os_version"),
+        "python_version": pick("python_version"),
+        "cpu": pick("cpu", "cpu_name"),
+        "gpu_name": gpu,
+        "driver_version": pick("driver_version", "gpu_driver_version"),
+        "torch_version": pick("torch_version"),
+        "cuda_version": cuda,
+        "cuda_available": bool(cuda_available),
+        "source": "recorded_run_metadata",
     }
 
-    if torch is not None:
-        env["torch_version"] = torch.__version__
-        env["cuda_version"] = torch.version.cuda or env["cuda_version"]
-        env["cuda_available"] = torch.cuda.is_available()
-        if torch.cuda.is_available() and env["gpu_name"] == "N/A":
-            env["gpu_name"] = torch.cuda.get_device_name(0)
-    return env
 
-
-def _format_image_resolution(
-    run_config: Mapping[str, Any] | None,
-    samples: Sequence[SampleRecord],
-) -> str | None:
-    if run_config and run_config.get("max_pixels") is not None:
-        return f"max_pixels={run_config['max_pixels']}"
-    for sample in samples:
-        if sample.image_resolution:
-            return sample.image_resolution
-    return None
-
-
-def _pick_model_config(
-    samples: Sequence[SampleRecord],
-    summary: Mapping[str, Any] | None = None,
-    run_config: Mapping[str, Any] | None = None,
-) -> dict[str, Any]:
-    summary = summary or {}
-    run_config = run_config or {}
+def _model_config(samples: Sequence[SampleRecord], summary: Mapping[str, Any], run_config: Mapping[str, Any]) -> dict[str, Any]:
+    resolution = f"max_pixels={run_config['max_pixels']}" if run_config.get("max_pixels") is not None else next((s.image_resolution for s in samples if s.image_resolution), None)
     return {
-        "model_name": run_config.get("model_id")
-        or _first_present(summary, "model_id")
-        or "Qwen/Qwen3-VL-2B-Instruct",
+        "model_name": run_config.get("model_id") or summary.get("model_id") or "Qwen/Qwen3-VL-2B-Instruct",
         "precision": summary.get("precision") or run_config.get("precision"),
         "batch_size": summary.get("batch_size") or run_config.get("batch_size"),
         "max_new_tokens": summary.get("max_new_tokens") or run_config.get("max_new_tokens"),
-        "image_resolution": _format_image_resolution(run_config, samples),
-        "prompt_version": "batch-default",
+        "image_resolution": resolution,
+        "prompt_version": run_config.get("prompt_version") or "batch-default",
     }
 
 
@@ -388,114 +270,59 @@ def build_benchmark_report(
     run_config: Mapping[str, Any] | None = None,
     metrics: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
-    summary = summary or {}
-    run_config = run_config or {}
-    metrics = metrics or {}
+    summary, run_config, metrics = summary or {}, run_config or {}, metrics or {}
+    overall = _summarize(samples)
+    loads = [s.model_load_time_s for s in samples if s.model_load_time_s is not None]
+    overall["model_load_time_s"] = summary.get("model_load_time_s") or run_config.get("model_load_time_s") or (round(loads[0], 6) if loads else None)
+    latencies = [s.latency_s for s in samples if s.status == "success" and s.latency_s is not None]
+    overall["total_runtime_s"] = summary.get("total_runtime_s") or (round(sum(latencies), 6) if latencies else 0.0)
 
-    overall = _summarize_group(samples)
-    model_load_values = [
-        sample.model_load_time_s
-        for sample in samples
-        if sample.model_load_time_s is not None
-    ]
-    overall["model_load_time_s"] = (
-        summary.get("model_load_time_s")
-        or run_config.get("model_load_time_s")
-        or (round(model_load_values[0], 6) if model_load_values else None)
-    )
-
-    latencies = _collect_latencies(samples)
-    overall["total_runtime_s"] = summary.get("total_runtime_s") or (
-        round(sum(latencies), 6) if latencies else 0.0
-    )
-
-    task_sections = {
-        task: _summarize_group(
-            [sample for sample in samples if sample.task == task],
-            include_task_metrics=True,
-        )
-        for task in TASK_TYPES
-    }
-
+    sections = {task: _summarize([s for s in samples if s.task == task], True) for task in TASK_TYPES}
     if metrics.get("vqa"):
-        task_sections["vqa"]["vqa_accuracy"] = metrics["vqa"].get("accuracy")
+        sections["vqa"]["vqa_accuracy"] = metrics["vqa"].get("accuracy")
     if metrics.get("grounding"):
-        task_sections["grounding"]["grounding_mean_iou"] = metrics["grounding"].get("mean_iou")
-        task_sections["grounding"]["acc_at_0_5"] = metrics["grounding"].get("acc_at_0_5")
-        task_sections["grounding"]["acc_at_0_7"] = metrics["grounding"].get("acc_at_0_7")
+        sections["grounding"].update({
+            "grounding_mean_iou": metrics["grounding"].get("mean_iou"),
+            "acc_at_0_5": metrics["grounding"].get("acc_at_0_5"),
+            "acc_at_0_7": metrics["grounding"].get("acc_at_0_7"),
+        })
 
     return {
         "overall": overall,
-        "caption": task_sections["caption"],
-        "vqa": task_sections["vqa"],
-        "grounding": task_sections["grounding"],
+        **sections,
         "environment": collect_environment(summary, run_config),
-        "model_config": _pick_model_config(samples, summary, run_config),
+        "model_config": _model_config(samples, summary, run_config),
         "metadata": {
-            "results_dir": _relative_to_project(results_dir or DEFAULT_RESULTS_DIR),
-            "source_files": [_relative_to_project(path) for path in (source_files or [])],
+            "results_dir": _relative(results_dir or DEFAULT_RESULTS_DIR),
+            "source_files": [_relative(p) for p in (source_files or [])],
             "sample_count": len(samples),
-            "token_count_source": "estimated_from_prediction_words_when_missing",
+            "token_count_source": "explicit_inference_fields_only",
+            "estimated_word_count_source": "whitespace_split_prediction",
+            "note": "Estimated word counts are diagnostics only and must not be reported as tokenizer token counts or token/s.",
         },
     }
 
 
-def generate_benchmark_report(
-    results_dir: Path | None = None,
-    output_path: Path | None = None,
-) -> dict[str, Any]:
-    resolved_results_dir = (results_dir or DEFAULT_RESULTS_DIR).resolve()
-    resolved_output_path = (output_path or DEFAULT_REPORT_PATH).resolve()
-
-    samples, source_files, metrics_payload = load_samples(resolved_results_dir)
-    summary_payload = (
-        load_json(resolved_results_dir / "summary.json")
-        if (resolved_results_dir / "summary.json").exists()
-        else {}
-    )
-    run_config_payload = (
-        load_json(resolved_results_dir / "run_config.json")
-        if (resolved_results_dir / "run_config.json").exists()
-        else {}
-    )
-
-    report = build_benchmark_report(
-        samples,
-        results_dir=resolved_results_dir,
-        source_files=source_files,
-        summary=summary_payload,
-        run_config=run_config_payload,
-        metrics=metrics_payload,
-    )
-
-    resolved_output_path.parent.mkdir(parents=True, exist_ok=True)
-    resolved_output_path.write_text(
-        json.dumps(report, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+def generate_benchmark_report(results_dir: Path | None = None, output_path: Path | None = None) -> dict[str, Any]:
+    results_dir = (results_dir or DEFAULT_RESULTS_DIR).resolve()
+    output_path = (output_path or DEFAULT_REPORT_PATH).resolve()
+    samples, files, metrics = load_samples(results_dir)
+    summary = load_json(results_dir / "summary.json") if (results_dir / "summary.json").exists() else {}
+    run_config = load_json(results_dir / "run_config.json") if (results_dir / "run_config.json").exists() else {}
+    report = build_benchmark_report(samples, results_dir=results_dir, source_files=files, summary=summary, run_config=run_config, metrics=metrics)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return report
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     import argparse
-
     parser = argparse.ArgumentParser(description="Generate unified benchmark report JSON.")
-    parser.add_argument(
-        "--results-dir",
-        type=Path,
-        default=DEFAULT_RESULTS_DIR,
-        help="Directory containing batch inference outputs.",
-    )
-    parser.add_argument(
-        "--output",
-        type=Path,
-        default=DEFAULT_REPORT_PATH,
-        help="Path to write benchmark_report.json.",
-    )
+    parser.add_argument("--results-dir", type=Path, default=DEFAULT_RESULTS_DIR)
+    parser.add_argument("--output", type=Path, default=DEFAULT_REPORT_PATH)
     args = parser.parse_args(list(argv) if argv is not None else None)
-
     report = generate_benchmark_report(args.results_dir, args.output)
-    print(f"[PASS] Benchmark report saved to {_relative_to_project(args.output)}")
+    print(f"[PASS] Benchmark report saved to {_relative(args.output)}")
     print(f"[PASS] Aggregated {report['metadata']['sample_count']} samples")
     return 0
 
