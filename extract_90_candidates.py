@@ -1,60 +1,74 @@
+#!/usr/bin/env python3
+"""Copy the 90 eval_v1 images from a local full VRSBench image directory.
+
+This helper is optional because the current PR already includes the 90-image
+internal evaluation subset. It is kept for reproducibility when rebuilding the
+subset from an independently downloaded VRSBench copy.
+"""
+
+from __future__ import annotations
+
+import argparse
 import json
-import os
 import shutil
 from pathlib import Path
 
-# ============================================================
-# 配置区域（组长使用前需要修改这里）
-# ============================================================
-# VRSBench 原始图片所在目录（组长需要改成自己的路径）
-VRSBENCH_IMAGES_DIR = Path(r"E:\path\to\VRSBench\images")  # ← 修改这里
+PROJECT_ROOT = Path(__file__).resolve().parent
+MANIFEST = PROJECT_ROOT / "datasets" / "vrsbench_eval_v1" / "candidate_manifest.jsonl"
+DEFAULT_OUTPUT = PROJECT_ROOT / "datasets" / "vrsbench_eval_v1" / "images"
 
-# 输出目录（相对于项目根目录）
-OUTPUT_DIR = Path("datasets/vrsbench_eval_v1/images")
-MANIFEST_PATH = Path("datasets/vrsbench_eval_v1/candidate_manifest.jsonl")
-# ============================================================
 
-def main():
-    # 检查清单文件是否存在
-    if not MANIFEST_PATH.exists():
-        print(f"❌ 错误: 找不到 {MANIFEST_PATH}")
-        print("   请先运行 extract_90_candidates.py 生成候选清单")
-        return
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--images-dir",
+        type=Path,
+        required=True,
+        help="Directory containing the official VRSBench source images.",
+    )
+    parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
+    args = parser.parse_args(argv)
 
-    # 创建输出目录
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    source_dir = args.images_dir.expanduser().resolve()
+    output_dir = args.output_dir.expanduser().resolve()
 
-    # 读取候选清单
-    with open(MANIFEST_PATH, 'r', encoding='utf-8') as f:
-        samples = [json.loads(line) for line in f]
+    if not MANIFEST.is_file():
+        print(f"[FAIL] manifest not found: {MANIFEST}")
+        return 1
+    if not source_dir.is_dir():
+        print(f"[FAIL] source image directory not found: {source_dir}")
+        return 1
 
-    print(f"📂 读取到 {len(samples)} 条候选样本")
-    print(f"📁 图片源目录: {VRSBENCH_IMAGES_DIR}")
-    print(f"📁 输出目录: {OUTPUT_DIR}")
-    print()
+    rows = [
+        json.loads(line)
+        for line in MANIFEST.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    output_dir.mkdir(parents=True, exist_ok=True)
 
-    # 提取图片
     copied = 0
-    missing = 0
-    for sample in samples:
-        # 从 image 路径中提取文件名
-        image_path = sample['image']
-        filename = os.path.basename(image_path)
-        src = VRSBENCH_IMAGES_DIR / filename
-        dst = OUTPUT_DIR / filename
+    missing: list[str] = []
+    for row in rows:
+        filename = Path(row["image"]).name
+        src = source_dir / filename
+        dst = output_dir / filename
+        if not src.is_file():
+            missing.append(filename)
+            continue
+        shutil.copy2(src, dst)
+        copied += 1
 
-        if src.exists():
-            shutil.copy2(src, dst)
-            copied += 1
-            print(f"✅ 已复制: {filename}")
-        else:
-            missing += 1
-            print(f"❌ 找不到: {filename} (尝试路径: {src})")
+    print(f"[INFO] manifest samples: {len(rows)}")
+    print(f"[INFO] copied: {copied}")
+    if missing:
+        print(f"[FAIL] missing: {len(missing)}")
+        for filename in missing:
+            print(f"  - {filename}")
+        return 1
 
-    print()
-    print(f"✅ 完成！成功复制 {copied} 张图片，{missing} 张缺失。")
-    if missing > 0:
-        print("⚠️ 请检查 VRSBENCH_IMAGES_DIR 路径是否正确，或手动补齐缺失图片。")
+    print("[PASS] all eval_v1 images are present")
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
