@@ -83,13 +83,41 @@ def build_prompt(sample: dict[str, Any]) -> str:
     task = sample["task"]
     question = sample["question"]
     if task == "caption":
-        return question
-    if task == "vqa":
-        return f"{question}\nAnswer with a concise short answer."
-    if task == "grounding":
         return (
-            f"{question}\nReturn only one bounding box in normalized 0-100 xyxy "
-            "format: {<x1><y1><x2><y2>}."
+            f"{question}\n"
+            "Describe only what is visible in this remote-sensing image. "
+            "Write 2-4 detailed but factual sentences. Focus on the main visible "
+            "targets, approximate counts when clear, spatial relationships, and "
+            "the scene type. Use remote-sensing object or scene names when they "
+            "are supported by the image. Do not guess unseen details, image "
+            "source, resolution, or fine categories that are not visually supported."
+        )
+    if task == "vqa":
+        return (
+            f"{question}\n"
+            "Answer using only the image. Return the shortest direct dataset-style "
+            "answer and do not add any explanation. For yes/no questions, answer "
+            "exactly Yes or No. For counting questions, answer only the number. "
+            "For object or category questions, use a clear remote-sensing target "
+            "or scene category such as expressway-toll-station, train station, "
+            "Chimney, storage tank, vehicle, airplane, dam, parking lot, urban, "
+            "or rural instead of only color, material, or appearance. For "
+            "top/middle/bottom or left/center/right questions, judge by the "
+            "target object's center point in equal image thirds. Assume north is "
+            "up in the image: east is image right, west is image left, north is "
+            "top, and south is bottom."
+        )
+    if task == "grounding":
+        target = sample.get("target") or question
+        return (
+            f"Locate this target in the image: {target}\n"
+            "Use all target attributes, position words, and relative "
+            "relationships to choose exactly one object; do not locate all "
+            "similar objects. Return a tight xyxy bounding box around only that "
+            "target, excluding adjacent objects and large background areas. "
+            "Use normalized 0-100 coordinates as required by the dataset. "
+            "Output only one JSON array with exactly four numbers: "
+            "[x1, y1, x2, y2]."
         )
     raise ValueError(f"unsupported task: {task}")
 
