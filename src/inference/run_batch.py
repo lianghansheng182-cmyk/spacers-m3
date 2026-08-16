@@ -42,6 +42,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-new-tokens", type=int, default=256)
     parser.add_argument("--batch-size", type=int, default=1)
     parser.add_argument("--max-pixels", type=int, default=1024 * 1024)
+    parser.add_argument(
+        "--prompt-version",
+        choices=("v1", "v2"),
+        default="v1",
+        help="Prompt template version. v1 is the default evaluation protocol.",
+    )
     return parser.parse_args()
 
 
@@ -79,7 +85,22 @@ def resolve_image_path(repo_root: Path, image: str) -> Path:
     return image_path.resolve()
 
 
-def build_prompt(sample: dict[str, Any]) -> str:
+def build_prompt_v1(sample: dict[str, Any]) -> str:
+    task = sample["task"]
+    question = sample["question"]
+    if task == "caption":
+        return question
+    if task == "vqa":
+        return f"{question}\nAnswer with a concise short answer."
+    if task == "grounding":
+        return (
+            f"{question}\nReturn only one bounding box in normalized 0-100 xyxy "
+            "format: {<x1><y1><x2><y2>}."
+        )
+    raise ValueError(f"unsupported task: {task}")
+
+
+def build_prompt_v2(sample: dict[str, Any]) -> str:
     task = sample["task"]
     question = sample["question"]
     if task == "caption":
@@ -122,7 +143,20 @@ def build_prompt(sample: dict[str, Any]) -> str:
     raise ValueError(f"unsupported task: {task}")
 
 
-def build_messages(sample: dict[str, Any], image_path: Path, max_pixels: int) -> list[dict[str, Any]]:
+def build_prompt(sample: dict[str, Any], prompt_version: str = "v1") -> str:
+    if prompt_version == "v1":
+        return build_prompt_v1(sample)
+    if prompt_version == "v2":
+        return build_prompt_v2(sample)
+    raise ValueError(f"unsupported prompt version: {prompt_version}")
+
+
+def build_messages(
+    sample: dict[str, Any],
+    image_path: Path,
+    max_pixels: int,
+    prompt_version: str = "v1",
+) -> list[dict[str, Any]]:
     return [
         {
             "role": "user",
@@ -132,7 +166,7 @@ def build_messages(sample: dict[str, Any], image_path: Path, max_pixels: int) ->
                     "image": str(image_path),
                     "max_pixels": max_pixels,
                 },
-                {"type": "text", "text": build_prompt(sample)},
+                {"type": "text", "text": build_prompt(sample, prompt_version)},
             ],
         }
     ]
@@ -185,12 +219,13 @@ def run_one_sample(
     device: torch.device,
     max_new_tokens: int,
     max_pixels: int,
+    prompt_version: str,
 ) -> str:
     image_path = resolve_image_path(repo_root, sample["image"])
     if not image_path.is_file():
         raise FileNotFoundError(f"image not found: {image_path}")
 
-    messages = build_messages(sample, image_path, max_pixels)
+    messages = build_messages(sample, image_path, max_pixels, prompt_version)
     text = processor.apply_chat_template(
         messages,
         tokenize=False,
@@ -253,6 +288,7 @@ def main() -> int:
         "precision": dtype_name(dtype),
         "max_new_tokens": args.max_new_tokens,
         "max_pixels": args.max_pixels,
+        "prompt_version": args.prompt_version,
         "device": str(device),
         "gpu_name": gpu_name,
         "torch_version": torch.__version__,
@@ -304,6 +340,7 @@ def main() -> int:
                 device=device,
                 max_new_tokens=args.max_new_tokens,
                 max_pixels=args.max_pixels,
+                prompt_version=args.prompt_version,
             )
             monitor.stop()
             success = True

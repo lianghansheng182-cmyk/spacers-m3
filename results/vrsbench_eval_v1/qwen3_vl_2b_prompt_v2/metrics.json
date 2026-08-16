@@ -1,0 +1,1471 @@
+{
+  "sample_count": 90,
+  "prediction_count": 90,
+  "success_count": 90,
+  "failure_count": 0,
+  "caption": {
+    "count": 30,
+    "metric": null,
+    "note": "Caption predictions are saved only; no automatic caption metric is reported for this run."
+  },
+  "vqa": {
+    "count": 30,
+    "correct": 16,
+    "accuracy": 0.533333,
+    "normalization": "NFKC, lowercase, punctuation-to-space, whitespace collapse, number words 0-10"
+  },
+  "grounding": {
+    "count": 30,
+    "parsed_count": 30,
+    "mean_iou": 0.374667,
+    "acc_at_0_5": 0.4,
+    "acc_at_0_7": 0.266667
+  },
+  "error_case_count": 32,
+  "error_case_counts": {
+    "grounding_low_iou": 18,
+    "vqa_wrong": 14
+  },
+  "per_sample": [
+    {
+      "id": "cap_ext_001",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_002",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_003",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_004",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_005",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_006",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_007",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_008",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_009",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_010",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_011",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_012",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_013",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_014",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_015",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_016",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_017",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_018",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_019",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_020",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_021",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_022",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_023",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_024",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_025",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_026",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_027",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_028",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_029",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "cap_ext_030",
+      "task": "caption",
+      "success": true
+    },
+    {
+      "id": "vqa_ext_001",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "forest",
+      "normalized_answer": "greenery",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_ext_002",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "yes",
+      "normalized_answer": "yes",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_ext_003",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "3",
+      "normalized_answer": "3",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_ext_004",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "vehicle",
+      "normalized_answer": "ship",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_ext_005",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "urban",
+      "normalized_answer": "suburban",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_ext_006",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "small",
+      "normalized_answer": "large",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_ext_007",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "yes",
+      "normalized_answer": "yes",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_ext_008",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "yes",
+      "normalized_answer": "yes",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_ext_009",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "yes",
+      "normalized_answer": "yes",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_ext_010",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "brown",
+      "normalized_answer": "brown",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_ext_011",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "parking lot",
+      "normalized_answer": "parking area",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_ext_012",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "airplane",
+      "normalized_answer": "airport",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_ext_013",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "dense",
+      "normalized_answer": "dense",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_ext_014",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "anchored",
+      "normalized_answer": "anchored",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_ext_015",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "vehicle",
+      "normalized_answer": "top right",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_ext_016",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "yes",
+      "normalized_answer": "yes",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_ext_017",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "yes",
+      "normalized_answer": "no",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_ext_018",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "yes",
+      "normalized_answer": "yes",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_ext_019",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "yes",
+      "normalized_answer": "yes",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_ext_020",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "rural",
+      "normalized_answer": "rural",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_ext_021",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "urban",
+      "normalized_answer": "urban",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_ext_022",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "no",
+      "normalized_answer": "bottom left",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_ext_023",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "8",
+      "normalized_answer": "multiple",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_ext_024",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "yes",
+      "normalized_answer": "diamond",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_ext_025",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "2",
+      "normalized_answer": "3",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_ext_026",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "yes",
+      "normalized_answer": "1",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_ext_027",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "yes",
+      "normalized_answer": "yes",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_ext_028",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "no",
+      "normalized_answer": "top left",
+      "exact_match": false
+    },
+    {
+      "id": "vqa_ext_029",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "harbors",
+      "normalized_answer": "harbors",
+      "exact_match": true
+    },
+    {
+      "id": "vqa_ext_030",
+      "task": "vqa",
+      "success": true,
+      "normalized_prediction": "2",
+      "normalized_answer": "2",
+      "exact_match": true
+    },
+    {
+      "id": "grounding_ext_001",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        46.6,
+        67.5,
+        62.9,
+        82.1
+      ],
+      "target_bbox": [
+        46,
+        68,
+        63,
+        82
+      ],
+      "iou": 0.920978,
+      "acc_at_0_5": true,
+      "acc_at_0_7": true,
+      "raw_parsed_bbox": [
+        466.0,
+        675.0,
+        629.0,
+        821.0
+      ],
+      "normalized_bbox_0_100": [
+        46.6,
+        67.5,
+        62.9,
+        82.1
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_002",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        58.6,
+        47.4,
+        73.1,
+        64.4
+      ],
+      "target_bbox": [
+        56,
+        48,
+        73,
+        66
+      ],
+      "iou": 0.746539,
+      "acc_at_0_5": true,
+      "acc_at_0_7": true,
+      "raw_parsed_bbox": [
+        586.0,
+        474.0,
+        731.0,
+        644.0
+      ],
+      "normalized_bbox_0_100": [
+        58.6,
+        47.4,
+        73.1,
+        64.4
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_003",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        0.0,
+        0.0,
+        66.9,
+        62.7
+      ],
+      "target_bbox": [
+        0,
+        0,
+        80,
+        67
+      ],
+      "iou": 0.78258,
+      "acc_at_0_5": true,
+      "acc_at_0_7": true,
+      "raw_parsed_bbox": [
+        0.0,
+        0.0,
+        669.0,
+        627.0
+      ],
+      "normalized_bbox_0_100": [
+        0.0,
+        0.0,
+        66.9,
+        62.7
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_004",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        32.4,
+        44.4,
+        41.4,
+        52.0
+      ],
+      "target_bbox": [
+        14,
+        46,
+        20,
+        47
+      ],
+      "iou": 0.0,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        324.0,
+        444.0,
+        414.0,
+        520.0
+      ],
+      "normalized_bbox_0_100": [
+        32.4,
+        44.4,
+        41.4,
+        52.0
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_005",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        11.2,
+        16.6,
+        14.2,
+        20.0
+      ],
+      "target_bbox": [
+        41,
+        5,
+        44,
+        9
+      ],
+      "iou": 0.0,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        112.0,
+        166.0,
+        142.0,
+        200.0
+      ],
+      "normalized_bbox_0_100": [
+        11.2,
+        16.6,
+        14.2,
+        20.0
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_006",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        71.2,
+        45.5,
+        82.4,
+        85.6
+      ],
+      "target_bbox": [
+        71,
+        44,
+        89,
+        100
+      ],
+      "iou": 0.445556,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        712.0,
+        455.0,
+        824.0,
+        856.0
+      ],
+      "normalized_bbox_0_100": [
+        71.2,
+        45.5,
+        82.4,
+        85.6
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_007",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        29.5,
+        80.5,
+        45.0,
+        90.8
+      ],
+      "target_bbox": [
+        35,
+        84,
+        57,
+        91
+      ],
+      "iou": 0.276817,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        295.0,
+        805.0,
+        450.0,
+        908.0
+      ],
+      "normalized_bbox_0_100": [
+        29.5,
+        80.5,
+        45.0,
+        90.8
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_008",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        12.3,
+        28.8,
+        47.6,
+        63.1
+      ],
+      "target_bbox": [
+        10,
+        28,
+        47,
+        65
+      ],
+      "iou": 0.856525,
+      "acc_at_0_5": true,
+      "acc_at_0_7": true,
+      "raw_parsed_bbox": [
+        123.0,
+        288.0,
+        476.0,
+        631.0
+      ],
+      "normalized_bbox_0_100": [
+        12.3,
+        28.8,
+        47.6,
+        63.1
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_009",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        65.6,
+        57.6,
+        99.8,
+        99.8
+      ],
+      "target_bbox": [
+        66,
+        58,
+        100,
+        100
+      ],
+      "iou": 0.96876,
+      "acc_at_0_5": true,
+      "acc_at_0_7": true,
+      "raw_parsed_bbox": [
+        656.0,
+        576.0,
+        998.0,
+        998.0
+      ],
+      "normalized_bbox_0_100": [
+        65.6,
+        57.6,
+        99.8,
+        99.8
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_010",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        45.2,
+        80.7,
+        54.4,
+        92.1
+      ],
+      "target_bbox": [
+        48,
+        83,
+        83,
+        100
+      ],
+      "iou": 0.090767,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        452.0,
+        807.0,
+        544.0,
+        921.0
+      ],
+      "normalized_bbox_0_100": [
+        45.2,
+        80.7,
+        54.4,
+        92.1
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_011",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        6.7,
+        79.5,
+        41.4,
+        100.0
+      ],
+      "target_bbox": [
+        7,
+        80,
+        37,
+        100
+      ],
+      "iou": 0.843467,
+      "acc_at_0_5": true,
+      "acc_at_0_7": true,
+      "raw_parsed_bbox": [
+        67.0,
+        795.0,
+        414.0,
+        1000.0
+      ],
+      "normalized_bbox_0_100": [
+        6.7,
+        79.5,
+        41.4,
+        100.0
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_012",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        53.5,
+        8.0,
+        59.7,
+        15.7
+      ],
+      "target_bbox": [
+        52,
+        7,
+        60,
+        16
+      ],
+      "iou": 0.663056,
+      "acc_at_0_5": true,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        535.0,
+        80.0,
+        597.0,
+        157.0
+      ],
+      "normalized_bbox_0_100": [
+        53.5,
+        8.0,
+        59.7,
+        15.7
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_013",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        10.0,
+        56.3,
+        18.5,
+        71.1
+      ],
+      "target_bbox": [
+        0,
+        96,
+        14,
+        100
+      ],
+      "iou": 0.0,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        100.0,
+        563.0,
+        185.0,
+        711.0
+      ],
+      "normalized_bbox_0_100": [
+        10.0,
+        56.3,
+        18.5,
+        71.1
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_014",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        42.7,
+        41.2,
+        99.9,
+        99.8
+      ],
+      "target_bbox": [
+        44,
+        41,
+        100,
+        100
+      ],
+      "iou": 0.969102,
+      "acc_at_0_5": true,
+      "acc_at_0_7": true,
+      "raw_parsed_bbox": [
+        427.0,
+        412.0,
+        999.0,
+        998.0
+      ],
+      "normalized_bbox_0_100": [
+        42.7,
+        41.2,
+        99.9,
+        99.8
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_015",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        57.4,
+        60.0,
+        76.3,
+        70.0
+      ],
+      "target_bbox": [
+        62,
+        0,
+        75,
+        68
+      ],
+      "iou": 0.107327,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        574.0,
+        600.0,
+        763.0,
+        700.0
+      ],
+      "normalized_bbox_0_100": [
+        57.4,
+        60.0,
+        76.3,
+        70.0
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_016",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        10.9,
+        12.0,
+        73.1,
+        49.8
+      ],
+      "target_bbox": [
+        17,
+        18,
+        66,
+        42
+      ],
+      "iou": 0.500179,
+      "acc_at_0_5": true,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        109.0,
+        120.0,
+        731.0,
+        498.0
+      ],
+      "normalized_bbox_0_100": [
+        10.9,
+        12.0,
+        73.1,
+        49.8
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_017",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        61.1,
+        36.1,
+        83.2,
+        74.8
+      ],
+      "target_bbox": [
+        70,
+        68,
+        89,
+        88
+      ],
+      "iou": 0.078358,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        611.0,
+        361.0,
+        832.0,
+        748.0
+      ],
+      "normalized_bbox_0_100": [
+        61.1,
+        36.1,
+        83.2,
+        74.8
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_018",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        28.8,
+        17.2,
+        48.4,
+        57.7
+      ],
+      "target_bbox": [
+        29,
+        18,
+        47,
+        57
+      ],
+      "iou": 0.884354,
+      "acc_at_0_5": true,
+      "acc_at_0_7": true,
+      "raw_parsed_bbox": [
+        288.0,
+        172.0,
+        484.0,
+        577.0
+      ],
+      "normalized_bbox_0_100": [
+        28.8,
+        17.2,
+        48.4,
+        57.7
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_019",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        68.3,
+        79.5,
+        77.1,
+        93.9
+      ],
+      "target_bbox": [
+        89,
+        87,
+        95,
+        100
+      ],
+      "iou": 0.0,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        683.0,
+        795.0,
+        771.0,
+        939.0
+      ],
+      "normalized_bbox_0_100": [
+        68.3,
+        79.5,
+        77.1,
+        93.9
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_020",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        54.4,
+        85.4,
+        69.5,
+        99.9
+      ],
+      "target_bbox": [
+        80,
+        62,
+        84,
+        75
+      ],
+      "iou": 0.0,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        544.0,
+        854.0,
+        695.0,
+        999.0
+      ],
+      "normalized_bbox_0_100": [
+        54.4,
+        85.4,
+        69.5,
+        99.9
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_021",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        62.6,
+        1.0,
+        68.2,
+        9.1
+      ],
+      "target_bbox": [
+        20,
+        59,
+        27,
+        63
+      ],
+      "iou": 0.0,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        626.0,
+        10.0,
+        682.0,
+        91.0
+      ],
+      "normalized_bbox_0_100": [
+        62.6,
+        1.0,
+        68.2,
+        9.1
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_022",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        77.7,
+        0.0,
+        100.0,
+        63.8
+      ],
+      "target_bbox": [
+        75,
+        23,
+        100,
+        71
+      ],
+      "iou": 0.531169,
+      "acc_at_0_5": true,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        777.0,
+        0.0,
+        1000.0,
+        638.0
+      ],
+      "normalized_bbox_0_100": [
+        77.7,
+        0.0,
+        100.0,
+        63.8
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_023",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        51.5,
+        11.4,
+        65.6,
+        19.5
+      ],
+      "target_bbox": [
+        55,
+        13,
+        65,
+        18
+      ],
+      "iou": 0.43779,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        515.0,
+        114.0,
+        656.0,
+        195.0
+      ],
+      "normalized_bbox_0_100": [
+        51.5,
+        11.4,
+        65.6,
+        19.5
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_024",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        6.2,
+        47.4,
+        10.0,
+        52.5
+      ],
+      "target_bbox": [
+        7,
+        48,
+        10,
+        50
+      ],
+      "iou": 0.309598,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        62.0,
+        474.0,
+        100.0,
+        525.0
+      ],
+      "normalized_bbox_0_100": [
+        6.2,
+        47.4,
+        10.0,
+        52.5
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_025",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        51.1,
+        84.4,
+        54.0,
+        88.0
+      ],
+      "target_bbox": [
+        35,
+        0,
+        39,
+        4
+      ],
+      "iou": 0.0,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        511.0,
+        844.0,
+        540.0,
+        880.0
+      ],
+      "normalized_bbox_0_100": [
+        51.1,
+        84.4,
+        54.0,
+        88.0
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_026",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        1.4,
+        0.0,
+        7.8,
+        11.5
+      ],
+      "target_bbox": [
+        2,
+        7,
+        5,
+        19
+      ],
+      "iou": 0.140479,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        14.0,
+        0.0,
+        78.0,
+        115.0
+      ],
+      "normalized_bbox_0_100": [
+        1.4,
+        0.0,
+        7.8,
+        11.5
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_027",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        3.2,
+        70.4,
+        10.0,
+        75.6
+      ],
+      "target_bbox": [
+        13,
+        55,
+        15,
+        60
+      ],
+      "iou": 0.0,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        32.0,
+        704.0,
+        100.0,
+        756.0
+      ],
+      "normalized_bbox_0_100": [
+        3.2,
+        70.4,
+        10.0,
+        75.6
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_028",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        10.7,
+        20.4,
+        41.4,
+        53.5
+      ],
+      "target_bbox": [
+        6,
+        20,
+        46,
+        57
+      ],
+      "iou": 0.686601,
+      "acc_at_0_5": true,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        107.0,
+        204.0,
+        414.0,
+        535.0
+      ],
+      "normalized_bbox_0_100": [
+        10.7,
+        20.4,
+        41.4,
+        53.5
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_029",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        74.9,
+        89.2,
+        86.2,
+        98.1
+      ],
+      "target_bbox": [
+        89,
+        54,
+        100,
+        96
+      ],
+      "iou": 0.0,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        749.0,
+        892.0,
+        862.0,
+        981.0
+      ],
+      "normalized_bbox_0_100": [
+        74.9,
+        89.2,
+        86.2,
+        98.1
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    },
+    {
+      "id": "grounding_ext_030",
+      "task": "grounding",
+      "success": true,
+      "parsed_bbox": [
+        12.1,
+        26.9,
+        36.5,
+        48.3
+      ],
+      "target_bbox": [
+        58,
+        21,
+        74,
+        34
+      ],
+      "iou": 0.0,
+      "acc_at_0_5": false,
+      "acc_at_0_7": false,
+      "raw_parsed_bbox": [
+        121.0,
+        269.0,
+        365.0,
+        483.0
+      ],
+      "normalized_bbox_0_100": [
+        12.1,
+        26.9,
+        36.5,
+        48.3
+      ],
+      "detected_bbox_space": "pixel_0_1000",
+      "parse_status": "ok",
+      "parse_error": null
+    }
+  ]
+}
