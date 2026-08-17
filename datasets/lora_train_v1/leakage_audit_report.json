@@ -1,0 +1,10 @@
+{
+  "excluded_images_count": 104,
+  "excluded_count": 507,
+  "leakage": 0,
+  "train_count": 9000,
+  "dev_count": 600,
+  "caption_train": 3000,
+  "vqa_train": 3000,
+  "grounding_train": 3000
+}
