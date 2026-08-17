@@ -93,3 +93,18 @@ python scripts/generate_benchmark_report.py \
 - Empty result directories produce a valid zero-sample report.
 - The module resolves the project root from `__file__`, so it can be invoked
   from another working directory.
+
+## Experiment section
+
+When `experiment.json` exists in the results directory, or when using
+`scripts/register_experiment.py`, the report also includes an `experiment`
+section with:
+
+- experiment name and git commit
+- base model / LoRA adapter
+- precision and batch size
+- model / adapter size
+- load time, latency, VRAM, success/failure
+- VQA accuracy and grounding metrics
+
+See `docs/benchmarking/lora_experiment_guide.md` for LoRA and precision workflow.

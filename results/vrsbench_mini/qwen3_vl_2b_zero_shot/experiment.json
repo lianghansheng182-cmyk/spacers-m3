@@ -1,0 +1,15 @@
+{
+  "experiment_name": "qwen3_vl_2b_zero_shot_bf16",
+  "base_model": "Qwen/Qwen3-VL-2B-Instruct",
+  "precision": "BF16",
+  "dataset": "vrsbench_mini",
+  "input_path": "datasets/mini_eval/mini_eval.jsonl",
+  "results_dir": "results\\vrsbench_mini\\qwen3_vl_2b_zero_shot",
+  "batch_size": 1,
+  "max_new_tokens": 256,
+  "lora_adapter": null,
+  "git_commit": "5098ad6a4890e2703cd078b928127566eb6c034c",
+  "operator": "朱福康",
+  "image_size": null,
+  "sample_count": null
+}
