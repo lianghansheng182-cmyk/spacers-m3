@@ -1,0 +1,15 @@
+{
+  "created_at_utc": "2026-08-23T15:51:17.913264+00:00",
+  "model_path": "/home/lhs/spacers_m3/models/Qwen3-VL-2B-Instruct",
+  "adapter_path": "results/lora/qwen3_vl_2b_lora_v1/adapter_final",
+  "input_path": "datasets/mini_eval/mini_eval.jsonl",
+  "output_dir": "/home/lhs/spacers_m3/results/lora/qwen3_vl_2b_lora_v1_eval/mini_eval_prompt_v1",
+  "prompt_version": "v1",
+  "max_new_tokens": 256,
+  "max_pixels": 1048576,
+  "device": "cuda:0",
+  "dtype": "torch.bfloat16",
+  "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+  "sample_count": 30,
+  "model_load_time_s": 3.930667
+}

@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "mode": "smoke",
+  "output_dir": "/home/lhs/spacers_m3/results/lora/qwen3_vl_2b_lora_v1_smoke",
+  "optimizer_steps": 50,
+  "micro_steps": 400,
+  "loss_first_window": 3.2569941498339174,
+  "loss_last_window": 0.8294986844994128,
+  "loss_min": 0.007499694358557463,
+  "loss_max": 6.2215728759765625,
+  "loss_nan": false,
+  "oom_count": 0,
+  "elapsed_seconds": 201.198,
+  "peak_vram_gib": 4.978,
+  "total_parameters": 2136248320,
+  "trainable_parameters": 8716288,
+  "trainable_ratio_percent": 0.408,
+  "checkpoints": [
+    "checkpoint-step-25",
+    "checkpoint-step-50"
+  ],
+  "final_adapter": "/home/lhs/spacers_m3/results/lora/qwen3_vl_2b_lora_v1_smoke/adapter_final"
+}

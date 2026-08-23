@@ -3,8 +3,10 @@ torch==2.13.0+cu130
 torchvision @ https://download.pytorch.org/whl/cu130/torchvision-0.28.0%2Bcu130-cp312-cp312-manylinux_2_28_x86_64.whl
 transformers==4.57.6
 accelerate==1.14.0
+peft==0.20.0
 pillow==12.3.0
 safetensors==0.8.0
 qwen-vl-utils==0.0.14
+pyyaml==6.0.3
 modelscope==1.39.0
 psutil==7.2.2

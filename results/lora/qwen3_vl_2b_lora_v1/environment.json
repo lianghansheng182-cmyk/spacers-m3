@@ -1,0 +1,16 @@
+{
+  "created": "2026-08-23T22:32:34",
+  "mode": "full",
+  "git_commit": "916f1197fa482d6c6cb5bdb9a3574923e63e4426",
+  "dependencies": {
+    "torch": "2.13.0+cu130",
+    "transformers": "4.57.6",
+    "peft": "0.20.0",
+    "accelerate": "1.14.0",
+    "pillow": "12.3.0",
+    "qwen-vl-utils": "0.0.14",
+    "pyyaml": "6.0.3"
+  },
+  "cuda_device": "NVIDIA GeForce RTX 5060 Laptop GPU",
+  "cuda_total_gib": 7.96
+}

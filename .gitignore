@@ -48,6 +48,8 @@ logs/
 scripts/logs/
 results/raw/
 results/predictions/
+results/lora/**/adapter_final/
+results/lora/**/checkpoint-step-*/
 
 # Local smoke-test inputs and temporary downloads
 data/test/demo.jpeg
