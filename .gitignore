@@ -51,6 +51,7 @@ results/predictions/
 
 # Local smoke-test inputs and temporary downloads
 data/test/demo.jpeg
+data/raw/
 *.tmp
 *.temp
 *.part

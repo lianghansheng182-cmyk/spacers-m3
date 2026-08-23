@@ -1,0 +1,546 @@
+{
+  "ids": [
+    "cap_001",
+    "cap_002",
+    "cap_003",
+    "cap_004",
+    "cap_005",
+    "cap_006",
+    "cap_007",
+    "cap_008",
+    "cap_009",
+    "cap_010",
+    "cap_ext_001",
+    "cap_ext_002",
+    "cap_ext_003",
+    "cap_ext_004",
+    "cap_ext_005",
+    "cap_ext_006",
+    "cap_ext_007",
+    "cap_ext_008",
+    "cap_ext_009",
+    "cap_ext_010",
+    "cap_ext_011",
+    "cap_ext_012",
+    "cap_ext_013",
+    "cap_ext_014",
+    "cap_ext_015",
+    "cap_ext_016",
+    "cap_ext_017",
+    "cap_ext_018",
+    "cap_ext_019",
+    "cap_ext_020",
+    "cap_ext_021",
+    "cap_ext_022",
+    "cap_ext_023",
+    "cap_ext_024",
+    "cap_ext_025",
+    "cap_ext_026",
+    "cap_ext_027",
+    "cap_ext_028",
+    "cap_ext_029",
+    "cap_ext_030",
+    "grounding_001",
+    "grounding_002",
+    "grounding_003",
+    "grounding_004",
+    "grounding_005",
+    "grounding_006",
+    "grounding_007",
+    "grounding_008",
+    "grounding_009",
+    "grounding_010",
+    "grounding_ext_001",
+    "grounding_ext_002",
+    "grounding_ext_003",
+    "grounding_ext_004",
+    "grounding_ext_005",
+    "grounding_ext_006",
+    "grounding_ext_007",
+    "grounding_ext_008",
+    "grounding_ext_009",
+    "grounding_ext_010",
+    "grounding_ext_011",
+    "grounding_ext_012",
+    "grounding_ext_013",
+    "grounding_ext_014",
+    "grounding_ext_015",
+    "grounding_ext_016",
+    "grounding_ext_017",
+    "grounding_ext_018",
+    "grounding_ext_019",
+    "grounding_ext_020",
+    "grounding_ext_021",
+    "grounding_ext_022",
+    "grounding_ext_023",
+    "grounding_ext_024",
+    "grounding_ext_025",
+    "grounding_ext_026",
+    "grounding_ext_027",
+    "grounding_ext_028",
+    "grounding_ext_029",
+    "grounding_ext_030",
+    "vqa_001",
+    "vqa_002",
+    "vqa_003",
+    "vqa_004",
+    "vqa_005",
+    "vqa_006",
+    "vqa_007",
+    "vqa_008",
+    "vqa_009",
+    "vqa_010",
+    "vqa_ext_001",
+    "vqa_ext_002",
+    "vqa_ext_003",
+    "vqa_ext_004",
+    "vqa_ext_005",
+    "vqa_ext_006",
+    "vqa_ext_007",
+    "vqa_ext_008",
+    "vqa_ext_009",
+    "vqa_ext_010",
+    "vqa_ext_011",
+    "vqa_ext_012",
+    "vqa_ext_013",
+    "vqa_ext_014",
+    "vqa_ext_015",
+    "vqa_ext_016",
+    "vqa_ext_017",
+    "vqa_ext_018",
+    "vqa_ext_019",
+    "vqa_ext_020",
+    "vqa_ext_021",
+    "vqa_ext_022",
+    "vqa_ext_023",
+    "vqa_ext_024",
+    "vqa_ext_025",
+    "vqa_ext_026",
+    "vqa_ext_027",
+    "vqa_ext_028",
+    "vqa_ext_029",
+    "vqa_ext_030"
+  ],
+  "basenames": [
+    "00002_0000.png",
+    "00003_0000.png",
+    "00004_0000.png",
+    "00005_0000.png",
+    "00006_0000.png",
+    "00008_0000.png",
+    "00009_0000.png",
+    "00010_0000.png",
+    "00011_0000.png",
+    "00012_0000.png",
+    "00473_0000.png",
+    "01302_0000.png",
+    "01723_0000.png",
+    "02499_0000.png",
+    "02829_0000.png",
+    "03055_0000.png",
+    "03291_0000.png",
+    "03479_0000.png",
+    "04187_0000.png",
+    "04216_0000.png",
+    "04320_0000.png",
+    "04598_0000.png",
+    "06131_0000.png",
+    "06241_0000.png",
+    "06872_0000.png",
+    "06904_0000.png",
+    "07373_0000.png",
+    "07943_0000.png",
+    "08659_0000.png",
+    "09081_0000.png",
+    "09185_0000.png",
+    "09566_0000.png",
+    "09611_0000.png",
+    "10297_0000.png",
+    "10675_0000.png",
+    "10680_0000.png",
+    "11025_0000.png",
+    "P0003_0002.png",
+    "P0003_0004.png",
+    "P0007_0001.png",
+    "P0007_0004.png",
+    "P0007_0005.png",
+    "P0036_0044.png",
+    "P0054_0009.png",
+    "P0218_0028.png",
+    "P0347_0025.png",
+    "P0421_0007.png",
+    "P0517_0001.png",
+    "P0526_0003.png",
+    "P0612_0002.png",
+    "P0638_0003.png",
+    "P0860_0042.png",
+    "P0951_0001.png",
+    "P0978_0013.png",
+    "P0993_0013.png",
+    "P1021_0002.png",
+    "P1089_0006.png",
+    "P1133_0005.png",
+    "P1149_0025.png",
+    "P1159_0048.png",
+    "P1166_0012.png",
+    "P1336_0070.png",
+    "P1356_0063.png",
+    "P1384_0008.png",
+    "P1384_0024.png",
+    "P1384_0056.png",
+    "P1388_0083.png",
+    "P1391_0050.png",
+    "P1392_0012.png",
+    "P1392_0058.png",
+    "P1403_0011.png",
+    "P1408_0081.png",
+    "P1426_0105.png",
+    "P1450_0018.png",
+    "P1450_0023.png",
+    "P1455_0017.png",
+    "P1502_0059.png",
+    "P1509_0014.png",
+    "P1705_0048.png",
+    "P1809_0039.png",
+    "P1850_0009.png",
+    "P2030_0011.png",
+    "P2030_0021.png",
+    "P2497_0017.png",
+    "P2560_0006.png",
+    "P2585_0009.png",
+    "P2625_0002.png",
+    "P2733_0033.png",
+    "P2740_0007.png",
+    "P2777_0042.png",
+    "P2778_0031.png",
+    "P2801_0018.png",
+    "P5034_0130.png",
+    "P5078_0003.png",
+    "P5325_0003.png",
+    "P5760_0006.png",
+    "P5789_1794.png",
+    "P7584_0090.png",
+    "P7763_0001.png",
+    "P8204_0021.png",
+    "P8204_0136.png",
+    "P8461_0097.png",
+    "P9337_0079.png",
+    "P9645_0018.png"
+  ],
+  "hashes": {
+    "03e58087c77a11a5f5abbb89bd392a3fa2be63cf434d69f6e36228573fdc2ccc": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\04187_0000.png"
+    ],
+    "0a2c56e4d969e5947d19c5673c3e22401a8ec5b3d4acd7d46b942b8b0aafc5b8": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1403_0011.png"
+    ],
+    "0a9334c75a67bb7a76bac65324652c90161962f9d35f7d6c46b341859b44dd46": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\06241_0000.png"
+    ],
+    "0e2330885e10a95a9908118d39264cb61b19cc0e740f118c457e40acb08474b5": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\03055_0000.png"
+    ],
+    "1257518b966508eb01efc2e052d4995e3b38d4ec6e42251776c3bcafedaedcad": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\mini_eval\\images\\00002_0000.png"
+    ],
+    "12832cf89d49de30bf13018d9cb029983b8901d09898080622c498b95fdaf551": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P2777_0042.png"
+    ],
+    "1351f577d7532f3c6f91d019232c3dd981cf13e7eac577f38981255db5f34420": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1384_0008.png"
+    ],
+    "1590c8a0fd6742fee5549d48248b2aa6872bc3a08ef4ceb1cadba81db6e6663b": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\11025_0000.png"
+    ],
+    "16d2eda3284bd291c7e0cb573ba7ff75a4d9760407df7e659259af72ffdcfabc": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P5034_0130.png"
+    ],
+    "17a69e69d091f77aaa5e36fcfa72aadb1e2a844b956062dd00dd853b8fbc112c": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P0860_0042.png"
+    ],
+    "1888b3de1f03f66aa7f5255d99ed27b12f51248ac2c38dcc5fba3097a6fe77c8": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\07373_0000.png"
+    ],
+    "1f8267f809d61e5f5be40b86160aa9e7ced41e4841e0169289071d7bf2729c86": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1384_0056.png"
+    ],
+    "21c8c9f8215e00e9079c6ce320fe76d1d98ab45f997e6cb0aa1ff8961a7cc79a": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\mini_eval\\images\\P0003_0004.png"
+    ],
+    "22ebe61dadf5790391536d6572f713220569f095f004222d42a21c2207d2525c": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P0638_0003.png"
+    ],
+    "2481a68bdb55c1ab516ee6ad76b53771b69b67020ab62e61557b03b2867dd7d0": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P0347_0025.png"
+    ],
+    "29ac03160cf3ef54cf329952592bf4ab0711f429943b42c6d5c9f24bc1b542ad": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P8204_0136.png"
+    ],
+    "2d7f1cce3823372da3645d165e8413d72768a1f4fa262b4f0d2005968906e6a6": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1388_0083.png"
+    ],
+    "2ec795b95dd347aeca58f50fc36621cceb8d67c3c08a9d66a81cd8b4b136ec26": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\07943_0000.png"
+    ],
+    "3586e423b400a294690c04b781343973875d9607b3f043a2f2f9a67bd0aff170": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P2801_0018.png"
+    ],
+    "36b9dae7c4c6eb273425fe1e5bf0991bc74c8b7d8a5a2c0772efba1a7d681a0f": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P0951_0001.png"
+    ],
+    "37469030d0cae4a8e58d629c6da567e1114eb965625e553c09ea28f71ea495c0": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\mini_eval\\images\\00003_0000.png"
+    ],
+    "3bae376f862e5f6dc0c8a5f20effde0a72a2b3dfe3516cdddbf460a2053c9712": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\04216_0000.png"
+    ],
+    "3d2dea61376b5c77755b77d14b6e318dd762a441d22294cf96ba79fbba86d830": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\mini_eval\\images\\00006_0000.png"
+    ],
+    "3e8abb8934dae97e13b4b1c8b5cecc60b9d845a9fba083dcab773cb3d9f205c6": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1809_0039.png"
+    ],
+    "412a298458ee64b99a5ce86ccbafdf55460e9e9138d72db5ae22115cfda785ef": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P5325_0003.png"
+    ],
+    "430223cf8758669b526ad875e7f40af83160a525aa25e194a75c5ff23176547d": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1149_0025.png"
+    ],
+    "43d0e13c39a15ab539c4281cd5031465a1f88df0b1f85d94c7faf1a768706e86": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\mini_eval\\images\\P0003_0002.png"
+    ],
+    "4d053b17d5a704455c83c75b1e63f85a4673cbdc8cecfde5a16f6efa48b38aa1": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\03479_0000.png"
+    ],
+    "4dddd299f927cdcf5c2c307c259a890f6062892b43e08abfa35f190d79b160fa": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P0517_0001.png"
+    ],
+    "4e09be4f078977a0a546fb566d6dedec50d1654b8291da5a098aad9ef01c0565": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P2030_0011.png"
+    ],
+    "527b3a38436e271092813542ec1cdea298e31ce18e27c54048091a8b5cbe2dff": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\mini_eval\\images\\P0007_0005.png"
+    ],
+    "539e04365deeae661678f24d64be6e2cf8ad6b574535e970b7dbf7558791be05": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P0993_0013.png"
+    ],
+    "59052c2f4e533c577f5606dc38de847bdc73cf1d9c287f72b68e59a0a4ebb92e": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\09611_0000.png"
+    ],
+    "59075f69444a675edf0c5cf65dc8ed2c78d079377c1c5ecc44004c30860dc476": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1705_0048.png"
+    ],
+    "59995c3bf072128e17555f23f838ab6dec0098a6dee92e6cf77d6e2d55dbbd7e": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\mini_eval\\images\\00011_0000.png"
+    ],
+    "59ac4b29556af564a03d4b9934ffa1d5eeafbbd36c1150197e0c9ca72acc9e81": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\06872_0000.png"
+    ],
+    "5f05995f5a4047c2bfc8e091424adafc11477eb17a8fc606590528e99ed52cab": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\02829_0000.png"
+    ],
+    "614d03d740f837187c0cf9b5cf7e194e8469101b70575e835a14c1ad88fa20b0": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\mini_eval\\images\\00008_0000.png"
+    ],
+    "619dd02fa238918849e71aa4bceb9d9b5ad14ec787c6796d79a5333ebf1ec2b1": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\08659_0000.png"
+    ],
+    "641f8adc8fc1aae18707c5e8b642a6558a9ebbfaefaf5b79d7d9c311eb2fde17": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\06904_0000.png"
+    ],
+    "64d70b71211b4b1054991ef40fdcce292ad3d73351f7463b8a88b18e6c068b21": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\mini_eval\\images\\00009_0000.png"
+    ],
+    "6502425aca8d9b42dc5ec72d984f5aa538c2573bb26da3d90144fb4e2aa55647": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\09081_0000.png"
+    ],
+    "651300ea57bfc139f68da5c8f10aa3c0034c12c9e657da7eb1157741c878abfd": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P8461_0097.png"
+    ],
+    "67d6ad24efab151c65d35f3db64a056313ee894aebc5de8b5e4d90879e8c2d45": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\09185_0000.png"
+    ],
+    "6d4127bd30ff0b7a1f4504920b0ecd9dce6842e6fe76d6ef32587a7507b11d70": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P0612_0002.png"
+    ],
+    "70c9eb12056dafb7f873e82f77b6bffbe3be3484e93f10ba9f316799b0be1d6b": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P2030_0021.png"
+    ],
+    "714fcefa8e99b422e3771be541f0c8a98e6893f1fd4e892f89b84feb43877b01": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P0421_0007.png"
+    ],
+    "71e50aee66bf89f34cb9240d90e4624996b539fe51600718d0464fe00459eeda": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1159_0048.png"
+    ],
+    "754ea30b2a67b288b7f309a68812b8b762f40c2bfcf4683a5fccae90963ea031": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P0526_0003.png"
+    ],
+    "77747b07ebf755861fd7bc840ad0de34e4afdaa31c0452ea819046ce8d784644": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1450_0018.png"
+    ],
+    "780fd3873730bc607b90aa9be671e8a758b6eaf95bff294996b8bb33ee351961": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1089_0006.png"
+    ],
+    "786e7c9cb2089d9a55bde0b184d62dfcf04355b003b74d3f39ec86017c5ca252": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1021_0002.png"
+    ],
+    "789d1da22851e0a7098b65539ea64109852b3d7475c19a9c9d97c1eb2b1ced58": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\mini_eval\\images\\00004_0000.png"
+    ],
+    "794dffbcf82061a71ed0b3a72ad098a6b383e34a9c59ac74dc6750aff21adb78": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P2778_0031.png"
+    ],
+    "79d61b5532f42a3fa4057124cd90056148d7c0e2232ff651acc2076bd995f192": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\04320_0000.png"
+    ],
+    "811c0646a1a1288e450409a45a50d5da701331c86844dbf5e97b433b94115ef3": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\01302_0000.png"
+    ],
+    "83315b9f7ca712a13adea54cc1e9b5d7ffdcdf55ca7a5e6a552205c6c9847458": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\10675_0000.png"
+    ],
+    "8338c7469098cfe471118a8051f8ae6db868d86e6e4e012de6966899e320f9e9": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1133_0005.png"
+    ],
+    "83a4bfd93cbb1da16d153e483aa3ef7c50566cd63998cd03cd9ca043dfd982f2": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P8204_0021.png"
+    ],
+    "8759ee0e1563852c7056c382d0e6adbb5dcc0a5e5ad6756707e29e53077dfce7": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\04598_0000.png"
+    ],
+    "8ceafd4393be85e90131b1f225ae4e0526b3c0109865e417fba9112e281d1280": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P5789_1794.png"
+    ],
+    "8eb5419ced51486276709dc818993dec999c1388144dc6592329f9760484aff4": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\10297_0000.png"
+    ],
+    "90a9e58dc53395f89f2531fff75bdafd0edbd0fb3233133b845c6ceb7d94051d": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P2497_0017.png"
+    ],
+    "915facc67964a440b8ce8f24798127127823641d7aa0405acb399d7e70dc3c02": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P2585_0009.png"
+    ],
+    "91fa946408cbda0e4bbe7d022c2f9e9087ed89f52b88b4a29b02eac0086a6827": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1166_0012.png"
+    ],
+    "99b0adf85719d6ded254ac0ca2e3d0efabaf950314340ed8d7042c1a606d5c35": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1336_0070.png"
+    ],
+    "9fc6bc65fddcdcd5933228334efc59a0c14070be28d0d70b3d52ddc105a1b39e": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\mini_eval\\images\\P0007_0004.png"
+    ],
+    "9fe4f0722da93b438ef5da29e1216aee7579c0a83af21575288150786866043f": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1509_0014.png"
+    ],
+    "a45e02038f64071d961efed27f8e271bb13f0df831c5538b4184e5a283865291": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P2625_0002.png"
+    ],
+    "ab408a86711621303376d44bd5b6e2c2132441a5484075808f0dd5da8052db7c": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1426_0105.png"
+    ],
+    "af7fb0c8400de0ca2f3c238121151580928ad5104108cfcf4a5d1d9d9d774f81": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P2733_0033.png"
+    ],
+    "b03e759796de997fefd70e6fb2bfe54cb1bbeafe348126a69514d1a926c33f21": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1455_0017.png"
+    ],
+    "b4e7367e8f6b417ed9453dab7bbf188688ac46221f0e601161ef05f2f0b8b84d": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P7584_0090.png"
+    ],
+    "b73451deed013d07ecbe9b68701784b87bf2071f75fd1ba828bfd12bd7d8fac5": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\10680_0000.png"
+    ],
+    "b8d7931019ffa256035de687e4625c56f8dd6594f35ddce5467ff3886afa572f": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1850_0009.png"
+    ],
+    "b8e5d8857bea1d8e00dff1a059d79c99e48dfb5fc9024808c45bca5aa85fe296": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P5760_0006.png"
+    ],
+    "bf2729fe181fdedd351f75824e1d4caca4a4b722637f233c5fc1719add74f735": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\00473_0000.png"
+    ],
+    "c195487fe483b886fc680274500188d954b1930f1a9834114e0cc5d47b1f0f7f": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\mini_eval\\images\\00012_0000.png",
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\00012_0000.png"
+    ],
+    "c23bef524bf371c85347a53ee2b32946c0988cc23939379deab30689e070e500": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1391_0050.png"
+    ],
+    "c43ff0dee3923800bb5db570c5c00791fbcfb7e660c3bd499a0d17f319f2a562": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\09566_0000.png"
+    ],
+    "c68f72fe215877d3e2f686f286d2596f013345400531e8a432f86310c1112aab": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P0978_0013.png"
+    ],
+    "c6ba07fcb0d37b685201bb9d8155b908fff28961ddadd7a50cc4ad58d21076d5": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\mini_eval\\images\\00005_0000.png"
+    ],
+    "c961894db5a2f30f88eb574c05a93eef5fe028f2097af1e20018102cf8a32622": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P7763_0001.png"
+    ],
+    "d685b8dd491bdff13b1d5d6db19823603d57f1fb5f2e0fe1464d094641518c5d": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1502_0059.png"
+    ],
+    "d906904fa2c2f32726559a79e68d94553e70bdd054c9773dc04ab122bbb148ee": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P0218_0028.png"
+    ],
+    "da09fc2a710ea769d402ad19f65f060c7e711ddcabb179adbe280ea98ac4fe2d": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P5078_0003.png"
+    ],
+    "dae32b9ca30b485f52c3a7c1550576c9bb0bbc4041fce61ad9a4817741372aaa": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\mini_eval\\images\\00010_0000.png"
+    ],
+    "db00ccd22285621a442f42d01870b24a84dfe1787b00b6554367c6ac0078599d": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P0054_0009.png"
+    ],
+    "dcd004954f7ed44ac27ae1b2eba26506aadd9033fddd0ec79f23a54532a7662d": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P2740_0007.png"
+    ],
+    "df9ffa11b0708a78e07da081d58572b4acd2330823dd671f0b120e33ed1e6e5a": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1392_0058.png"
+    ],
+    "e3ae0d925ecf1e42bfa5bffc0cfac519a0ed7f8de20d9b090b47b5f209fa8350": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P2560_0006.png"
+    ],
+    "e59df8d23e61a2012f82a2425eeef9afa0c23791cd4c56f5d3a275c97b93ebcd": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1408_0081.png"
+    ],
+    "e96c9d6eab5e810928ea13983891f919959d82a6085263738603be4dd06397ee": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\02499_0000.png"
+    ],
+    "e99209ea3418ce6f1ac40e879d09819fe4ac31762d7c2e6f3cd27c30a942b3cd": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1392_0012.png"
+    ],
+    "ed8c0d11b877a4dbc77e6718688f85983b8c43dd3457ddf940903e4a9d1e239b": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\03291_0000.png"
+    ],
+    "ede0a150fbf75556f8ea62dc172aab71cdaf8d93abc3a4af30a93f011329104e": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1356_0063.png"
+    ],
+    "f041e3eceadbb5fd34f303c7069daf7df40dc8acd101f7a37634220a998dd833": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1384_0024.png"
+    ],
+    "f4e6560b815fd6b22e725d8bfa3b13c60952dae841e56c5eab31ea623fefbabc": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\06131_0000.png"
+    ],
+    "f75954603b94db1f0d48f055ce39bfd1c9047e188d6ee4f26a001719f241a56a": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\01723_0000.png"
+    ],
+    "f7b403e4be7ab33d4e8b57453f3e337e5360ef12fd4f5ae972a185cb6ab2afe1": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P9337_0079.png"
+    ],
+    "f9dc2ed6b204522d80894f5f020de14c27fdf4b98e95f4eda6a1cbb9fc854e86": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\mini_eval\\images\\P0007_0001.png"
+    ],
+    "fd8fa9751a8fdd0842327c56b37e8b87e48ee9a06d06cf51aaf4d8e427509d10": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P1450_0023.png"
+    ],
+    "fe343e8f28e659cc4def2459823cb4b30f193b5856eb951e4ebab9960bd15d00": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P9645_0018.png"
+    ],
+    "ff3581d1d3a8d9205acce189d912e919c944db1807583d4986713e881db22ee7": [
+      "\\\\wsl.localhost\\Ubuntu\\home\\lhs\\spacers_m3\\datasets\\vrsbench_eval_v1\\images\\P0036_0044.png"
+    ]
+  },
+  "manifest_rows": 210
+}
