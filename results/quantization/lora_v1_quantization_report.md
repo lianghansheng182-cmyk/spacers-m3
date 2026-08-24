@@ -1,91 +1,49 @@
 # LoRA v1 Quantization Report
 
-Generated: 2026-08-24T21:51:41
+Generated: 2026-08-24T23:55:50
 
 ## Verdict
 
-BF16 LoRA v1 is the only runnable precision in the current environment. INT8 and INT4 were not formally evaluated because the required bitsandbytes backend is missing from the active project virtual environment.
+INT8 and INT4 were both truly validated with bitsandbytes on the current RTX 5060 Laptop GPU / CUDA 13 environment. Both smoke tests and both 90-sample Prompt v1 evaluations completed successfully.
 
-This report does not claim quantization support from API availability alone.
+INT4 is the strongest deployment candidate from this run: it has the lowest peak VRAM, faster latency than INT8, and the best 90-sample Grounding metrics, while keeping VQA equal to INT8 and above BF16. The caveat is one Grounding parse failure in INT4, caused by a malformed 6-number bbox output.
 
 ## Environment
 
 ```json
 {
-  "python": "Python 3.12.3",
   "packages": {
     "torch": "2.13.0+cu130",
     "transformers": "4.57.6",
     "peft": "0.20.0",
     "accelerate": "1.14.0",
-    "bitsandbytes": "MISSING",
-    "qwen-vl-utils": "0.0.14",
-    "pillow": "12.3.0"
+    "bitsandbytes": "0.50.1",
+    "qwen-vl-utils": "0.0.14"
   },
   "cuda_available": true,
   "torch_cuda": "13.0",
-  "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
-  "gpu_capability": [
+  "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+  "compute_capability": [
     12,
     0
   ]
 }
 ```
 
-## Code Audit
+## Smoke Tests
 
-```json
-{
-  "precision_backend_py": {
-    "exists": false,
-    "tracked": false,
-    "note": "No tracked precision_backend.py was found; current precision handling is embedded in inference/evaluation scripts."
-  },
-  "lora_adapter_loading": {
-    "script": "scripts/lora/evaluate_lora_adapter.py",
-    "method": "Load Qwen3VLForConditionalGeneration first, then PeftModel.from_pretrained(base_model, adapter_path).",
-    "adapter": "results/lora/qwen3_vl_2b_lora_v1/adapter_final"
-  },
-  "benchmark_framework": {
-    "summary_files": "summary.json and metrics.json from evaluate_lora_adapter/evaluate_mini_eval",
-    "resource_monitor": "src/utils/resource_monitor.py records latency_s and peak_vram_mb.",
-    "ttft": "not implemented",
-    "true_tokens_per_second": "not implemented; benchmark_metrics.py intentionally does not fabricate token/s from word counts."
-  },
-  "evaluation_protocol": {
-    "prompt": "Prompt v1",
-    "datasets": [
-      "datasets/mini_eval/mini_eval.jsonl",
-      "datasets/vrsbench_eval_v1/resolved_manifest.jsonl"
-    ],
-    "parser": "src/evaluation/evaluate_mini_eval.py parse_grounding_bbox"
-  }
-}
-```
+| Precision | Status | Success | Load time s | Mean latency s | P95 latency s | Peak VRAM MB | Grounding parsed |
+|---|---|---:|---:|---:|---:|---:|---:|
+| INT8 | PASS | 3/3 | 8.045162 | 4.533836 | 9.401216 | 2540.41 | 1/1 |
+| INT4 NF4 | PASS | 3/3 | 5.826323 | 3.033925 | 6.642285 | 1658.48 | 1/1 |
 
-## BF16 Reference
+## VRSBench Eval v1 90
 
-LoRA v1 BF16 results are reused from the completed Prompt v1 evaluations with the same adapter and evaluation algorithm.
-
-| Dataset | VQA acc | Grounding mean IoU | Acc@0.5 | Acc@0.7 | Parse failures | Peak VRAM MB | Mean latency s | P95 latency s |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| mini_eval 30 | 0.7 | 0.617452 | 0.8 | 0.2 | 0 | 4201.32 | 1.785099 | 4.818842 |
-| vrsbench_eval_v1 90 | 0.7 | 0.443984 | 0.466667 | 0.266667 | 1 | 4203.17 | 1.768474 | 5.11779 |
-
-## Quantization Smoke
-
-| Precision | Status | Model loaded | Adapter loaded | Prediction checked | Reason/error |
-|---|---|---:|---:|---:|---|
-| INT8 | NOT_RUN | False | False | 0 | ModuleNotFoundError: No module named 'bitsandbytes' |
-| INT4 | NOT_RUN | False | False | 0 | ModuleNotFoundError: No module named 'bitsandbytes' |
-
-## Formal Quantized Eval
-
-| Precision | 90-run status | VQA acc | Grounding mean IoU | Acc@0.5 | Acc@0.7 | Parse failures | Peak VRAM MB | Mean latency s | P95 latency s |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| BF16 | completed | 0.7 | 0.443984 | 0.466667 | 0.266667 | 1 | 4203.17 | 1.768474 | 5.11779 |
-| INT8 | not run | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
-| INT4 | not run | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
+| Precision | Success | VQA acc | Grounding mean IoU | Acc@0.5 | Acc@0.7 | Parse failures | Peak VRAM MB | Load time s | Mean latency s | P95 latency s |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| BF16 | 90/90 | 0.7 | 0.443984 | 0.466667 | 0.266667 | 1 | 4203.17 | 2.707903 | 1.768474 | 5.11779 |
+| INT8 | 90/90 | 0.733333 | 0.477298 | 0.466667 | 0.4 | 0 | 2545.99 (39.43% saved) | 3.877763 | 4.402703 | 13.65974 |
+| INT4 NF4 | 90/90 | 0.733333 | 0.50968 | 0.6 | 0.466667 | 1 | 1659.81 (60.51% saved) | 5.069761 | 2.214299 | 6.429084 |
 
 ## Storage
 
@@ -93,21 +51,21 @@ LoRA v1 BF16 results are reused from the completed Prompt v1 evaluations with th
 |---|---:|
 | Base model directory | 4068.994 |
 | LoRA v1 adapter | 33.311 |
-| INT8 quantized model artifact | not generated |
-| INT4 quantized model artifact | not generated |
+| INT8 saved model artifact | unavailable; quantized base model was loaded but not saved |
+| INT4 saved model artifact | unavailable; quantized base model was loaded but not saved |
 
-## Answers
+## Precision Comparison
 
-1. BF16 is the only completed precision. INT8/INT4 effects are unknown in this environment because quantized loading cannot be run without bitsandbytes.
-2. VRAM savings for INT8/INT4 were not measured.
-3. Storage savings for INT8/INT4 were not measured; no quantized model artifacts were generated.
-4. Latency changes for INT8/INT4 were not measured.
-5. The current deployment candidate remains LoRA v1 BF16.
-6. No quantized precision-loss conclusion can be made until INT8/INT4 smoke tests actually load and generate predictions.
+- BF16 reference: VQA 0.70, Grounding mean IoU 0.443984, Acc@0.5 0.466667, Acc@0.7 0.266667, parse failures 1, peak VRAM 4203.17 MB.
+- INT8: VQA 0.733333, Grounding mean IoU 0.477298, Acc@0.5 0.466667, Acc@0.7 0.40, parse failures 0, peak VRAM 2545.99 MB. VRAM saved vs BF16: 39.43%.
+- INT4 NF4: VQA 0.733333, Grounding mean IoU 0.50968, Acc@0.5 0.60, Acc@0.7 0.466667, parse failures 1, peak VRAM 1659.81 MB. VRAM saved vs BF16: 60.51%.
 
-## Required Before Quantized Runs
+## Unsupported Metrics
 
-- Install a CUDA-compatible bitsandbytes build in `.venv`.
-- Add or enable an explicit precision backend for `BF16`, `INT8`, and `INT4` model loading.
-- Re-run smoke on Caption/VQA/Grounding samples before any 90-sample quantized eval.
-- Record real output token counts before reporting true token/s; TTFT is currently not implemented.
+- TTFT: unavailable; the current evaluator does not instrument first-token timing.
+- true token/s: unavailable; the current evaluator does not record generated token counts. No word/s estimate is reported as token/s.
+- quantized model storage: unavailable; no INT8/INT4 base-model artifacts were saved.
+
+## Recommendation
+
+Use LoRA v1 INT4 NF4 as the next deployment candidate, with one follow-up check on Grounding output formatting because INT4 still produced one malformed bbox. Keep BF16 as the accuracy reference and INT8 as a safer quantized fallback when zero parse failures are more important than VRAM and latency.

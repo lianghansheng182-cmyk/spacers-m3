@@ -1,119 +1,105 @@
 {
-  "created": "2026-08-24T21:51:41",
+  "created": "2026-08-24T23:55:50",
   "environment": {
-    "python": "Python 3.12.3",
     "packages": {
       "torch": "2.13.0+cu130",
       "transformers": "4.57.6",
       "peft": "0.20.0",
       "accelerate": "1.14.0",
-      "bitsandbytes": "MISSING",
-      "qwen-vl-utils": "0.0.14",
-      "pillow": "12.3.0"
+      "bitsandbytes": "0.50.1",
+      "qwen-vl-utils": "0.0.14"
     },
     "cuda_available": true,
     "torch_cuda": "13.0",
-    "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
-    "gpu_capability": [
+    "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "compute_capability": [
       12,
       0
     ]
   },
-  "code_audit": {
-    "precision_backend_py": {
-      "exists": false,
-      "tracked": false,
-      "note": "No tracked precision_backend.py was found; current precision handling is embedded in inference/evaluation scripts."
+  "smoke": {
+    "int8": {
+      "status": "PASS",
+      "success": 3,
+      "failure": 0,
+      "load_time_s": 8.045162,
+      "mean_latency_s": 4.533836,
+      "p95_latency_s": 9.401216,
+      "peak_vram_mb": 2540.41,
+      "grounding_parsed": 1,
+      "grounding_count": 1
     },
-    "lora_adapter_loading": {
-      "script": "scripts/lora/evaluate_lora_adapter.py",
-      "method": "Load Qwen3VLForConditionalGeneration first, then PeftModel.from_pretrained(base_model, adapter_path).",
-      "adapter": "results/lora/qwen3_vl_2b_lora_v1/adapter_final"
-    },
-    "benchmark_framework": {
-      "summary_files": "summary.json and metrics.json from evaluate_lora_adapter/evaluate_mini_eval",
-      "resource_monitor": "src/utils/resource_monitor.py records latency_s and peak_vram_mb.",
-      "ttft": "not implemented",
-      "true_tokens_per_second": "not implemented; benchmark_metrics.py intentionally does not fabricate token/s from word counts."
-    },
-    "evaluation_protocol": {
-      "prompt": "Prompt v1",
-      "datasets": [
-        "datasets/mini_eval/mini_eval.jsonl",
-        "datasets/vrsbench_eval_v1/resolved_manifest.jsonl"
-      ],
-      "parser": "src/evaluation/evaluate_mini_eval.py parse_grounding_bbox"
+    "int4": {
+      "status": "PASS",
+      "success": 3,
+      "failure": 0,
+      "load_time_s": 5.826323,
+      "mean_latency_s": 3.033925,
+      "p95_latency_s": 6.642285,
+      "peak_vram_mb": 1658.48,
+      "grounding_parsed": 1,
+      "grounding_count": 1
     }
   },
-  "backend_imports": {
-    "bitsandbytes": {
-      "status": "FAIL",
-      "error": "ModuleNotFoundError: No module named 'bitsandbytes'",
-      "traceback_tail": [
-        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-        "  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import",
-        "  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load",
-        "  File \"<frozen importlib._bootstrap>\", line 1324, in _find_and_load_unlocked",
-        "ModuleNotFoundError: No module named 'bitsandbytes'"
-      ]
-    }
-  },
-  "bf16_reference": {
-    "mini_eval_30": {
-      "vqa_accuracy": 0.7,
-      "grounding_mean_iou": 0.617452,
-      "grounding_acc_at_0_5": 0.8,
-      "grounding_acc_at_0_7": 0.2,
-      "grounding_parse_failures": 0,
-      "success_count": 30,
-      "failure_count": 0,
-      "model_load_time_s": 3.930667,
-      "latency_mean_s": 1.785099,
-      "latency_p95_s": 4.818842,
-      "peak_vram_mb": 4201.32,
+  "vrsbench_eval_v1_90": {
+    "bf16": {
+      "precision": "bf16",
+      "success": 90,
+      "failure": 0,
+      "vqa": 0.7,
+      "mean_iou": 0.443984,
+      "acc05": 0.466667,
+      "acc07": 0.266667,
+      "parse_failures": 1,
+      "load_time_s": 2.707903,
+      "mean_latency_s": 1.768474,
+      "p95_latency_s": 5.11779,
+      "peak_vram_mb": 4203.17,
       "adapter_size_mb": 33.311
     },
-    "vrsbench_eval_v1_90": {
-      "vqa_accuracy": 0.7,
-      "grounding_mean_iou": 0.443984,
-      "grounding_acc_at_0_5": 0.466667,
-      "grounding_acc_at_0_7": 0.266667,
-      "grounding_parse_failures": 1,
-      "success_count": 90,
-      "failure_count": 0,
-      "model_load_time_s": 2.707903,
-      "latency_mean_s": 1.768474,
-      "latency_p95_s": 5.11779,
-      "peak_vram_mb": 4203.17,
+    "int8": {
+      "precision": "int8",
+      "success": 90,
+      "failure": 0,
+      "vqa": 0.733333,
+      "mean_iou": 0.477298,
+      "acc05": 0.466667,
+      "acc07": 0.4,
+      "parse_failures": 0,
+      "load_time_s": 3.877763,
+      "mean_latency_s": 4.402703,
+      "p95_latency_s": 13.65974,
+      "peak_vram_mb": 2545.99,
+      "adapter_size_mb": 33.311
+    },
+    "int4": {
+      "precision": "int4",
+      "success": 90,
+      "failure": 0,
+      "vqa": 0.733333,
+      "mean_iou": 0.50968,
+      "acc05": 0.6,
+      "acc07": 0.466667,
+      "parse_failures": 1,
+      "load_time_s": 5.069761,
+      "mean_latency_s": 2.214299,
+      "p95_latency_s": 6.429084,
+      "peak_vram_mb": 1659.81,
       "adapter_size_mb": 33.311
     }
   },
   "storage": {
     "base_model_dir_mb": 4068.994,
-    "lora_v1_adapter_mb": 33.311
+    "lora_v1_adapter_mb": 33.311,
+    "int8_saved_artifact_mb": null,
+    "int4_saved_artifact_mb": null
   },
-  "smoke": {
-    "int8": {
-      "precision": "int8",
-      "status": "NOT_RUN",
-      "reason": "bitsandbytes backend is not importable in the active .venv, so real INT8/INT4 model loading cannot be attempted.",
-      "backend_error": "ModuleNotFoundError: No module named 'bitsandbytes'",
-      "model_loaded": false,
-      "adapter_loaded": false,
-      "predictions_checked": 0
-    },
-    "int4": {
-      "precision": "int4",
-      "status": "NOT_RUN",
-      "reason": "bitsandbytes backend is not importable in the active .venv, so real INT8/INT4 model loading cannot be attempted.",
-      "backend_error": "ModuleNotFoundError: No module named 'bitsandbytes'",
-      "model_loaded": false,
-      "adapter_loaded": false,
-      "predictions_checked": 0
-    }
-  },
-  "formal_quantized_eval": {
-    "int8": "not_run_smoke_not_supported",
-    "int4": "not_run_smoke_not_supported"
-  }
+  "ttft": "unavailable",
+  "true_tokens_per_second": "unavailable",
+  "notes": [
+    "bitsandbytes was installed into the project .venv only.",
+    "torch, transformers, peft, and accelerate versions remained unchanged after installation.",
+    "INT8 and INT4 use the same LoRA v1 adapter, Prompt v1, 90-sample manifest, and evaluator as BF16.",
+    "Quantized base-model artifacts were not saved, so quantized storage size is unavailable."
+  ]
 }

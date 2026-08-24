@@ -1,0 +1,1 @@
+{"id": "vqa_ext_001", "task": "vqa", "error_type": "vqa_wrong", "prediction": "vegetation", "ground_truth": "Greenery", "parsed_bbox": null, "target_bbox": null, "iou": null, "comment": "normalized exact match is false"}

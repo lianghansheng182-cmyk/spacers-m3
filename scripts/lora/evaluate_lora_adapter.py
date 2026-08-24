@@ -15,7 +15,7 @@ from typing import Any
 import torch
 from peft import PeftModel
 from qwen_vl_utils import process_vision_info
-from transformers import AutoProcessor, Qwen3VLForConditionalGeneration
+from transformers import AutoProcessor, BitsAndBytesConfig, Qwen3VLForConditionalGeneration
 from transformers import StoppingCriteria, StoppingCriteriaList
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -34,6 +34,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--input", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--prompt-version", choices=("v1", "v2"), default="v1")
+    parser.add_argument("--precision", choices=("bf16", "int8", "int4"), default="bf16")
     parser.add_argument("--max-new-tokens", type=int, default=256)
     parser.add_argument("--grounding-max-new-tokens", type=int, default=None)
     parser.add_argument("--stop-grounding-after-brace", action="store_true")
@@ -96,6 +97,19 @@ def pick_device() -> torch.device:
 
 def pick_dtype(device: torch.device) -> torch.dtype:
     return torch.bfloat16 if device.type == "cuda" else torch.float32
+
+
+def quantization_config(precision: str) -> BitsAndBytesConfig | None:
+    if precision == "int8":
+        return BitsAndBytesConfig(load_in_8bit=True)
+    if precision == "int4":
+        return BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_compute_dtype=torch.bfloat16,
+            bnb_4bit_use_double_quant=True,
+        )
+    return None
 
 
 def resolve_image_path(image: str) -> Path:
@@ -161,18 +175,25 @@ def main() -> int:
     samples = load_jsonl(args.input.resolve())
     device = pick_device()
     dtype = pick_dtype(device)
+    q_config = quantization_config(args.precision)
     if device.type == "cuda":
         torch.cuda.empty_cache()
         torch.cuda.reset_peak_memory_stats()
 
     load_start = time.perf_counter()
     processor = AutoProcessor.from_pretrained(args.model_path, trust_remote_code=True, local_files_only=True)
+    model_kwargs: dict[str, Any] = {
+        "device_map": "auto" if device.type == "cuda" else None,
+        "trust_remote_code": True,
+        "local_files_only": True,
+    }
+    if q_config is None:
+        model_kwargs["dtype"] = dtype
+    else:
+        model_kwargs["quantization_config"] = q_config
     base_model = Qwen3VLForConditionalGeneration.from_pretrained(
         args.model_path,
-        dtype=dtype,
-        device_map="auto" if device.type == "cuda" else None,
-        trust_remote_code=True,
-        local_files_only=True,
+        **model_kwargs,
     )
     model = PeftModel.from_pretrained(base_model, args.adapter_path)
     model.eval()
@@ -187,12 +208,14 @@ def main() -> int:
         "input_path": str(args.input),
         "output_dir": str(output_dir),
         "prompt_version": args.prompt_version,
+        "precision": args.precision,
         "max_new_tokens": args.max_new_tokens,
         "grounding_max_new_tokens": args.grounding_max_new_tokens,
         "stop_grounding_after_brace": args.stop_grounding_after_brace,
         "max_pixels": args.max_pixels,
         "device": str(device),
         "dtype": str(dtype),
+        "quantization_config": str(q_config) if q_config is not None else None,
         "gpu_name": torch.cuda.get_device_name(0) if device.type == "cuda" else "N/A",
         "sample_count": len(samples),
         "model_load_time_s": round(load_time_s, 6),
@@ -274,6 +297,7 @@ def main() -> int:
         "peak_vram_mb": round(max(peak_vram_values), 2) if peak_vram_values else 0.0,
         "adapter_size_mb": round(adapter_size_bytes / 1024 / 1024, 3),
         "prompt_version": args.prompt_version,
+        "precision": args.precision,
         "max_new_tokens": args.max_new_tokens,
         "grounding_max_new_tokens": args.grounding_max_new_tokens,
         "stop_grounding_after_brace": args.stop_grounding_after_brace,

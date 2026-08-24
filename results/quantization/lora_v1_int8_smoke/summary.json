@@ -1,0 +1,100 @@
+{
+  "input_path": "results/quantization/lora_v1_quant_smoke_3.jsonl",
+  "output_dir": "/home/lhs/spacers_m3/results/quantization/lora_v1_int8_smoke",
+  "predictions_path": "/home/lhs/spacers_m3/results/quantization/lora_v1_int8_smoke/predictions.jsonl",
+  "metrics_path": "/home/lhs/spacers_m3/results/quantization/lora_v1_int8_smoke/metrics.json",
+  "error_cases_path": "/home/lhs/spacers_m3/results/quantization/lora_v1_int8_smoke/error_cases.jsonl",
+  "run_config_path": "/home/lhs/spacers_m3/results/quantization/lora_v1_int8_smoke/run_config.json",
+  "sample_count": 3,
+  "success_count": 3,
+  "failure_count": 0,
+  "total_runtime_s": 14.596273,
+  "model_load_time_s": 8.045162,
+  "latency_mean_s": 4.533836,
+  "latency_p95_s": 9.401216,
+  "peak_vram_mb": 2540.41,
+  "adapter_size_mb": 33.311,
+  "prompt_version": "v1",
+  "precision": "int8",
+  "max_new_tokens": 256,
+  "grounding_max_new_tokens": 32,
+  "stop_grounding_after_brace": true,
+  "metrics": {
+    "sample_count": 3,
+    "prediction_count": 3,
+    "success_count": 3,
+    "failure_count": 0,
+    "caption": {
+      "count": 1,
+      "metric": null,
+      "note": "Caption predictions are saved only; no automatic caption metric is reported for this run."
+    },
+    "vqa": {
+      "count": 1,
+      "correct": 0,
+      "accuracy": 0.0,
+      "normalization": "NFKC, lowercase, punctuation-to-space, whitespace collapse, number words 0-10"
+    },
+    "grounding": {
+      "count": 1,
+      "parsed_count": 1,
+      "mean_iou": 0.783217,
+      "acc_at_0_5": 1.0,
+      "acc_at_0_7": 1.0
+    },
+    "error_case_count": 1,
+    "error_case_counts": {
+      "vqa_wrong": 1
+    },
+    "per_sample": [
+      {
+        "id": "cap_ext_001",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "vqa_ext_001",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "vegetation",
+        "normalized_answer": "greenery",
+        "exact_match": false
+      },
+      {
+        "id": "grounding_ext_001",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": [
+          45.0,
+          66.0,
+          62.0,
+          82.0
+        ],
+        "target_bbox": [
+          46,
+          68,
+          63,
+          82
+        ],
+        "iou": 0.783217,
+        "acc_at_0_5": true,
+        "acc_at_0_7": true,
+        "raw_parsed_bbox": [
+          45.0,
+          66.0,
+          62.0,
+          82.0
+        ],
+        "normalized_bbox_0_100": [
+          45.0,
+          66.0,
+          62.0,
+          82.0
+        ],
+        "detected_bbox_space": "normalized_0_100",
+        "parse_status": "ok",
+        "parse_error": null
+      }
+    ]
+  }
+}

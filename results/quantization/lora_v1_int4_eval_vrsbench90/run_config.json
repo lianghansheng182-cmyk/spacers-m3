@@ -1,0 +1,19 @@
+{
+  "created_at_utc": "2026-08-24T15:50:21.363390+00:00",
+  "model_path": "/home/lhs/spacers_m3/models/Qwen3-VL-2B-Instruct",
+  "adapter_path": "results/lora/qwen3_vl_2b_lora_v1/adapter_final",
+  "input_path": "datasets/vrsbench_eval_v1/resolved_manifest.jsonl",
+  "output_dir": "/home/lhs/spacers_m3/results/quantization/lora_v1_int4_eval_vrsbench90",
+  "prompt_version": "v1",
+  "precision": "int4",
+  "max_new_tokens": 256,
+  "grounding_max_new_tokens": 32,
+  "stop_grounding_after_brace": true,
+  "max_pixels": 1048576,
+  "device": "cuda:0",
+  "dtype": "torch.bfloat16",
+  "quantization_config": "BitsAndBytesConfig {\n  \"_load_in_4bit\": true,\n  \"_load_in_8bit\": false,\n  \"bnb_4bit_compute_dtype\": \"bfloat16\",\n  \"bnb_4bit_quant_storage\": \"uint8\",\n  \"bnb_4bit_quant_type\": \"nf4\",\n  \"bnb_4bit_use_double_quant\": true,\n  \"llm_int8_enable_fp32_cpu_offload\": false,\n  \"llm_int8_has_fp16_weight\": false,\n  \"llm_int8_skip_modules\": null,\n  \"llm_int8_threshold\": 6.0,\n  \"load_in_4bit\": true,\n  \"load_in_8bit\": false,\n  \"quant_method\": \"bitsandbytes\"\n}\n",
+  "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+  "sample_count": 90,
+  "model_load_time_s": 5.069761
+}
