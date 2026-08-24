@@ -16,6 +16,7 @@ import torch
 from peft import PeftModel
 from qwen_vl_utils import process_vision_info
 from transformers import AutoProcessor, Qwen3VLForConditionalGeneration
+from transformers import StoppingCriteria, StoppingCriteriaList
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
@@ -34,8 +35,27 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--prompt-version", choices=("v1", "v2"), default="v1")
     parser.add_argument("--max-new-tokens", type=int, default=256)
+    parser.add_argument("--grounding-max-new-tokens", type=int, default=None)
+    parser.add_argument("--stop-grounding-after-brace", action="store_true")
     parser.add_argument("--max-pixels", type=int, default=1024 * 1024)
     return parser.parse_args()
+
+
+class StopAfterGeneratedBrace(StoppingCriteria):
+    def __init__(self, processor: AutoProcessor, prompt_len: int) -> None:
+        self.processor = processor
+        self.prompt_len = prompt_len
+
+    def __call__(self, input_ids: torch.LongTensor, scores: torch.FloatTensor, **kwargs: Any) -> bool:
+        generated = input_ids[0, self.prompt_len :]
+        if generated.numel() == 0:
+            return False
+        text = self.processor.batch_decode(
+            [generated],
+            skip_special_tokens=True,
+            clean_up_tokenization_spaces=False,
+        )[0]
+        return "}" in text
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -105,6 +125,7 @@ def run_one(
     max_new_tokens: int,
     max_pixels: int,
     prompt_version: str,
+    stop_after_brace: bool,
 ) -> str:
     image_path = resolve_image_path(sample["image"])
     messages = build_messages(sample, image_path, max_pixels, prompt_version)
@@ -112,8 +133,15 @@ def run_one(
     image_inputs, video_inputs = process_vision_info(messages)
     inputs = processor(text=[text], images=image_inputs, videos=video_inputs, padding=True, return_tensors="pt")
     inputs = inputs.to(device)
+    stopping_criteria = None
+    if stop_after_brace:
+        stopping_criteria = StoppingCriteriaList([StopAfterGeneratedBrace(processor, inputs.input_ids.shape[1])])
     with torch.inference_mode():
-        generated_ids = model.generate(**inputs, max_new_tokens=max_new_tokens)
+        generated_ids = model.generate(
+            **inputs,
+            max_new_tokens=max_new_tokens,
+            stopping_criteria=stopping_criteria,
+        )
     generated_trimmed = [out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)]
     return processor.batch_decode(generated_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0].strip()
 
@@ -160,6 +188,8 @@ def main() -> int:
         "output_dir": str(output_dir),
         "prompt_version": args.prompt_version,
         "max_new_tokens": args.max_new_tokens,
+        "grounding_max_new_tokens": args.grounding_max_new_tokens,
+        "stop_grounding_after_brace": args.stop_grounding_after_brace,
         "max_pixels": args.max_pixels,
         "device": str(device),
         "dtype": str(dtype),
@@ -185,9 +215,10 @@ def main() -> int:
                 processor,
                 model,
                 device,
-                args.max_new_tokens,
+                args.grounding_max_new_tokens if sample.get("task") == "grounding" and args.grounding_max_new_tokens else args.max_new_tokens,
                 args.max_pixels,
                 args.prompt_version,
+                sample.get("task") == "grounding" and args.stop_grounding_after_brace,
             )
             monitor.stop()
             success = True
@@ -214,6 +245,8 @@ def main() -> int:
             "latency_s": report["latency_s"],
             "peak_vram_mb": report["peak_vram_mb"],
             "max_new_tokens": args.max_new_tokens,
+            "effective_max_new_tokens": args.grounding_max_new_tokens if sample.get("task") == "grounding" and args.grounding_max_new_tokens else args.max_new_tokens,
+            "stop_after_brace": sample.get("task") == "grounding" and args.stop_grounding_after_brace,
             "sample": sample,
         }
         append_jsonl(predictions_path, row)
@@ -242,6 +275,8 @@ def main() -> int:
         "adapter_size_mb": round(adapter_size_bytes / 1024 / 1024, 3),
         "prompt_version": args.prompt_version,
         "max_new_tokens": args.max_new_tokens,
+        "grounding_max_new_tokens": args.grounding_max_new_tokens,
+        "stop_grounding_after_brace": args.stop_grounding_after_brace,
         "metrics": metrics,
     }
     write_json(summary_path, summary)

@@ -1,0 +1,93 @@
+{
+  "created": "2026-08-24T18:53:34",
+  "config": "configs/lora/qwen3_vl_2b_lora_v2.yaml",
+  "train_path": "/home/lhs/spacers_m3/datasets/vrsbench_lora_v2/train.jsonl",
+  "grounding_rows": 6000,
+  "sampled_rows": 30,
+  "target_kind_counts": {
+    "bbox_brace_angle": 30
+  },
+  "examples": [
+    {
+      "sample_id": "train_grounding_002609_promptv1_zh",
+      "source_sample_id": "train_grounding_002609",
+      "question": "请根据目标描述定位图像中的唯一目标：The large vehicle parked adjacent to a building at the bottom of the image。必须利用目标描述中的位置、属性和相对关系，只选择一个目标。只返回一个归一化0-100的xyxy边界框，格式严格为{<x1><y1><x2><y2>}。不要输出类别名、解释、Markdown或多余数字。",
+      "manifest_answer": "{<37><62><71><94>}",
+      "bbox": [
+        37,
+        62,
+        71,
+        94
+      ],
+      "full_train_text": "<|im_start|>user\n<|vision_start|><|image_pad|><|vision_end|>请根据目标描述定位图像中的唯一目标：The large vehicle parked adjacent to a building at the bottom of the image。必须利用目标描述中的位置、属性和相对关系，只选择一个目标。只返回一个归一化0-100的xyxy边界框，格式严格为{<x1><y1><x2><y2>}。不要输出类别名、解释、Markdown或多余数字。<|im_end|>\n<|im_start|>assistant\n{<37><62><71><94>}<|im_end|>\n",
+      "prompt_text": "<|im_start|>user\n<|vision_start|><|image_pad|><|vision_end|>请根据目标描述定位图像中的唯一目标：The large vehicle parked adjacent to a building at the bottom of the image。必须利用目标描述中的位置、属性和相对关系，只选择一个目标。只返回一个归一化0-100的xyxy边界框，格式严格为{<x1><y1><x2><y2>}。不要输出类别名、解释、Markdown或多余数字。<|im_end|>\n<|im_start|>assistant\n",
+      "supervised_assistant_target": "{<37><62><71><94>}<|im_end|>\n",
+      "target_kind": "bbox_brace_angle"
+    },
+    {
+      "sample_id": "train_grounding_002042_promptv1_zh",
+      "source_sample_id": "train_grounding_002042",
+      "question": "请根据目标描述定位图像中的唯一目标：The vehicle is the only vehicle on this section of the road。必须利用目标描述中的位置、属性和相对关系，只选择一个目标。只返回一个归一化0-100的xyxy边界框，格式严格为{<x1><y1><x2><y2>}。不要输出类别名、解释、Markdown或多余数字。",
+      "manifest_answer": "{<15><63><32><70>}",
+      "bbox": [
+        15,
+        63,
+        32,
+        70
+      ],
+      "full_train_text": "<|im_start|>user\n<|vision_start|><|image_pad|><|vision_end|>请根据目标描述定位图像中的唯一目标：The vehicle is the only vehicle on this section of the road。必须利用目标描述中的位置、属性和相对关系，只选择一个目标。只返回一个归一化0-100的xyxy边界框，格式严格为{<x1><y1><x2><y2>}。不要输出类别名、解释、Markdown或多余数字。<|im_end|>\n<|im_start|>assistant\n{<15><63><32><70>}<|im_end|>\n",
+      "prompt_text": "<|im_start|>user\n<|vision_start|><|image_pad|><|vision_end|>请根据目标描述定位图像中的唯一目标：The vehicle is the only vehicle on this section of the road。必须利用目标描述中的位置、属性和相对关系，只选择一个目标。只返回一个归一化0-100的xyxy边界框，格式严格为{<x1><y1><x2><y2>}。不要输出类别名、解释、Markdown或多余数字。<|im_end|>\n<|im_start|>assistant\n",
+      "supervised_assistant_target": "{<15><63><32><70>}<|im_end|>\n",
+      "target_kind": "bbox_brace_angle"
+    },
+    {
+      "sample_id": "train_grounding_000565_promptv1_zh",
+      "source_sample_id": "train_grounding_000565",
+      "question": "请根据目标描述定位图像中的唯一目标：The large vehicle located at the bottom right corner and fully visible。必须利用目标描述中的位置、属性和相对关系，只选择一个目标。只返回一个归一化0-100的xyxy边界框，格式严格为{<x1><y1><x2><y2>}。不要输出类别名、解释、Markdown或多余数字。",
+      "manifest_answer": "{<82><75><97><96>}",
+      "bbox": [
+        82,
+        75,
+        97,
+        96
+      ],
+      "full_train_text": "<|im_start|>user\n<|vision_start|><|image_pad|><|vision_end|>请根据目标描述定位图像中的唯一目标：The large vehicle located at the bottom right corner and fully visible。必须利用目标描述中的位置、属性和相对关系，只选择一个目标。只返回一个归一化0-100的xyxy边界框，格式严格为{<x1><y1><x2><y2>}。不要输出类别名、解释、Markdown或多余数字。<|im_end|>\n<|im_start|>assistant\n{<82><75><97><96>}<|im_end|>\n",
+      "prompt_text": "<|im_start|>user\n<|vision_start|><|image_pad|><|vision_end|>请根据目标描述定位图像中的唯一目标：The large vehicle located at the bottom right corner and fully visible。必须利用目标描述中的位置、属性和相对关系，只选择一个目标。只返回一个归一化0-100的xyxy边界框，格式严格为{<x1><y1><x2><y2>}。不要输出类别名、解释、Markdown或多余数字。<|im_end|>\n<|im_start|>assistant\n",
+      "supervised_assistant_target": "{<82><75><97><96>}<|im_end|>\n",
+      "target_kind": "bbox_brace_angle"
+    },
+    {
+      "sample_id": "train_grounding_001201",
+      "source_sample_id": "train_grounding_001201",
+      "question": "the location of <p>The smallest ship docked on the extreme bottom-right corner</p> is",
+      "manifest_answer": "{<89><66><97><69>}",
+      "bbox": [
+        89,
+        66,
+        97,
+        69
+      ],
+      "full_train_text": "<|im_start|>user\n<|vision_start|><|image_pad|><|vision_end|>the location of <p>The smallest ship docked on the extreme bottom-right corner</p> is<|im_end|>\n<|im_start|>assistant\n{<89><66><97><69>}<|im_end|>\n",
+      "prompt_text": "<|im_start|>user\n<|vision_start|><|image_pad|><|vision_end|>the location of <p>The smallest ship docked on the extreme bottom-right corner</p> is<|im_end|>\n<|im_start|>assistant\n",
+      "supervised_assistant_target": "{<89><66><97><69>}<|im_end|>\n",
+      "target_kind": "bbox_brace_angle"
+    },
+    {
+      "sample_id": "train_grounding_000239_promptv1_zh",
+      "source_sample_id": "train_grounding_000239",
+      "question": "请根据目标描述定位图像中的唯一目标：The large vehicle is located towards the right side of the image。必须利用目标描述中的位置、属性和相对关系，只选择一个目标。只返回一个归一化0-100的xyxy边界框，格式严格为{<x1><y1><x2><y2>}。不要输出类别名、解释、Markdown或多余数字。",
+      "manifest_answer": "{<91><46><98><56>}",
+      "bbox": [
+        91,
+        46,
+        98,
+        56
+      ],
+      "full_train_text": "<|im_start|>user\n<|vision_start|><|image_pad|><|vision_end|>请根据目标描述定位图像中的唯一目标：The large vehicle is located towards the right side of the image。必须利用目标描述中的位置、属性和相对关系，只选择一个目标。只返回一个归一化0-100的xyxy边界框，格式严格为{<x1><y1><x2><y2>}。不要输出类别名、解释、Markdown或多余数字。<|im_end|>\n<|im_start|>assistant\n{<91><46><98><56>}<|im_end|>\n",
+      "prompt_text": "<|im_start|>user\n<|vision_start|><|image_pad|><|vision_end|>请根据目标描述定位图像中的唯一目标：The large vehicle is located towards the right side of the image。必须利用目标描述中的位置、属性和相对关系，只选择一个目标。只返回一个归一化0-100的xyxy边界框，格式严格为{<x1><y1><x2><y2>}。不要输出类别名、解释、Markdown或多余数字。<|im_end|>\n<|im_start|>assistant\n",
+      "supervised_assistant_target": "{<91><46><98><56>}<|im_end|>\n",
+      "target_kind": "bbox_brace_angle"
+    }
+  ],
+  "status": "PASS"
+}

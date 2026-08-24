@@ -12,7 +12,7 @@ import shutil
 import subprocess
 import sys
 import time
-from collections import deque
+from collections import Counter, deque
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -135,18 +135,58 @@ def load_model_and_processor(config: dict[str, Any], device: torch.device) -> tu
     return model, processor
 
 
-def train(config: dict[str, Any], repo_root: Path, mode: str) -> dict[str, Any]:
+def make_task_weighted_picker(
+    rows: list[dict[str, Any]],
+    weights: dict[str, Any] | None,
+    rng: random.Random,
+) -> tuple[Any, dict[str, float]]:
+    if not weights:
+        return None, {}
+
+    buckets: dict[str, list[dict[str, Any]]] = {}
+    normalized_weights: dict[str, float] = {}
+    for row in rows:
+        buckets.setdefault(str(row.get("task")), []).append(row)
+    for task, value in weights.items():
+        weight = float(value)
+        if weight > 0 and buckets.get(task):
+            normalized_weights[task] = weight
+    if not normalized_weights:
+        return None, {}
+
+    tasks = list(normalized_weights)
+    task_weights = [normalized_weights[task] for task in tasks]
+    positions = {task: 0 for task in tasks}
+    for task in tasks:
+        rng.shuffle(buckets[task])
+
+    def pick() -> dict[str, Any]:
+        task = rng.choices(tasks, weights=task_weights, k=1)[0]
+        index = positions[task]
+        bucket = buckets[task]
+        if index >= len(bucket):
+            rng.shuffle(bucket)
+            index = 0
+        positions[task] = index + 1
+        return bucket[index]
+
+    return pick, normalized_weights
+
+
+def train(config: dict[str, Any], repo_root: Path, mode: str, config_path: Path) -> dict[str, Any]:
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA is required for this LoRA training smoke/full run.")
     device = torch.device("cuda")
     torch.cuda.empty_cache()
     torch.cuda.reset_peak_memory_stats()
-    random.seed(int(config["run"]["seed"]))
-    torch.manual_seed(int(config["run"]["seed"]))
+    seed = int(config["run"]["seed"])
+    rng = random.Random(seed)
+    random.seed(seed)
+    torch.manual_seed(seed)
 
     output_dir = repo_root / (config["run"]["smoke_output_dir"] if mode == "smoke" else config["run"]["output_dir"])
     prepare_output_dir(output_dir)
-    shutil.copy2(repo_root / "configs/lora/qwen3_vl_2b_lora_v1.yaml", output_dir / "training_config.yaml")
+    shutil.copy2(config_path, output_dir / "training_config.yaml")
     write_json(
         output_dir / "environment.json",
         {
@@ -161,7 +201,8 @@ def train(config: dict[str, Any], repo_root: Path, mode: str) -> dict[str, Any]:
 
     rows = load_jsonl(repo_root / config["data"]["train"])
     if config["training"].get("shuffle", True):
-        random.shuffle(rows)
+        rng.shuffle(rows)
+    row_picker, task_weight_config = make_task_weighted_picker(rows, config["data"].get("task_weights"), rng)
     image_root = repo_root / config["data"]["image_root"]
     max_steps = int(config["training"]["smoke_max_steps"] if mode == "smoke" else config["training"]["max_steps"])
     grad_accum = int(config["training"]["gradient_accumulation_steps"])
@@ -181,11 +222,17 @@ def train(config: dict[str, Any], repo_root: Path, mode: str) -> dict[str, Any]:
     optimizer_step = 0
     row_index = 0
     oom_count = 0
+    seen_task_counts: Counter[str] = Counter()
 
     with log_path.open("w", encoding="utf-8") as log_handle:
         while optimizer_step < max_steps:
-            row = rows[row_index % len(rows)]
-            row_index += 1
+            if row_picker is None:
+                row = rows[row_index % len(rows)]
+                row_index += 1
+            else:
+                row = row_picker()
+                row_index += 1
+            seen_task_counts.update([str(row.get("task"))])
             try:
                 batch = encode_sample(processor, row, image_root, device)
                 with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
@@ -252,6 +299,8 @@ def train(config: dict[str, Any], repo_root: Path, mode: str) -> dict[str, Any]:
         "total_parameters": total_params,
         "trainable_parameters": trainable_params,
         "trainable_ratio_percent": round(trainable_params / total_params * 100, 4),
+        "task_weight_config": task_weight_config,
+        "optimizer_step_task_counts": dict(seen_task_counts),
         "checkpoints": sorted(path.name for path in output_dir.glob("checkpoint-step-*")),
         "final_adapter": str(final_dir),
     }
@@ -267,7 +316,7 @@ def main() -> int:
 
     repo_root = Path(".").resolve()
     config = yaml.safe_load(args.config.read_text(encoding="utf-8"))
-    summary = train(config, repo_root, args.mode)
+    summary = train(config, repo_root, args.mode, args.config.resolve())
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0
 

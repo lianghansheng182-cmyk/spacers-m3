@@ -1,0 +1,57 @@
+run:
+  name: qwen3_vl_2b_lora_v2
+  seed: 20260823
+  output_dir: results/lora/qwen3_vl_2b_lora_v2
+  smoke_output_dir: results/lora/qwen3_vl_2b_lora_v2_smoke
+
+model:
+  name: Qwen3-VL-2B-Instruct
+  path: models/Qwen3-VL-2B-Instruct
+  dtype: bf16
+  local_files_only: true
+  gradient_checkpointing: true
+  use_cache: false
+
+data:
+  train: datasets/vrsbench_lora_v2/train.jsonl
+  dev: datasets/vrsbench_lora_v2/train_dev.jsonl
+  image_root: datasets/vrsbench_lora_v2
+  prompt_version: v1
+  task_weights:
+    caption: 1.0
+    vqa: 1.0
+    grounding: 1.75
+
+lora:
+  r: 8
+  alpha: 16
+  dropout: 0.05
+  bias: none
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+  save_adapter_only: true
+
+training:
+  bf16: true
+  batch_size: 1
+  gradient_accumulation_steps: 8
+  learning_rate: 0.0002
+  weight_decay: 0.0
+  max_grad_norm: 1.0
+  num_epochs: 1
+  max_steps: 1125
+  smoke_max_steps: 50
+  log_every: 1
+  save_every: 25
+  shuffle: true
+
+reporting:
+  record_git_commit: true
+  record_environment: true
+  save_training_log: true
