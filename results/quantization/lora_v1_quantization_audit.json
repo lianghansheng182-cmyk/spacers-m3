@@ -1,0 +1,119 @@
+{
+  "created": "2026-08-24T21:51:41",
+  "environment": {
+    "python": "Python 3.12.3",
+    "packages": {
+      "torch": "2.13.0+cu130",
+      "transformers": "4.57.6",
+      "peft": "0.20.0",
+      "accelerate": "1.14.0",
+      "bitsandbytes": "MISSING",
+      "qwen-vl-utils": "0.0.14",
+      "pillow": "12.3.0"
+    },
+    "cuda_available": true,
+    "torch_cuda": "13.0",
+    "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "gpu_capability": [
+      12,
+      0
+    ]
+  },
+  "code_audit": {
+    "precision_backend_py": {
+      "exists": false,
+      "tracked": false,
+      "note": "No tracked precision_backend.py was found; current precision handling is embedded in inference/evaluation scripts."
+    },
+    "lora_adapter_loading": {
+      "script": "scripts/lora/evaluate_lora_adapter.py",
+      "method": "Load Qwen3VLForConditionalGeneration first, then PeftModel.from_pretrained(base_model, adapter_path).",
+      "adapter": "results/lora/qwen3_vl_2b_lora_v1/adapter_final"
+    },
+    "benchmark_framework": {
+      "summary_files": "summary.json and metrics.json from evaluate_lora_adapter/evaluate_mini_eval",
+      "resource_monitor": "src/utils/resource_monitor.py records latency_s and peak_vram_mb.",
+      "ttft": "not implemented",
+      "true_tokens_per_second": "not implemented; benchmark_metrics.py intentionally does not fabricate token/s from word counts."
+    },
+    "evaluation_protocol": {
+      "prompt": "Prompt v1",
+      "datasets": [
+        "datasets/mini_eval/mini_eval.jsonl",
+        "datasets/vrsbench_eval_v1/resolved_manifest.jsonl"
+      ],
+      "parser": "src/evaluation/evaluate_mini_eval.py parse_grounding_bbox"
+    }
+  },
+  "backend_imports": {
+    "bitsandbytes": {
+      "status": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'bitsandbytes'",
+      "traceback_tail": [
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import",
+        "  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load",
+        "  File \"<frozen importlib._bootstrap>\", line 1324, in _find_and_load_unlocked",
+        "ModuleNotFoundError: No module named 'bitsandbytes'"
+      ]
+    }
+  },
+  "bf16_reference": {
+    "mini_eval_30": {
+      "vqa_accuracy": 0.7,
+      "grounding_mean_iou": 0.617452,
+      "grounding_acc_at_0_5": 0.8,
+      "grounding_acc_at_0_7": 0.2,
+      "grounding_parse_failures": 0,
+      "success_count": 30,
+      "failure_count": 0,
+      "model_load_time_s": 3.930667,
+      "latency_mean_s": 1.785099,
+      "latency_p95_s": 4.818842,
+      "peak_vram_mb": 4201.32,
+      "adapter_size_mb": 33.311
+    },
+    "vrsbench_eval_v1_90": {
+      "vqa_accuracy": 0.7,
+      "grounding_mean_iou": 0.443984,
+      "grounding_acc_at_0_5": 0.466667,
+      "grounding_acc_at_0_7": 0.266667,
+      "grounding_parse_failures": 1,
+      "success_count": 90,
+      "failure_count": 0,
+      "model_load_time_s": 2.707903,
+      "latency_mean_s": 1.768474,
+      "latency_p95_s": 5.11779,
+      "peak_vram_mb": 4203.17,
+      "adapter_size_mb": 33.311
+    }
+  },
+  "storage": {
+    "base_model_dir_mb": 4068.994,
+    "lora_v1_adapter_mb": 33.311
+  },
+  "smoke": {
+    "int8": {
+      "precision": "int8",
+      "status": "NOT_RUN",
+      "reason": "bitsandbytes backend is not importable in the active .venv, so real INT8/INT4 model loading cannot be attempted.",
+      "backend_error": "ModuleNotFoundError: No module named 'bitsandbytes'",
+      "model_loaded": false,
+      "adapter_loaded": false,
+      "predictions_checked": 0
+    },
+    "int4": {
+      "precision": "int4",
+      "status": "NOT_RUN",
+      "reason": "bitsandbytes backend is not importable in the active .venv, so real INT8/INT4 model loading cannot be attempted.",
+      "backend_error": "ModuleNotFoundError: No module named 'bitsandbytes'",
+      "model_loaded": false,
+      "adapter_loaded": false,
+      "predictions_checked": 0
+    }
+  },
+  "formal_quantized_eval": {
+    "int8": "not_run_smoke_not_supported",
+    "int4": "not_run_smoke_not_supported"
+  }
+}
