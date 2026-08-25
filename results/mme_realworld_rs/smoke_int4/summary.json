@@ -1,0 +1,33 @@
+{
+  "run_config_path": "/home/lhs/spacers_m3/results/mme_realworld_rs/smoke_int4/run_config.json",
+  "predictions_path": "/home/lhs/spacers_m3/results/mme_realworld_rs/smoke_int4/predictions.json",
+  "metrics_path": "/home/lhs/spacers_m3/results/mme_realworld_rs/smoke_int4/metrics.json",
+  "official_eval": {
+    "available": true,
+    "returncode": 0,
+    "stdout_path": "/home/lhs/spacers_m3/results/mme_realworld_rs/smoke_int4/official_eval_stdout.txt"
+  },
+  "sample_count": 5,
+  "failure_count": 0,
+  "model_load_time_s": 6.915365,
+  "latency_mean_s": 0.910447,
+  "latency_p95_s": 1.927584,
+  "peak_vram_mb": 1848.66,
+  "metrics": {
+    "sample_count": 5,
+    "correct": 5,
+    "accuracy": 1.0,
+    "parse_failures": 0,
+    "by_task": {
+      "Perception": {
+        "Remote Sensing": {
+          "position": {
+            "true": 5,
+            "false": 0,
+            "is_E": 0
+          }
+        }
+      }
+    }
+  }
+}

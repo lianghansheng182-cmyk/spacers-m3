@@ -1,0 +1,43 @@
+{
+  "run_config_path": "/home/lhs/spacers_m3/results/mme_realworld_rs/run_config.json",
+  "predictions_path": "/home/lhs/spacers_m3/results/mme_realworld_rs/predictions.json",
+  "metrics_path": "/home/lhs/spacers_m3/results/mme_realworld_rs/metrics.json",
+  "official_eval": {
+    "available": true,
+    "returncode": 0,
+    "stdout_path": "/home/lhs/spacers_m3/results/mme_realworld_rs/official_eval_stdout.txt"
+  },
+  "sample_count": 150,
+  "failure_count": 0,
+  "model_load_time_s": 4.678999,
+  "latency_mean_s": 0.569578,
+  "latency_p95_s": 0.693621,
+  "peak_vram_mb": 1850.04,
+  "metrics": {
+    "sample_count": 150,
+    "correct": 70,
+    "accuracy": 0.466667,
+    "parse_failures": 0,
+    "by_task": {
+      "Perception": {
+        "Remote Sensing": {
+          "position": {
+            "true": 31,
+            "false": 19,
+            "is_E": 1
+          },
+          "color": {
+            "true": 29,
+            "false": 21,
+            "is_E": 0
+          },
+          "count": {
+            "true": 10,
+            "false": 40,
+            "is_E": 7
+          }
+        }
+      }
+    }
+  }
+}

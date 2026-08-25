@@ -1,0 +1,17 @@
+{
+  "sample_count": 5,
+  "failure_count": 0,
+  "official_metrics": {
+    "Bleu_1": 0.5294117646903115,
+    "Bleu_2": 0.4481198043085559,
+    "Bleu_3": 0.3689006563972618,
+    "Bleu_4": 0.2945811042067378,
+    "ROUGE_L": 0.6244819242188843,
+    "CIDEr": 1.0379454839977715
+  },
+  "official_metric_error": "{\"METEOR\": \"FileNotFoundError: [Errno 2] No such file or directory: 'java'\"}",
+  "change_total": 1,
+  "change_acc": 0.0,
+  "nochange_total": 4,
+  "nochange_acc": 0.5
+}

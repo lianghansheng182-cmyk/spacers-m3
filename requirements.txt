@@ -11,3 +11,4 @@ pyyaml==6.0.3
 modelscope==1.39.0
 psutil==7.2.2
 bitsandbytes==0.50.1
+pyarrow==25.0.1
