@@ -15,6 +15,7 @@ Created: 2026-08-25
 - Benchmark adapters now exist under `scripts/benchmarks/` for MME-RealWorld-RS Lite, XLRS-Bench Lite, and LEVIR-CC.
 - Unified benchmark dispatcher exists at `scripts/benchmarks/run_benchmark.py`.
 - README now records the frozen model policy, environment setup, INT4 benchmark commands, result locations, and data policy.
+- Technical report draft exists at `docs/competition_technical_report.md`.
 - Raw benchmark data is kept under `data/raw/`, which is excluded by `.gitignore`.
 - Model weights, adapter checkpoints, and large raw datasets remain excluded by `.gitignore`.
 - Result outputs are isolated under benchmark-specific `results/` subdirectories.
@@ -27,7 +28,7 @@ Created: 2026-08-25
 - One-click inference exists for core Qwen3-VL usage; final packaging may still need a shorter top-level shell wrapper.
 - One-click benchmark coverage now has a unified Python dispatcher, but there is not yet a top-level shell wrapper that checks all data prerequisites before dispatch.
 - BF16 fallback is supported by the shared precision backend, but the new benchmark reports currently record INT4 as the completed path.
-- Final technical report still needs narrative integration of the new benchmark outcomes.
+- Final technical report may still need formatting for the competition template, but the core narrative and metrics are now collected.
 
 ## BLOCKED
 
@@ -51,4 +52,4 @@ Created: 2026-08-25
 1. Resume XLRS-Bench-lite download when HuggingFace network access is stable, then rerun the full 3080-sample Lite split with the existing adapter.
 2. Install or provide a Java runtime without disrupting the Python environment, then rerun LEVIR-CC metric aggregation to add METEOR.
 3. Add a top-level shell wrapper for the frozen benchmark dispatcher if the submission format expects shell commands instead of Python commands.
-4. Finalize the technical report narrative around the already generated result tables.
+4. Format `docs/competition_technical_report.md` into the final competition template if a required template is provided.
