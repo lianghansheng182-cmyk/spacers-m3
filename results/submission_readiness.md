@@ -13,6 +13,8 @@ Created: 2026-08-25
 - XLRS-Bench-lite has a true INT4 smoke run and a 44-shard partial run over all locally available Arrow shards.
 - LEVIR-CC has a true INT4 official test split run for BLEU, ROUGE-L, and CIDEr using official RSICC scorer code.
 - Benchmark adapters now exist under `scripts/benchmarks/` for MME-RealWorld-RS Lite, XLRS-Bench Lite, and LEVIR-CC.
+- Unified benchmark dispatcher exists at `scripts/benchmarks/run_benchmark.py`.
+- README now records the frozen model policy, environment setup, INT4 benchmark commands, result locations, and data policy.
 - Raw benchmark data is kept under `data/raw/`, which is excluded by `.gitignore`.
 - Model weights, adapter checkpoints, and large raw datasets remain excluded by `.gitignore`.
 - Result outputs are isolated under benchmark-specific `results/` subdirectories.
@@ -22,9 +24,8 @@ Created: 2026-08-25
 
 - XLRS-Bench-lite full run is not complete because only 44 / 74 Arrow shards were available locally after the HuggingFace download failed. The current 1848-sample result is reproducible from local data but must be reported as internal partial.
 - LEVIR-CC metric set is incomplete because METEOR is unavailable without Java. BLEU, ROUGE-L, and CIDEr are complete.
-- One-click inference exists for core Qwen3-VL usage, but the new benchmark adapters are script-level commands rather than a single unified launcher.
-- One-click benchmark coverage is split across separate scripts instead of a benchmark-agnostic CLI.
-- README still needs final competition-oriented reproduction commands for VRSBench, MME-RealWorld-RS Lite, XLRS-Bench Lite, and LEVIR-CC.
+- One-click inference exists for core Qwen3-VL usage; final packaging may still need a shorter top-level shell wrapper.
+- One-click benchmark coverage now has a unified Python dispatcher, but there is not yet a top-level shell wrapper that checks all data prerequisites before dispatch.
 - BF16 fallback is supported by the shared precision backend, but the new benchmark reports currently record INT4 as the completed path.
 - Final technical report still needs narrative integration of the new benchmark outcomes.
 
@@ -49,5 +50,5 @@ Created: 2026-08-25
 
 1. Resume XLRS-Bench-lite download when HuggingFace network access is stable, then rerun the full 3080-sample Lite split with the existing adapter.
 2. Install or provide a Java runtime without disrupting the Python environment, then rerun LEVIR-CC metric aggregation to add METEOR.
-3. Write final README commands for the frozen model, INT4 loading, and every benchmark result claimed in `results/final_benchmark_summary.md`.
-4. Add a thin unified benchmark launcher that dispatches to the existing benchmark-specific scripts without changing model behavior.
+3. Add a top-level shell wrapper for the frozen benchmark dispatcher if the submission format expects shell commands instead of Python commands.
+4. Finalize the technical report narrative around the already generated result tables.
