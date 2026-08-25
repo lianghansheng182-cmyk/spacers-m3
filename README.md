@@ -141,6 +141,12 @@ python scripts/reliability/run_fault_injection.py \
 
 OrbitGuard-RS is software-level SEU-equivalent validation only. It is not a real space radiation experiment or hardware qualification result.
 
+Report figures for this module are generated at:
+
+```bash
+results/reliability/figures/
+```
+
 ## Current Results
 
 The consolidated result table is tracked at:

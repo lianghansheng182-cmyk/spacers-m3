@@ -18,6 +18,7 @@ Created: 2026-08-25
 - Technical report draft exists at `docs/competition_technical_report.md`.
 - High-resolution global+2x2 tiling ablation is implemented, evaluated, and documented under `results/highres/`.
 - OrbitGuard-RS reliability prototype is implemented and documented under `results/reliability/`, including software-level LoRA bit-flip manifests, integrity detection, automatic recovery, and resource-overhead accounting.
+- OrbitGuard-RS report figures exist under `results/reliability/figures/`.
 - Raw benchmark data is kept under `data/raw/`, which is excluded by `.gitignore`.
 - Model weights, adapter checkpoints, and large raw datasets remain excluded by `.gitignore`.
 - Result outputs are isolated under benchmark-specific `results/` subdirectories.
@@ -33,6 +34,7 @@ Created: 2026-08-25
 - Final technical report may still need formatting for the competition template, but the core narrative and metrics are now collected.
 - High-resolution tiling is reproducible and technically feasible, but it is not recommended as the default deployment path because the accuracy gains are small relative to latency cost.
 - OrbitGuard-RS selective protection currently uses safe file-level critical asset protection; tensor-level selective recovery was not implemented because it would require higher-risk safetensors rewriting.
+- OrbitGuard-RS Level-2 corrupted-adapter inference triggered real CUDA device-side assertions; Level-3 inference was intentionally skipped under the stop-loss rule to avoid destabilizing the frozen environment.
 
 ## BLOCKED
 

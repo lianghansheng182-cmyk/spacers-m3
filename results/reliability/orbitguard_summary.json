@@ -1,6 +1,6 @@
 {
   "created_at_unix": 1787661589.202948,
-  "git_commit": "f653321d372146c329112190a0b407c3c1b68f12",
+  "git_commit": "5deced9a79adcd60d2a11e1805e28572b5033e7d",
   "config_path": "configs/reliability/orbitguard_v1.yaml",
   "config": {
     "run": {
@@ -683,5 +683,212 @@
       "metric_source": "post_recovery_integrity_pass_same_healthy_adapter"
     },
     "source_dir": "results/reliability/real_fault_eval"
+  },
+  "real_safe_range_experiment": {
+    "runs": [
+      {
+        "level": "level_1",
+        "seed": 101,
+        "fault_count": 1,
+        "status": "completed",
+        "metrics": {
+          "sample_count": 30,
+          "vqa_accuracy": 0.6,
+          "grounding_mean_iou": 0.608913,
+          "grounding_acc_at_0_5": 0.9,
+          "grounding_acc_at_0_7": 0.3,
+          "parse_failures": 0,
+          "inference_failures": 0,
+          "latency_mean_s": 2.395969,
+          "latency_p95_s": 7.068633,
+          "peak_vram_mb": 1658.34,
+          "metric_source": "real_level_1_summary_aggregated_before_cache_cleanup"
+        },
+        "fault_manifest_path": "results/reliability/fault_manifests_real_safe/level_1_seed101_q_proj_LoRA-A.json"
+      },
+      {
+        "level": "level_1",
+        "seed": 102,
+        "fault_count": 1,
+        "status": "completed",
+        "metrics": {
+          "sample_count": 30,
+          "vqa_accuracy": 0.7,
+          "grounding_mean_iou": 0.555237,
+          "grounding_acc_at_0_5": 0.6,
+          "grounding_acc_at_0_7": 0.4,
+          "parse_failures": 0,
+          "inference_failures": 0,
+          "latency_mean_s": 2.140874,
+          "latency_p95_s": 5.927473,
+          "peak_vram_mb": 1658.34,
+          "metric_source": "real_level_1_summary_aggregated_before_cache_cleanup"
+        },
+        "fault_manifest_path": "results/reliability/fault_manifests_real_safe/level_1_seed102_q_proj_LoRA-B.json"
+      },
+      {
+        "level": "level_1",
+        "seed": 103,
+        "fault_count": 1,
+        "status": "completed",
+        "metrics": {
+          "sample_count": 30,
+          "vqa_accuracy": 0.7,
+          "grounding_mean_iou": 0.546187,
+          "grounding_acc_at_0_5": 0.8,
+          "grounding_acc_at_0_7": 0.4,
+          "parse_failures": 0,
+          "inference_failures": 0,
+          "latency_mean_s": 2.357249,
+          "latency_p95_s": 5.993486,
+          "peak_vram_mb": 1658.34,
+          "metric_source": "real_level_1_summary_aggregated_before_cache_cleanup"
+        },
+        "fault_manifest_path": "results/reliability/fault_manifests_real_safe/level_1_seed103_v_proj_LoRA-A.json"
+      },
+      {
+        "level": "level_2",
+        "seed": 201,
+        "fault_count": 8,
+        "status": "inference_failed_cuda_device_assert",
+        "metrics": {
+          "sample_count": 30,
+          "vqa_accuracy": 0.0,
+          "grounding_mean_iou": 0.0,
+          "grounding_acc_at_0_5": 0.0,
+          "grounding_acc_at_0_7": 0.0,
+          "parse_failures": 10,
+          "inference_failures": 30,
+          "latency_mean_s": null,
+          "latency_p95_s": null,
+          "peak_vram_mb": null,
+          "metric_source": "real_cuda_device_assert_before_summary"
+        },
+        "fault_manifest_path": "results/reliability/fault_manifests_real_safe/level_2_seed201_v_proj_LoRA-B.json"
+      },
+      {
+        "level": "level_2",
+        "seed": 202,
+        "fault_count": 8,
+        "status": "inference_failed_cuda_device_assert",
+        "metrics": {
+          "sample_count": 30,
+          "vqa_accuracy": 0.0,
+          "grounding_mean_iou": 0.0,
+          "grounding_acc_at_0_5": 0.0,
+          "grounding_acc_at_0_7": 0.0,
+          "parse_failures": 10,
+          "inference_failures": 30,
+          "latency_mean_s": null,
+          "latency_p95_s": null,
+          "peak_vram_mb": null,
+          "metric_source": "real_cuda_device_assert_before_summary"
+        },
+        "fault_manifest_path": "results/reliability/fault_manifests_real_safe/level_2_seed202_o_proj_LoRA-B.json"
+      },
+      {
+        "level": "level_2",
+        "seed": 203,
+        "fault_count": 8,
+        "status": "inference_failed_cuda_device_assert",
+        "metrics": {
+          "sample_count": 30,
+          "vqa_accuracy": 0.0,
+          "grounding_mean_iou": 0.0,
+          "grounding_acc_at_0_5": 0.0,
+          "grounding_acc_at_0_7": 0.0,
+          "parse_failures": 10,
+          "inference_failures": 30,
+          "latency_mean_s": null,
+          "latency_p95_s": null,
+          "peak_vram_mb": null,
+          "metric_source": "real_cuda_device_assert_before_summary"
+        },
+        "fault_manifest_path": "results/reliability/fault_manifests_real_safe/level_2_seed203_down_proj_LoRA-B.json"
+      }
+    ],
+    "level_summary": [
+      {
+        "level": "level_1",
+        "attempted_runs": 3,
+        "completed_runs": 3,
+        "failed_runs": 0,
+        "status": "completed",
+        "vqa_accuracy": 0.666667,
+        "grounding_mean_iou": 0.570112,
+        "grounding_acc_at_0_5": 0.766667,
+        "grounding_acc_at_0_7": 0.366667,
+        "parse_failures": 0.0,
+        "inference_failure_rate": 0.0
+      },
+      {
+        "level": "level_2",
+        "attempted_runs": 3,
+        "completed_runs": 0,
+        "failed_runs": 3,
+        "status": "contains_real_inference_failure",
+        "vqa_accuracy": 0.0,
+        "grounding_mean_iou": 0.0,
+        "grounding_acc_at_0_5": 0.0,
+        "grounding_acc_at_0_7": 0.0,
+        "parse_failures": 10.0,
+        "inference_failure_rate": 1.0
+      },
+      {
+        "level": "level_3",
+        "attempted_runs": 0,
+        "completed_runs": 0,
+        "failed_runs": 0,
+        "status": "not_run_stop_loss_after_level_2_cuda_assert",
+        "vqa_accuracy": null,
+        "grounding_mean_iou": null,
+        "inference_failure_rate": null
+      }
+    ],
+    "stop_loss": {
+      "triggered": true,
+      "reason": "Level-2 corrupted LoRA adapters triggered CUDA device-side assert during generation.",
+      "observed_error": "CUDA device-side assert in torch.multinomial: probability tensor contains either inf, nan or element < 0",
+      "action": "Stopped before Level-3 inference to avoid destabilizing the frozen environment."
+    },
+    "healthy": {
+      "sample_count": 30,
+      "vqa_accuracy": 0.6,
+      "grounding_mean_iou": 0.484756,
+      "grounding_acc_at_0_5": 0.6,
+      "grounding_acc_at_0_7": 0.3,
+      "parse_failures": 1,
+      "inference_failures": 0,
+      "latency_mean_s": 2.18008,
+      "latency_p95_s": 6.157958,
+      "peak_vram_mb": 1658.34
+    },
+    "faulted_completed_mean": {
+      "sample_count": 30,
+      "vqa_accuracy": 0.666667,
+      "grounding_mean_iou": 0.570112,
+      "grounding_acc_at_0_5": 0.766667,
+      "grounding_acc_at_0_7": 0.366667,
+      "parse_failures": 0.0,
+      "inference_failures": 0.0,
+      "latency_mean_s": 2.298031,
+      "latency_p95_s": 6.329864,
+      "peak_vram_mb": 1658.34,
+      "metric_source": "real_level_1_completed_runs_mean"
+    },
+    "level2_failure_rate": 1.0,
+    "recovered": {
+      "sample_count": 30,
+      "vqa_accuracy": 0.6,
+      "grounding_mean_iou": 0.484756,
+      "grounding_acc_at_0_5": 0.6,
+      "grounding_acc_at_0_7": 0.3,
+      "parse_failures": 1,
+      "inference_failures": 0,
+      "latency_mean_s": 2.18008,
+      "latency_p95_s": 6.157958,
+      "peak_vram_mb": 1658.34,
+      "metric_source": "post_recovery_integrity_pass_same_healthy_adapter"
+    }
   }
 }

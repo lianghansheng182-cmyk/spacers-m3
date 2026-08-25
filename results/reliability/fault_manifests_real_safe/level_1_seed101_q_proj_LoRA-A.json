@@ -1,0 +1,41 @@
+{
+  "created_at_unix": 1787665160.1803362,
+  "source_adapter_dir": "/home/lhs/spacers_m3/results/lora/qwen3_vl_2b_lora_v1/adapter_final",
+  "output_adapter_dir": "/home/lhs/spacers_m3/results/reliability/real_fault_eval_full/corrupted_adapters/level_1_seed101_q_proj_A",
+  "adapter_model": "/home/lhs/spacers_m3/results/reliability/real_fault_eval_full/corrupted_adapters/level_1_seed101_q_proj_A/adapter_model.safetensors",
+  "fault_model": "software-level SEU-equivalent fault injection",
+  "note": "This is not a real space radiation or space-qualified hardware experiment.",
+  "seed": 101,
+  "level": "level_1",
+  "fault_count": 1,
+  "group_filter": {
+    "projection": "q_proj",
+    "lora_side": "A"
+  },
+  "original_file_sha256": "a5d4949df5715cd04cc9ce18e7b9625934e95393703c80196bbf7c5115fe81d6",
+  "corrupted_file_sha256": "cb5573d5bb18236ea589d3ad22961e186d09257426553425dc31c9c9867a6dfd",
+  "faults": [
+    {
+      "fault_index": 0,
+      "fault_type": "software_level_seu_equivalent_lora_tensor_bitflip",
+      "level": "level_1",
+      "seed": 101,
+      "affected_tensor": "base_model.model.model.language_model.layers.25.self_attn.q_proj.lora_A.weight",
+      "tensor_group": {
+        "layer": "25",
+        "projection": "q_proj",
+        "lora_side": "A",
+        "domain": "language"
+      },
+      "element_index": 6381,
+      "bit_position": 22,
+      "byte_offset_within_tensor": 25526,
+      "original_byte": 131,
+      "corrupted_byte": 195,
+      "original_value": "-0.01609688438475132",
+      "corrupted_value": "-0.02390938438475132",
+      "original_tensor_sha256": "b12aaa735f80cfef02a196ac1ba2c5c1b27eb4b22f9fa390c078aa50b26724f8",
+      "corrupted_tensor_sha256": "851a89200f175eea34b9139780c21e1a545c69099b3a802c669743b10aafb029"
+    }
+  ]
+}

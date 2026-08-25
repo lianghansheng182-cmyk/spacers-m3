@@ -288,17 +288,27 @@ Protection modes:
 
 Mode 2 currently uses safe file-level critical asset protection. Tensor-level selective recovery would reduce storage further, but was not implemented because rewriting partial safetensors ranges is higher risk at submission time.
 
-### Four-Layer Innovation Structure
+### SpaceRS-Agent Four-Layer Innovation Structure
 
-The final system is organized as four layers:
+The final system is packaged as **SpaceRS-Agent**. These module names are project-internal names, not claims of external products.
 
-I. Remote-Sensing Adaptation: multi-task LoRA adaptation for Caption, VQA, and Grounding.
+I. **RemoteLoRA**: remote-sensing Caption/VQA/Grounding capability adaptation with LoRA v1.
 
-II. Resource-Efficient Deployment: INT4 NF4 deployment candidate for LoRA v1.
+II. **OrbitQuant**: INT4 NF4 resource-constrained deployment for Qwen3-VL-2B-Instruct + LoRA v1.
 
-III. High-Resolution Perception: Global + 2x2 multi-view high-resolution fallback.
+III. **HiRes-View**: optional Global + 2x2 high-resolution multi-view fallback.
 
-IV. Reliable Onboard Inference: OrbitGuard-RS integrity protection, criticality-aware protection, and automatic recovery.
+IV. **OrbitGuard-RS**: software-level soft-error integrity detection, criticality-aware protection, and automatic recovery.
+
+Report-ready figures are generated under `results/reliability/figures/`:
+
+- `orbitguard_architecture.svg`
+- `fault_recovery_pipeline.svg`
+- `criticality_ranking.svg`
+- `fault_level_vqa.svg`
+- `fault_level_grounding.svg`
+- `healthy_faulted_recovered.svg`
+- `protection_tradeoff.svg`
 
 Detailed outputs:
 

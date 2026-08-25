@@ -43,6 +43,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     parser.add_argument("--run-inference", action="store_true", help="Run corrupted adapter inference instead of metric projection.")
     parser.add_argument("--max-fault-runs", type=int, default=9)
+    parser.add_argument("--stop-on-inference-failure", action="store_true")
     parser.add_argument("--output-dir", type=Path, default=None)
     return parser.parse_args()
 
@@ -394,7 +395,16 @@ def main() -> int:
                 }
             )
             run_index += 1
+            if args.stop_on_inference_failure and metrics.get("inference_failures", 0) > 0:
+                print(
+                    f"Stopping after inference failure at {level} seed={seed}; "
+                    "further corrupted-adapter execution may destabilize CUDA context.",
+                    flush=True,
+                )
+                break
         if run_index >= args.max_fault_runs:
+            break
+        if runs and args.stop_on_inference_failure and runs[-1]["metrics"].get("inference_failures", 0) > 0:
             break
 
     ranking = summarize_fault_runs(runs, healthy)

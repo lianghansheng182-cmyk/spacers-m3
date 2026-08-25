@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="300" viewBox="0 0 940 300">
+<rect width="100%" height="100%" fill="white"/>
+<text x="470" y="35" text-anchor="middle" font-size="24" font-family="Arial">Fault Detection and Recovery Pipeline</text>
+<g font-family="Arial" font-size="14">
+<rect x="35" y="120" width="120" height="55" rx="7" fill="#e8f1f8" stroke="#2f6f9f"/><text x="95" y="153" text-anchor="middle">Fault Manifest</text>
+<rect x="185" y="120" width="125" height="55" rx="7" fill="#fff3df" stroke="#b7791f"/><text x="248" y="153" text-anchor="middle">Temp Adapter</text>
+<rect x="340" y="120" width="120" height="55" rx="7" fill="#fdecec" stroke="#b94242"/><text x="400" y="153" text-anchor="middle">Bit/File Fault</text>
+<rect x="490" y="120" width="120" height="55" rx="7" fill="#eef7ed" stroke="#4f8a4f"/><text x="550" y="153" text-anchor="middle">SHA256 Check</text>
+<rect x="640" y="120" width="115" height="55" rx="7" fill="#f7e9ef" stroke="#9f4568"/><text x="698" y="143" text-anchor="middle">Block Bad</text><text x="698" y="162" text-anchor="middle">Inference</text>
+<rect x="785" y="120" width="120" height="55" rx="7" fill="#eef7ed" stroke="#4f8a4f"/><text x="845" y="143" text-anchor="middle">Restore +</text><text x="845" y="162" text-anchor="middle">Re-check</text>
+<path d="M155 148 L185 148 M310 148 L340 148 M460 148 L490 148 M610 148 L640 148 M755 148 L785 148" stroke="#333" marker-end="url(#a)"/>
+</g><defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#333"/></marker></defs>
+</svg>
