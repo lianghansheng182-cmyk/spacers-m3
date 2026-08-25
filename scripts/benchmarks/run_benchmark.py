@@ -27,6 +27,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, default=None)
     parser.add_argument("--limit", type=int, default=None, help="Optional sample limit for smoke runs.")
     parser.add_argument("--max-pixels", type=int, default=1024 * 1024)
+    parser.add_argument("--tiling-mode", choices=("none", "grid_2x2"), default="none")
+    parser.add_argument("--tile-overlap", type=float, default=0.0)
+    parser.add_argument("--category-contains", default=None)
     return parser.parse_args()
 
 
@@ -69,10 +72,16 @@ def build_command(args: argparse.Namespace) -> list[str]:
         command.append(str(REPO_ROOT / "scripts" / "benchmarks" / "evaluate_mme_realworld_rs_lite.py"))
         add_common(command, args)
         command.extend(["--output-dir", str(args.output_dir or REPO_ROOT / "results" / "mme_realworld_rs")])
+        command.extend(["--tiling-mode", args.tiling_mode, "--tile-overlap", str(args.tile_overlap)])
+        if args.category_contains is not None:
+            command.extend(["--category-contains", args.category_contains])
     elif args.benchmark == "xlrs-lite":
         command.append(str(REPO_ROOT / "scripts" / "benchmarks" / "evaluate_xlrs_bench_lite.py"))
         add_common(command, args)
         command.extend(["--output-dir", str(args.output_dir or REPO_ROOT / "results" / "xlrs_bench" / "full_lite_int4")])
+        command.extend(["--tiling-mode", args.tiling_mode, "--tile-overlap", str(args.tile_overlap)])
+        if args.category_contains is not None:
+            command.extend(["--category-contains", args.category_contains])
     elif args.benchmark == "levir-cc":
         command.append(str(REPO_ROOT / "scripts" / "benchmarks" / "evaluate_levir_cc.py"))
         add_common(command, args)

@@ -1,0 +1,43 @@
+{
+  "run_config_path": "/home/lhs/spacers_m3/results/highres/mme_rs_tiling_full_int4/run_config.json",
+  "predictions_path": "/home/lhs/spacers_m3/results/highres/mme_rs_tiling_full_int4/predictions.json",
+  "metrics_path": "/home/lhs/spacers_m3/results/highres/mme_rs_tiling_full_int4/metrics.json",
+  "official_eval": {
+    "available": true,
+    "returncode": 0,
+    "stdout_path": "/home/lhs/spacers_m3/results/highres/mme_rs_tiling_full_int4/official_eval_stdout.txt"
+  },
+  "sample_count": 150,
+  "failure_count": 0,
+  "model_load_time_s": 11.636185,
+  "latency_mean_s": 2.587324,
+  "latency_p95_s": 2.777234,
+  "peak_vram_mb": 2869.18,
+  "metrics": {
+    "sample_count": 150,
+    "correct": 71,
+    "accuracy": 0.473333,
+    "parse_failures": 0,
+    "by_task": {
+      "Perception": {
+        "Remote Sensing": {
+          "position": {
+            "true": 29,
+            "false": 21,
+            "is_E": 0
+          },
+          "color": {
+            "true": 31,
+            "false": 19,
+            "is_E": 0
+          },
+          "count": {
+            "true": 11,
+            "false": 39,
+            "is_E": 1
+          }
+        }
+      }
+    }
+  }
+}

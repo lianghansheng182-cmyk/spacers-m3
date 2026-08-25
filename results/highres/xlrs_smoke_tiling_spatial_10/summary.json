@@ -1,0 +1,38 @@
+{
+  "run_config_path": "/home/lhs/spacers_m3/results/highres/xlrs_smoke_tiling_spatial_10/run_config.json",
+  "predictions_path": "/home/lhs/spacers_m3/results/highres/xlrs_smoke_tiling_spatial_10/predictions.jsonl",
+  "metrics_path": "/home/lhs/spacers_m3/results/highres/xlrs_smoke_tiling_spatial_10/metrics.json",
+  "sample_count": 10,
+  "failure_count": 0,
+  "model_load_time_s": 7.103116,
+  "latency_mean_s": 2.825086,
+  "latency_p95_s": 3.505917,
+  "peak_vram_mb": 2865.08,
+  "resolution_stats": {
+    "min_width": 4096,
+    "max_width": 10000,
+    "min_height": 4096,
+    "max_height": 10000,
+    "max_pixels": 100000000
+  },
+  "metrics": {
+    "sample_count": 10,
+    "correct": 2,
+    "accuracy_micro": 0.2,
+    "accuracy_macro_category": 0.2,
+    "parse_failures": 0,
+    "multi_answer_count": 0,
+    "category_counts": {
+      "Object spatial relationship/Object spatial relationship": 10
+    },
+    "category_accuracy": {
+      "Object spatial relationship/Object spatial relationship": 0.2
+    },
+    "l2_counts": {
+      "default": 10
+    },
+    "l2_accuracy": {
+      "default": 0.2
+    }
+  }
+}

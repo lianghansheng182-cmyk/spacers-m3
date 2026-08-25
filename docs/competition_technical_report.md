@@ -148,6 +148,48 @@ Protocol type: official test split with METEOR blocked.
 
 BLEU, ROUGE-L, and CIDEr use the official RSICC scorer files. METEOR requires a Java runtime that is not installed on the current host.
 
+## High-Resolution Multi-View Tiling Ablation
+
+The competition innovation experiment tested a resource-aware multi-scale inference mechanism for ultra-high-resolution remote-sensing scenes.
+
+Method:
+
+- Single global overview of the original image
+- Four local 2x2 crops: top-left, top-right, bottom-left, bottom-right
+- Fixed input order and a wrapper prompt explaining that all views are from the same scene
+- Same Qwen3-VL-2B-Instruct base model, LoRA v1 adapter, INT4 NF4 precision, labels, and evaluators
+
+Input audit:
+
+- XLRS local 44-shard partial contains 1848 samples; 1837 are >16MP.
+- XLRS median image size is 100MP, commonly compressed to `image_grid_thw=[[1, 64, 64]]` in single-view inference.
+- MME-RS contains 150 samples; 135 are >16MP and the largest image is 11500x7500.
+
+A/B result:
+
+| Benchmark | Single acc | Global+2x2 acc | Delta | Mean latency multiplier | Peak VRAM increase |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| XLRS local 44-shard partial | 0.389069 | 0.405303 | +0.016234 | 4.88x | +1019.78 MB |
+| MME-RS Lite | 0.466667 | 0.473333 | +0.006666 | 4.54x | +1019.14 MB |
+
+Category-level observations:
+
+- XLRS improved most on Object motion state (+0.066667) and Regional land use classification (+0.065000).
+- XLRS regressed on Environmental condition reasoning (-0.050000), Anomaly Detection and Interpretation (-0.030000), and Counting with complex reasoning (-0.020000).
+- MME-RS improved on color (+0.040000) and count (+0.020000), but regressed on position (-0.040000).
+
+Decision:
+
+- The mechanism is technically feasible on the RTX 5060 Laptop GPU 8GB with INT4 NF4.
+- The accuracy gains are small compared with the latency cost.
+- A simple megapixel-threshold adaptive route is not justified by this ablation because the benefit is category-dependent and not cleanly explained by resolution alone.
+- The module should be kept as a reproducible innovation ablation and optional high-resolution fallback, not as the default deployment path.
+
+Detailed reports:
+
+- `results/highres/highres_input_audit.md`
+- `results/highres/highres_tiling_ablation.md`
+
 ## Reproducibility
 
 Use the unified dispatcher:

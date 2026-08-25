@@ -1,0 +1,38 @@
+{
+  "run_config_path": "/home/lhs/spacers_m3/results/highres/xlrs_smoke_single_counting_10/run_config.json",
+  "predictions_path": "/home/lhs/spacers_m3/results/highres/xlrs_smoke_single_counting_10/predictions.jsonl",
+  "metrics_path": "/home/lhs/spacers_m3/results/highres/xlrs_smoke_single_counting_10/metrics.json",
+  "sample_count": 10,
+  "failure_count": 0,
+  "model_load_time_s": 7.612733,
+  "latency_mean_s": 0.762019,
+  "latency_p95_s": 1.769537,
+  "peak_vram_mb": 1839.6,
+  "resolution_stats": {
+    "min_width": 4096,
+    "max_width": 7360,
+    "min_height": 4096,
+    "max_height": 4912,
+    "max_pixels": 36152320
+  },
+  "metrics": {
+    "sample_count": 10,
+    "correct": 3,
+    "accuracy_micro": 0.3,
+    "accuracy_macro_category": 0.3,
+    "parse_failures": 0,
+    "multi_answer_count": 0,
+    "category_counts": {
+      "Counting/Overall counting": 10
+    },
+    "category_accuracy": {
+      "Counting/Overall counting": 0.3
+    },
+    "l2_counts": {
+      "default": 10
+    },
+    "l2_accuracy": {
+      "default": 0.3
+    }
+  }
+}

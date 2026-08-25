@@ -1,0 +1,1132 @@
+[
+  {
+    "Question_id": "perception/remote_sensing/count/2107",
+    "Image": "dota_v2_dota_v2_dota_v2_P6031.png",
+    "Text": "How many red cars are there in the fifth single row of the large parking lot from top to bottom in the picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) 4",
+      "(B) 5",
+      "(C) 6",
+      "(D) 7",
+      "(E) This image doesn't feature the count."
+    ],
+    "Ground truth": "A",
+    "Category": "count",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "B",
+    "Parsed output": "B",
+    "Inference error": null,
+    "Latency s": 2.908164,
+    "Peak VRAM MB": 2343.73,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P6031.png",
+      "original_width": 1227,
+      "original_height": 1672,
+      "original_pixels": 2051544
+    },
+    "Tiling mode": "grid_2x2",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          1227,
+          1672
+        ],
+        "original_width": 1227,
+        "original_height": 1672
+      },
+      {
+        "tile_id": "top_left",
+        "crop_xyxy": [
+          0,
+          0,
+          613,
+          836
+        ],
+        "original_width": 1227,
+        "original_height": 1672
+      },
+      {
+        "tile_id": "top_right",
+        "crop_xyxy": [
+          613,
+          0,
+          1227,
+          836
+        ],
+        "original_width": 1227,
+        "original_height": 1672
+      },
+      {
+        "tile_id": "bottom_left",
+        "crop_xyxy": [
+          0,
+          836,
+          613,
+          1672
+        ],
+        "original_width": 1227,
+        "original_height": 1672
+      },
+      {
+        "tile_id": "bottom_right",
+        "crop_xyxy": [
+          613,
+          836,
+          1227,
+          1672
+        ],
+        "original_width": 1227,
+        "original_height": 1672
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        74,
+        54
+      ],
+      [
+        1,
+        52,
+        38
+      ],
+      [
+        1,
+        52,
+        38
+      ],
+      [
+        1,
+        52,
+        38
+      ],
+      [
+        1,
+        52,
+        38
+      ]
+    ]
+  },
+  {
+    "Question_id": "perception/remote_sensing/count/2467",
+    "Image": "dota_v2_dota_v2_dota_v2_P6874.png",
+    "Text": "How many red cars are there in the parking lot?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) 3",
+      "(B) 1",
+      "(C) 2",
+      "(D) 4",
+      "(E) This image doesn't feature the count."
+    ],
+    "Ground truth": "A",
+    "Category": "count",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "A",
+    "Parsed output": "A",
+    "Inference error": null,
+    "Latency s": 2.768772,
+    "Peak VRAM MB": 2818.24,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P6874.png",
+      "original_width": 3334,
+      "original_height": 2244,
+      "original_pixels": 7481496
+    },
+    "Tiling mode": "grid_2x2",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          3334,
+          2244
+        ],
+        "original_width": 3334,
+        "original_height": 2244
+      },
+      {
+        "tile_id": "top_left",
+        "crop_xyxy": [
+          0,
+          0,
+          1667,
+          1122
+        ],
+        "original_width": 3334,
+        "original_height": 2244
+      },
+      {
+        "tile_id": "top_right",
+        "crop_xyxy": [
+          1667,
+          0,
+          3334,
+          1122
+        ],
+        "original_width": 3334,
+        "original_height": 2244
+      },
+      {
+        "tile_id": "bottom_left",
+        "crop_xyxy": [
+          0,
+          1122,
+          1667,
+          2244
+        ],
+        "original_width": 3334,
+        "original_height": 2244
+      },
+      {
+        "tile_id": "bottom_right",
+        "crop_xyxy": [
+          1667,
+          1122,
+          3334,
+          2244
+        ],
+        "original_width": 3334,
+        "original_height": 2244
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        52,
+        76
+      ],
+      [
+        1,
+        52,
+        76
+      ],
+      [
+        1,
+        52,
+        76
+      ],
+      [
+        1,
+        52,
+        76
+      ],
+      [
+        1,
+        52,
+        76
+      ]
+    ]
+  },
+  {
+    "Question_id": "perception/remote_sensing/count/0107",
+    "Image": "dota_v2_dota_v2_dota_v2_P10199.png",
+    "Text": "How many red cars are there in the first area on the left side of the parking lot in front of the long white building at the top of the picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) 2",
+      "(B) 3",
+      "(C) 4",
+      "(D) 5",
+      "(E) This image doesn't feature the count."
+    ],
+    "Ground truth": "A",
+    "Category": "count",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "B",
+    "Parsed output": "B",
+    "Inference error": null,
+    "Latency s": 2.54431,
+    "Peak VRAM MB": 2775.76,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P10199.png",
+      "original_width": 7360,
+      "original_height": 4912,
+      "original_pixels": 36152320
+    },
+    "Tiling mode": "grid_2x2",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          7360,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      },
+      {
+        "tile_id": "top_left",
+        "crop_xyxy": [
+          0,
+          0,
+          3680,
+          2456
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      },
+      {
+        "tile_id": "top_right",
+        "crop_xyxy": [
+          3680,
+          0,
+          7360,
+          2456
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      },
+      {
+        "tile_id": "bottom_left",
+        "crop_xyxy": [
+          0,
+          2456,
+          3680,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      },
+      {
+        "tile_id": "bottom_right",
+        "crop_xyxy": [
+          3680,
+          2456,
+          7360,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        50,
+        76
+      ]
+    ]
+  },
+  {
+    "Question_id": "perception/remote_sensing/count/0870",
+    "Image": "dota_v2_dota_v2_dota_v2_P11259.png",
+    "Text": "How many blue boats are there in the bay with a colored cargo ship in the picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) 2",
+      "(B) 3",
+      "(C) 4",
+      "(D) 5",
+      "(E) This image doesn't feature the count."
+    ],
+    "Ground truth": "A",
+    "Category": "count",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "A",
+    "Parsed output": "A",
+    "Inference error": null,
+    "Latency s": 2.703105,
+    "Peak VRAM MB": 2863.57,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P11259.png",
+      "original_width": 4096,
+      "original_height": 4096,
+      "original_pixels": 16777216
+    },
+    "Tiling mode": "grid_2x2",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          4096,
+          4096
+        ],
+        "original_width": 4096,
+        "original_height": 4096
+      },
+      {
+        "tile_id": "top_left",
+        "crop_xyxy": [
+          0,
+          0,
+          2048,
+          2048
+        ],
+        "original_width": 4096,
+        "original_height": 4096
+      },
+      {
+        "tile_id": "top_right",
+        "crop_xyxy": [
+          2048,
+          0,
+          4096,
+          2048
+        ],
+        "original_width": 4096,
+        "original_height": 4096
+      },
+      {
+        "tile_id": "bottom_left",
+        "crop_xyxy": [
+          0,
+          2048,
+          2048,
+          4096
+        ],
+        "original_width": 4096,
+        "original_height": 4096
+      },
+      {
+        "tile_id": "bottom_right",
+        "crop_xyxy": [
+          2048,
+          2048,
+          4096,
+          4096
+        ],
+        "original_width": 4096,
+        "original_height": 4096
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        64,
+        64
+      ],
+      [
+        1,
+        64,
+        64
+      ],
+      [
+        1,
+        64,
+        64
+      ],
+      [
+        1,
+        64,
+        64
+      ],
+      [
+        1,
+        64,
+        64
+      ]
+    ]
+  },
+  {
+    "Question_id": "perception/remote_sensing/count/1530",
+    "Image": "dota_v2_dota_v2_dota_v2_P4399.png",
+    "Text": "How many yellow cars are running on the bridge in the top right area of this picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) 22",
+      "(B) 25",
+      "(C) 2",
+      "(D) 30",
+      "(E) This image doesn't feature the count."
+    ],
+    "Ground truth": "C",
+    "Category": "count",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "C",
+    "Parsed output": "C",
+    "Inference error": null,
+    "Latency s": 2.475895,
+    "Peak VRAM MB": 2772.61,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P4399.png",
+      "original_width": 7360,
+      "original_height": 4912,
+      "original_pixels": 36152320
+    },
+    "Tiling mode": "grid_2x2",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          7360,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      },
+      {
+        "tile_id": "top_left",
+        "crop_xyxy": [
+          0,
+          0,
+          3680,
+          2456
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      },
+      {
+        "tile_id": "top_right",
+        "crop_xyxy": [
+          3680,
+          0,
+          7360,
+          2456
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      },
+      {
+        "tile_id": "bottom_left",
+        "crop_xyxy": [
+          0,
+          2456,
+          3680,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      },
+      {
+        "tile_id": "bottom_right",
+        "crop_xyxy": [
+          3680,
+          2456,
+          7360,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        50,
+        76
+      ]
+    ]
+  },
+  {
+    "Question_id": "perception/remote_sensing/count/3446",
+    "Image": "dota_v2_dota_v2_dota_v2_P9528.png",
+    "Text": "How many cars are running on the road in the top right corner of this picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) 3",
+      "(B) 5",
+      "(C) 6",
+      "(D) 9",
+      "(E) This image doesn't feature the count."
+    ],
+    "Ground truth": "D",
+    "Category": "count",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "A",
+    "Parsed output": "A",
+    "Inference error": null,
+    "Latency s": 2.558745,
+    "Peak VRAM MB": 2771.79,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P9528.png",
+      "original_width": 7360,
+      "original_height": 4912,
+      "original_pixels": 36152320
+    },
+    "Tiling mode": "grid_2x2",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          7360,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      },
+      {
+        "tile_id": "top_left",
+        "crop_xyxy": [
+          0,
+          0,
+          3680,
+          2456
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      },
+      {
+        "tile_id": "top_right",
+        "crop_xyxy": [
+          3680,
+          0,
+          7360,
+          2456
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      },
+      {
+        "tile_id": "bottom_left",
+        "crop_xyxy": [
+          0,
+          2456,
+          3680,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      },
+      {
+        "tile_id": "bottom_right",
+        "crop_xyxy": [
+          3680,
+          2456,
+          7360,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        50,
+        76
+      ]
+    ]
+  },
+  {
+    "Question_id": "perception/remote_sensing/count/0973",
+    "Image": "dota_v2_dota_v2_dota_v2_P2866.png",
+    "Text": "How many boats are there in the picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) 7",
+      "(B) 8",
+      "(C) 9",
+      "(D) 10",
+      "(E) The image does not feature the number."
+    ],
+    "Ground truth": "D",
+    "Category": "count",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "A",
+    "Parsed output": "A",
+    "Inference error": null,
+    "Latency s": 2.832839,
+    "Peak VRAM MB": 2862.37,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P2866.png",
+      "original_width": 4096,
+      "original_height": 4097,
+      "original_pixels": 16781312
+    },
+    "Tiling mode": "grid_2x2",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          4096,
+          4097
+        ],
+        "original_width": 4096,
+        "original_height": 4097
+      },
+      {
+        "tile_id": "top_left",
+        "crop_xyxy": [
+          0,
+          0,
+          2048,
+          2048
+        ],
+        "original_width": 4096,
+        "original_height": 4097
+      },
+      {
+        "tile_id": "top_right",
+        "crop_xyxy": [
+          2048,
+          0,
+          4096,
+          2048
+        ],
+        "original_width": 4096,
+        "original_height": 4097
+      },
+      {
+        "tile_id": "bottom_left",
+        "crop_xyxy": [
+          0,
+          2048,
+          2048,
+          4097
+        ],
+        "original_width": 4096,
+        "original_height": 4097
+      },
+      {
+        "tile_id": "bottom_right",
+        "crop_xyxy": [
+          2048,
+          2048,
+          4096,
+          4097
+        ],
+        "original_width": 4096,
+        "original_height": 4097
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        64,
+        64
+      ],
+      [
+        1,
+        64,
+        64
+      ],
+      [
+        1,
+        64,
+        64
+      ],
+      [
+        1,
+        64,
+        64
+      ],
+      [
+        1,
+        64,
+        64
+      ]
+    ]
+  },
+  {
+    "Question_id": "perception/remote_sensing/count/2549",
+    "Image": "dota_v2_dota_v2_dota_v2_P7078.png",
+    "Text": "How many ships are there in the row below the dock in the lower middle area of the picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) 5",
+      "(B) 6",
+      "(C) 7",
+      "(D) 8",
+      "(E) This image doesn't feature the count."
+    ],
+    "Ground truth": "A",
+    "Category": "count",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "B",
+    "Parsed output": "B",
+    "Inference error": null,
+    "Latency s": 1.872383,
+    "Peak VRAM MB": 2502.49,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P7078.png",
+      "original_width": 2005,
+      "original_height": 1349,
+      "original_pixels": 2704745
+    },
+    "Tiling mode": "grid_2x2",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          2005,
+          1349
+        ],
+        "original_width": 2005,
+        "original_height": 1349
+      },
+      {
+        "tile_id": "top_left",
+        "crop_xyxy": [
+          0,
+          0,
+          1002,
+          674
+        ],
+        "original_width": 2005,
+        "original_height": 1349
+      },
+      {
+        "tile_id": "top_right",
+        "crop_xyxy": [
+          1002,
+          0,
+          2005,
+          674
+        ],
+        "original_width": 2005,
+        "original_height": 1349
+      },
+      {
+        "tile_id": "bottom_left",
+        "crop_xyxy": [
+          0,
+          674,
+          1002,
+          1349
+        ],
+        "original_width": 2005,
+        "original_height": 1349
+      },
+      {
+        "tile_id": "bottom_right",
+        "crop_xyxy": [
+          1002,
+          674,
+          2005,
+          1349
+        ],
+        "original_width": 2005,
+        "original_height": 1349
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        42,
+        64
+      ],
+      [
+        1,
+        42,
+        64
+      ],
+      [
+        1,
+        42,
+        64
+      ],
+      [
+        1,
+        42,
+        64
+      ]
+    ]
+  },
+  {
+    "Question_id": "perception/remote_sensing/count/1515",
+    "Image": "dota_v2_dota_v2_dota_v2_P4372.png",
+    "Text": "How many red cars are there in the parking lot in front of the yellow and white building in the top right area of this picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) 2",
+      "(B) 3",
+      "(C) 5",
+      "(D) 7",
+      "(E) This image doesn't feature the count."
+    ],
+    "Ground truth": "B",
+    "Category": "count",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "B",
+    "Parsed output": "B",
+    "Inference error": null,
+    "Latency s": 2.556876,
+    "Peak VRAM MB": 2773.82,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P4372.png",
+      "original_width": 7360,
+      "original_height": 4912,
+      "original_pixels": 36152320
+    },
+    "Tiling mode": "grid_2x2",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          7360,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      },
+      {
+        "tile_id": "top_left",
+        "crop_xyxy": [
+          0,
+          0,
+          3680,
+          2456
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      },
+      {
+        "tile_id": "top_right",
+        "crop_xyxy": [
+          3680,
+          0,
+          7360,
+          2456
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      },
+      {
+        "tile_id": "bottom_left",
+        "crop_xyxy": [
+          0,
+          2456,
+          3680,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      },
+      {
+        "tile_id": "bottom_right",
+        "crop_xyxy": [
+          3680,
+          2456,
+          7360,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        50,
+        76
+      ],
+      [
+        1,
+        50,
+        76
+      ]
+    ]
+  },
+  {
+    "Question_id": "perception/remote_sensing/count/3257",
+    "Image": "dota_v2_dota_v2_dota_v2_P8934.png",
+    "Text": "How many courses are there in the bottom right corner of the picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) 1",
+      "(B) 2",
+      "(C) 3",
+      "(D) 4",
+      "(E) This image doesn't feature the count."
+    ],
+    "Ground truth": "C",
+    "Category": "count",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "B",
+    "Parsed output": "B",
+    "Inference error": null,
+    "Latency s": 2.684121,
+    "Peak VRAM MB": 2862.97,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P8934.png",
+      "original_width": 4096,
+      "original_height": 4096,
+      "original_pixels": 16777216
+    },
+    "Tiling mode": "grid_2x2",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          4096,
+          4096
+        ],
+        "original_width": 4096,
+        "original_height": 4096
+      },
+      {
+        "tile_id": "top_left",
+        "crop_xyxy": [
+          0,
+          0,
+          2048,
+          2048
+        ],
+        "original_width": 4096,
+        "original_height": 4096
+      },
+      {
+        "tile_id": "top_right",
+        "crop_xyxy": [
+          2048,
+          0,
+          4096,
+          2048
+        ],
+        "original_width": 4096,
+        "original_height": 4096
+      },
+      {
+        "tile_id": "bottom_left",
+        "crop_xyxy": [
+          0,
+          2048,
+          2048,
+          4096
+        ],
+        "original_width": 4096,
+        "original_height": 4096
+      },
+      {
+        "tile_id": "bottom_right",
+        "crop_xyxy": [
+          2048,
+          2048,
+          4096,
+          4096
+        ],
+        "original_width": 4096,
+        "original_height": 4096
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        64,
+        64
+      ],
+      [
+        1,
+        64,
+        64
+      ],
+      [
+        1,
+        64,
+        64
+      ],
+      [
+        1,
+        64,
+        64
+      ],
+      [
+        1,
+        64,
+        64
+      ]
+    ]
+  }
+]

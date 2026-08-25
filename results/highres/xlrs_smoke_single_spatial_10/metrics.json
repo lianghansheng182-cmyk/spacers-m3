@@ -1,0 +1,20 @@
+{
+  "sample_count": 10,
+  "correct": 2,
+  "accuracy_micro": 0.2,
+  "accuracy_macro_category": 0.2,
+  "parse_failures": 0,
+  "multi_answer_count": 0,
+  "category_counts": {
+    "Object spatial relationship/Object spatial relationship": 10
+  },
+  "category_accuracy": {
+    "Object spatial relationship/Object spatial relationship": 0.2
+  },
+  "l2_counts": {
+    "default": 10
+  },
+  "l2_accuracy": {
+    "default": 0.2
+  }
+}

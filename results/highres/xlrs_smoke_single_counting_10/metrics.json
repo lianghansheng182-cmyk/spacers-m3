@@ -1,0 +1,20 @@
+{
+  "sample_count": 10,
+  "correct": 3,
+  "accuracy_micro": 0.3,
+  "accuracy_macro_category": 0.3,
+  "parse_failures": 0,
+  "multi_answer_count": 0,
+  "category_counts": {
+    "Counting/Overall counting": 10
+  },
+  "category_accuracy": {
+    "Counting/Overall counting": 0.3
+  },
+  "l2_counts": {
+    "default": 10
+  },
+  "l2_accuracy": {
+    "default": 0.3
+  }
+}

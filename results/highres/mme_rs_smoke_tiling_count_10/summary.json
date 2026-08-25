@@ -1,0 +1,33 @@
+{
+  "run_config_path": "/home/lhs/spacers_m3/results/highres/mme_rs_smoke_tiling_count_10/run_config.json",
+  "predictions_path": "/home/lhs/spacers_m3/results/highres/mme_rs_smoke_tiling_count_10/predictions.json",
+  "metrics_path": "/home/lhs/spacers_m3/results/highres/mme_rs_smoke_tiling_count_10/metrics.json",
+  "official_eval": {
+    "available": true,
+    "returncode": 0,
+    "stdout_path": "/home/lhs/spacers_m3/results/highres/mme_rs_smoke_tiling_count_10/official_eval_stdout.txt"
+  },
+  "sample_count": 10,
+  "failure_count": 0,
+  "model_load_time_s": 7.534864,
+  "latency_mean_s": 2.590521,
+  "latency_p95_s": 2.874268,
+  "peak_vram_mb": 2863.57,
+  "metrics": {
+    "sample_count": 10,
+    "correct": 4,
+    "accuracy": 0.4,
+    "parse_failures": 0,
+    "by_task": {
+      "Perception": {
+        "Remote Sensing": {
+          "count": {
+            "true": 4,
+            "false": 6,
+            "is_E": 0
+          }
+        }
+      }
+    }
+  }
+}

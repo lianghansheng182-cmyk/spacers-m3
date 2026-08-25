@@ -16,6 +16,7 @@ from typing import Any
 
 import torch
 from peft import PeftModel
+from PIL import Image
 from qwen_vl_utils import process_vision_info
 from transformers import AutoProcessor, BitsAndBytesConfig, Qwen3VLForConditionalGeneration
 
@@ -23,6 +24,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
+from src.inference.highres_tiling import make_tiled_views, tiling_prompt_prefix  # noqa: E402
 from src.utils.resource_monitor import ResourceMonitor  # noqa: E402
 
 
@@ -49,6 +51,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--max-new-tokens", type=int, default=8)
     parser.add_argument("--max-pixels", type=int, default=1024 * 1024)
+    parser.add_argument("--tiling-mode", choices=("none", "grid_2x2"), default="none")
+    parser.add_argument("--tile-overlap", type=float, default=0.0)
+    parser.add_argument("--category-contains", default=None)
     return parser.parse_args()
 
 
@@ -231,6 +236,9 @@ def main() -> int:
 
     data_root = args.data_root.resolve()
     question_json, rows = load_rs_rows(data_root)
+    if args.category_contains:
+        category_filter = args.category_contains.lower()
+        rows = [row for row in rows if category_filter in str(row.get("Category", "")).lower()]
     if args.limit is not None:
         rows = rows[: args.limit]
 
@@ -251,6 +259,9 @@ def main() -> int:
         "max_pixels": args.max_pixels,
         "sample_count": len(rows),
         "limit": args.limit,
+        "tiling_mode": args.tiling_mode,
+        "tile_overlap": args.tile_overlap,
+        "category_contains": args.category_contains,
     }
     write_json(run_config_path, run_config)
 
@@ -283,21 +294,61 @@ def main() -> int:
     for index, row in enumerate(rows, start=1):
         prediction = ""
         error = None
+        image_meta: dict[str, Any] = {}
+        tile_metadata: list[dict[str, Any]] = []
+        image_grid_thw = None
         monitor = ResourceMonitor()
         try:
             image_path = resolve_image(data_root, row["Image"])
+            with Image.open(image_path) as image_handle:
+                image = image_handle.convert("RGB")
+            image_meta = {
+                "image_path": str(image_path),
+                "original_width": image.size[0],
+                "original_height": image.size[1],
+                "original_pixels": image.size[0] * image.size[1],
+            }
+            prompt = build_prompt(row)
+            if args.tiling_mode == "none":
+                content = [
+                    {"type": "image", "image": str(image_path), "max_pixels": args.max_pixels},
+                    {"type": "text", "text": prompt},
+                ]
+                tile_metadata = [
+                    {
+                        "tile_id": "global",
+                        "crop_xyxy": [0, 0, image.size[0], image.size[1]],
+                        "original_width": image.size[0],
+                        "original_height": image.size[1],
+                    }
+                ]
+            else:
+                tiled_views = make_tiled_views(image, args.tiling_mode, args.tile_overlap)
+                tile_metadata = [
+                    {
+                        "tile_id": item.metadata.tile_id,
+                        "crop_xyxy": list(item.metadata.crop_xyxy),
+                        "original_width": item.metadata.original_width,
+                        "original_height": item.metadata.original_height,
+                    }
+                    for item in tiled_views
+                ]
+                content = [
+                    {"type": "image", "image": item.image, "max_pixels": args.max_pixels}
+                    for item in tiled_views
+                ]
+                content.append({"type": "text", "text": tiling_prompt_prefix() + "\n" + prompt})
             messages = [
                 {
                     "role": "user",
-                    "content": [
-                        {"type": "image", "image": str(image_path), "max_pixels": args.max_pixels},
-                        {"type": "text", "text": build_prompt(row)},
-                    ],
+                    "content": content,
                 }
             ]
             text = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
             image_inputs, video_inputs = process_vision_info(messages)
             inputs = processor(text=[text], images=image_inputs, videos=video_inputs, padding=True, return_tensors="pt")
+            if hasattr(inputs, "image_grid_thw") and inputs.image_grid_thw is not None:
+                image_grid_thw = inputs.image_grid_thw.cpu().tolist()
             inputs = inputs.to(device)
             monitor.start()
             with torch.inference_mode():
@@ -323,6 +374,10 @@ def main() -> int:
         pred_row["Inference error"] = error
         pred_row["Latency s"] = report["latency_s"]
         pred_row["Peak VRAM MB"] = report["peak_vram_mb"]
+        pred_row["Image metadata"] = image_meta
+        pred_row["Tiling mode"] = args.tiling_mode
+        pred_row["Tile metadata"] = tile_metadata
+        pred_row["Image grid thw"] = image_grid_thw
         predictions.append(pred_row)
         print(
             f"[{index:03d}/{len(rows):03d}] {row['Question_id']} "

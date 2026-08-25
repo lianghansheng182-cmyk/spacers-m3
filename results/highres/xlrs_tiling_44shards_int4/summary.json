@@ -1,0 +1,52 @@
+{
+  "run_config_path": "/home/lhs/spacers_m3/results/highres/xlrs_tiling_44shards_int4/run_config.json",
+  "predictions_path": "/home/lhs/spacers_m3/results/highres/xlrs_tiling_44shards_int4/predictions.jsonl",
+  "metrics_path": "/home/lhs/spacers_m3/results/highres/xlrs_tiling_44shards_int4/metrics.json",
+  "sample_count": 1848,
+  "failure_count": 0,
+  "model_load_time_s": 4.255033,
+  "latency_mean_s": 2.709781,
+  "latency_p95_s": 2.868999,
+  "peak_vram_mb": 2920.86,
+  "resolution_stats": {
+    "min_width": 1361,
+    "max_width": 11500,
+    "min_height": 1196,
+    "max_height": 10000,
+    "max_pixels": 100000000
+  },
+  "metrics": {
+    "sample_count": 1848,
+    "correct": 749,
+    "accuracy_micro": 0.405303,
+    "accuracy_macro_category": 0.489359,
+    "parse_failures": 1,
+    "multi_answer_count": 0,
+    "category_counts": {
+      "Complex reasoning/Anomaly Detection and Interpretation": 100,
+      "Complex reasoning/Environmental condition reasoning": 100,
+      "Counting/Counting with complex reasoning": 100,
+      "Counting/Overall counting": 60,
+      "Land use classification/Regional Land use classification": 200,
+      "Object properties/Object color": 728,
+      "Object properties/Object motion state": 60,
+      "Object spatial relationship/Object spatial relationship": 500
+    },
+    "category_accuracy": {
+      "Complex reasoning/Anomaly Detection and Interpretation": 0.65,
+      "Complex reasoning/Environmental condition reasoning": 0.72,
+      "Counting/Counting with complex reasoning": 0.39,
+      "Counting/Overall counting": 0.233333,
+      "Land use classification/Regional Land use classification": 0.705,
+      "Object properties/Object color": 0.291209,
+      "Object properties/Object motion state": 0.583333,
+      "Object spatial relationship/Object spatial relationship": 0.342
+    },
+    "l2_counts": {
+      "default": 1848
+    },
+    "l2_accuracy": {
+      "default": 0.405303
+    }
+  }
+}

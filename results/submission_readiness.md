@@ -16,6 +16,7 @@ Created: 2026-08-25
 - Unified benchmark dispatcher exists at `scripts/benchmarks/run_benchmark.py`.
 - README now records the frozen model policy, environment setup, INT4 benchmark commands, result locations, and data policy.
 - Technical report draft exists at `docs/competition_technical_report.md`.
+- High-resolution global+2x2 tiling ablation is implemented, evaluated, and documented under `results/highres/`.
 - Raw benchmark data is kept under `data/raw/`, which is excluded by `.gitignore`.
 - Model weights, adapter checkpoints, and large raw datasets remain excluded by `.gitignore`.
 - Result outputs are isolated under benchmark-specific `results/` subdirectories.
@@ -29,6 +30,7 @@ Created: 2026-08-25
 - One-click benchmark coverage now has a unified Python dispatcher, but there is not yet a top-level shell wrapper that checks all data prerequisites before dispatch.
 - BF16 fallback is supported by the shared precision backend, but the new benchmark reports currently record INT4 as the completed path.
 - Final technical report may still need formatting for the competition template, but the core narrative and metrics are now collected.
+- High-resolution tiling is reproducible and technically feasible, but it is not recommended as the default deployment path because the accuracy gains are small relative to latency cost.
 
 ## BLOCKED
 
@@ -46,6 +48,7 @@ Created: 2026-08-25
 | MME-RealWorld-RS Lite | ready | official Lite RS subset | `results/mme_realworld_rs/` |
 | XLRS-Bench Lite | partial | internal partial, 44 / 74 shards | `results/xlrs_bench/partial_44shards_int4/` |
 | LEVIR-CC | ready with metric caveat | official test split, METEOR blocked | `results/levir_cc/` |
+| High-resolution tiling | ready as ablation | XLRS partial + MME-RS A/B | `results/highres/highres_tiling_ablation.md` |
 
 ## Next Highest Priority
 

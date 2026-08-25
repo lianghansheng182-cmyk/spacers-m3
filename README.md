@@ -58,7 +58,7 @@ Supported benchmark names:
 - `xlrs-lite`
 - `levir-cc`
 
-Use `--limit N` for smoke runs where supported. Use `--precision bf16`, `--precision int8`, or `--precision int4` to select the backend.
+Use `--limit N` for smoke runs where supported. Use `--precision bf16`, `--precision int8`, or `--precision int4` to select the backend. For MME-RS Lite and XLRS-Lite, `--tiling-mode grid_2x2` enables the high-resolution multi-view ablation.
 
 ## Reproduction Commands
 
@@ -94,6 +94,22 @@ python scripts/benchmarks/run_benchmark.py xlrs-lite \
 ```
 
 Current committed XLRS result is a 44 / 74 shard partial run at `results/xlrs_bench/partial_44shards_int4/`, because the remaining HuggingFace shards were not available locally.
+
+High-resolution global+2x2 tiling ablation:
+
+```bash
+python scripts/benchmarks/run_benchmark.py xlrs-lite \
+  --precision int4 \
+  --tiling-mode grid_2x2 \
+  --output-dir results/highres/xlrs_tiling_44shards_int4
+```
+
+```bash
+python scripts/benchmarks/run_benchmark.py mme-rs-lite \
+  --precision int4 \
+  --tiling-mode grid_2x2 \
+  --output-dir results/highres/mme_rs_tiling_full_int4
+```
 
 LEVIR-CC official test split:
 
@@ -138,6 +154,8 @@ results/submission_readiness.md
 - `results/levir_cc/report.md`
 - `results/final_benchmark_summary.md`
 - `results/submission_readiness.md`
+- `results/highres/highres_input_audit.md`
+- `results/highres/highres_tiling_ablation.md`
 
 ## Data Policy
 

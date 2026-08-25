@@ -28,6 +28,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
+from src.inference.highres_tiling import make_tiled_views, tiling_prompt_prefix  # noqa: E402
 from src.utils.resource_monitor import ResourceMonitor  # noqa: E402
 
 
@@ -49,6 +50,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--max-new-tokens", type=int, default=16)
     parser.add_argument("--max-pixels", type=int, default=1024 * 1024)
+    parser.add_argument("--tiling-mode", choices=("none", "grid_2x2"), default="none")
+    parser.add_argument("--tile-overlap", type=float, default=0.0)
+    parser.add_argument("--category-contains", default=None)
     return parser.parse_args()
 
 
@@ -87,8 +91,13 @@ def quantization_config(precision: str) -> BitsAndBytesConfig | None:
     return None
 
 
-def iter_arrow_rows(data_root: Path, limit: int | None = None) -> Iterable[dict[str, Any]]:
+def iter_arrow_rows(
+    data_root: Path,
+    limit: int | None = None,
+    category_contains: str | None = None,
+) -> Iterable[dict[str, Any]]:
     yielded = 0
+    category_filter = category_contains.lower() if category_contains else None
     shard_paths = sorted((data_root / "train").glob("data-*-of-*.arrow"))
     if not shard_paths:
         raise FileNotFoundError(f"no XLRS Arrow shards found under {data_root / 'train'}")
@@ -97,6 +106,8 @@ def iter_arrow_rows(data_root: Path, limit: int | None = None) -> Iterable[dict[
             reader = ipc.open_stream(source)
             for batch in reader:
                 for row in batch.to_pylist():
+                    if category_filter and category_filter not in str(row.get("category", "")).lower():
+                        continue
                     yield row
                     yielded += 1
                     if limit is not None and yielded >= limit:
@@ -215,7 +226,7 @@ def main() -> int:
     predictions_path.write_text("", encoding="utf-8")
 
     data_root = args.data_root.resolve()
-    rows_iter = iter_arrow_rows(data_root, args.limit)
+    rows_iter = iter_arrow_rows(data_root, args.limit, args.category_contains)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     dtype = torch.bfloat16 if device.type == "cuda" else torch.float32
     q_config = quantization_config(args.precision)
@@ -274,6 +285,9 @@ def main() -> int:
         "max_new_tokens": args.max_new_tokens,
         "max_pixels": args.max_pixels,
         "limit": args.limit,
+        "tiling_mode": args.tiling_mode,
+        "tile_overlap": args.tile_overlap,
+        "category_contains": args.category_contains,
     }
     write_json(run_config_path, run_config)
 
@@ -283,10 +297,21 @@ def main() -> int:
         target_answer = ""
         error = None
         image_meta: dict[str, Any] = {}
+        tile_metadata: list[dict[str, Any]] = []
         image_grid_thw = None
         monitor = ResourceMonitor()
         try:
             image, image_meta = image_from_row(row)
+            tiled_views = make_tiled_views(image, args.tiling_mode, args.tile_overlap)
+            tile_metadata = [
+                {
+                    "tile_id": item.metadata.tile_id,
+                    "crop_xyxy": list(item.metadata.crop_xyxy),
+                    "original_width": item.metadata.original_width,
+                    "original_height": item.metadata.original_height,
+                }
+                for item in tiled_views
+            ]
             width = image_meta["original_width"]
             height = image_meta["original_height"]
             resolution_stats["min_width"] = width if resolution_stats["min_width"] is None else min(resolution_stats["min_width"], width)
@@ -294,13 +319,18 @@ def main() -> int:
             resolution_stats["min_height"] = height if resolution_stats["min_height"] is None else min(resolution_stats["min_height"], height)
             resolution_stats["max_height"] = max(resolution_stats["max_height"], height)
             resolution_stats["max_pixels"] = max(resolution_stats["max_pixels"], image_meta["original_pixels"])
+            prompt = build_prompt(row)
+            if args.tiling_mode != "none":
+                prompt = tiling_prompt_prefix() + "\n" + prompt
+            content: list[dict[str, Any]] = [
+                {"type": "image", "image": item.image, "max_pixels": args.max_pixels}
+                for item in tiled_views
+            ]
+            content.append({"type": "text", "text": prompt})
             messages = [
                 {
                     "role": "user",
-                    "content": [
-                        {"type": "image", "image": image, "max_pixels": args.max_pixels},
-                        {"type": "text", "text": build_prompt(row)},
-                    ],
+                    "content": content,
                 }
             ]
             text = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
@@ -352,6 +382,8 @@ def main() -> int:
             "latency_s": report["latency_s"],
             "peak_vram_mb": report["peak_vram_mb"],
             "image": image_meta,
+            "tiling_mode": args.tiling_mode,
+            "tile_metadata": tile_metadata,
             "image_grid_thw": image_grid_thw,
         }
         update_metrics(metrics_accumulator, result)

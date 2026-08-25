@@ -1,0 +1,15 @@
+{
+  "created_at_utc": "2026-08-25T07:51:14.132048+00:00",
+  "benchmark": "XLRS-Bench-lite",
+  "split": "train",
+  "data_root": "/home/lhs/spacers_m3/data/raw/xlrs_bench_lite",
+  "model_path": "/home/lhs/spacers_m3/models/Qwen3-VL-2B-Instruct",
+  "adapter_path": "/home/lhs/spacers_m3/results/lora/qwen3_vl_2b_lora_v1/adapter_final",
+  "precision": "int4",
+  "max_new_tokens": 16,
+  "max_pixels": 1048576,
+  "limit": null,
+  "tiling_mode": "grid_2x2",
+  "tile_overlap": 0.0,
+  "category_contains": null
+}
