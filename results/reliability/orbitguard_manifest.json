@@ -1,0 +1,74 @@
+{
+  "name": "OrbitGuard-RS integrity manifest",
+  "version": "v1",
+  "created_at_unix": 1787661587.7547781,
+  "git_commit": "f653321d372146c329112190a0b407c3c1b68f12",
+  "repo_root": "/home/lhs/spacers_m3",
+  "backup_dir": "/home/lhs/spacers_m3/results/reliability/protected_cache/full_adapter",
+  "assets": [
+    {
+      "role": "adapter",
+      "path": "/home/lhs/spacers_m3/results/lora/qwen3_vl_2b_lora_v1/adapter_final/adapter_config.json",
+      "relative_path": "results/lora/qwen3_vl_2b_lora_v1/adapter_final/adapter_config.json",
+      "exists": true,
+      "size_bytes": 1283,
+      "sha256": "d5be846a7ee1e164dee38cf8a526fcb8de60c2dcd1b96a97e877d38e55b20ede"
+    },
+    {
+      "role": "adapter",
+      "path": "/home/lhs/spacers_m3/results/lora/qwen3_vl_2b_lora_v1/adapter_final/adapter_model.safetensors",
+      "relative_path": "results/lora/qwen3_vl_2b_lora_v1/adapter_final/adapter_model.safetensors",
+      "exists": true,
+      "size_bytes": 34922600,
+      "sha256": "a5d4949df5715cd04cc9ce18e7b9625934e95393703c80196bbf7c5115fe81d6"
+    },
+    {
+      "role": "adapter",
+      "path": "/home/lhs/spacers_m3/results/lora/qwen3_vl_2b_lora_v1/adapter_final/README.md",
+      "relative_path": "results/lora/qwen3_vl_2b_lora_v1/adapter_final/README.md",
+      "exists": true,
+      "size_bytes": 5178,
+      "sha256": "e34d4cbe24b794b76844a32cc674672e9e6613a5c5f53b924ba72f74e4c17e0f"
+    },
+    {
+      "role": "inference_config",
+      "path": "/home/lhs/spacers_m3/configs/lora/qwen3_vl_2b_lora_v1.yaml",
+      "relative_path": "configs/lora/qwen3_vl_2b_lora_v1.yaml",
+      "exists": true,
+      "size_bytes": 1012,
+      "sha256": "0fdc5ee7bfdabc4ae3b6e71494e09d14ebf90a87e1643328507385141428badd"
+    },
+    {
+      "role": "inference_config",
+      "path": "/home/lhs/spacers_m3/scripts/benchmarks/run_benchmark.py",
+      "relative_path": "scripts/benchmarks/run_benchmark.py",
+      "exists": true,
+      "size_bytes": 4298,
+      "sha256": "995697086aab6b6997dd29b90ad9162ed2fe643055a01584cb64bb1798d8b66c"
+    },
+    {
+      "role": "inference_config",
+      "path": "/home/lhs/spacers_m3/scripts/lora/evaluate_lora_adapter.py",
+      "relative_path": "scripts/lora/evaluate_lora_adapter.py",
+      "exists": true,
+      "size_bytes": 12258,
+      "sha256": "101a618cd4ac6cdc9de630d64ef18ee9d6fb8a9729dbeb95ab1558a1deadca3e"
+    },
+    {
+      "role": "inference_config",
+      "path": "/home/lhs/spacers_m3/src/inference/run_batch.py",
+      "relative_path": "src/inference/run_batch.py",
+      "exists": true,
+      "size_bytes": 14962,
+      "sha256": "289a6e2050f57267bc4a17ce82bdac30c6730e26a8041315ea0b9645babfd333"
+    },
+    {
+      "role": "inference_config",
+      "path": "/home/lhs/spacers_m3/src/evaluation/evaluate_mini_eval.py",
+      "relative_path": "src/evaluation/evaluate_mini_eval.py",
+      "exists": true,
+      "size_bytes": 18094,
+      "sha256": "4278aa95d9380318dd0dd73bff9d144de249e15e83d638531603a21971b78559"
+    }
+  ]
+}

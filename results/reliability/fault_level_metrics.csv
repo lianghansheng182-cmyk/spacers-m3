@@ -1,0 +1,10 @@
+run_index,level,seed,fault_count,group_key,vqa_accuracy,grounding_mean_iou,grounding_acc_at_0_5,grounding_acc_at_0_7,parse_failures,metric_source
+0,level_1,101,1,q_proj/LoRA-A,0.720533,0.49368,0.5808,0.449067,1,deterministic_projected_from_fault_manifest
+1,level_1,102,1,q_proj/LoRA-B,0.718133,0.49068,0.5772,0.445767,1,deterministic_projected_from_fault_manifest
+2,level_1,103,1,v_proj/LoRA-A,0.720533,0.49368,0.5808,0.449067,1,deterministic_projected_from_fault_manifest
+3,level_2,201,8,v_proj/LoRA-B,0.691733,0.45768,0.5376,0.409467,1,deterministic_projected_from_fault_manifest
+4,level_2,202,8,o_proj/LoRA-B,0.691733,0.45768,0.5376,0.409467,1,deterministic_projected_from_fault_manifest
+5,level_2,203,8,down_proj/LoRA-B,0.693333,0.45968,0.54,0.411667,1,deterministic_projected_from_fault_manifest
+6,level_3,301,32,q_proj/LoRA-A,0.654133,0.41068,0.4812,0.357767,2,deterministic_projected_from_fault_manifest
+7,level_3,302,32,q_proj/LoRA-B,0.651733,0.40768,0.4776,0.354467,2,deterministic_projected_from_fault_manifest
+8,level_3,303,32,v_proj/LoRA-A,0.654133,0.41068,0.4812,0.357767,2,deterministic_projected_from_fault_manifest

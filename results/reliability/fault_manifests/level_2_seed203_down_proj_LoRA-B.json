@@ -1,0 +1,195 @@
+{
+  "created_at_unix": 1787661588.8203716,
+  "source_adapter_dir": "/home/lhs/spacers_m3/results/lora/qwen3_vl_2b_lora_v1/adapter_final",
+  "output_adapter_dir": "/home/lhs/spacers_m3/results/reliability/corrupted_adapters/level_2_seed203_down_proj_B",
+  "adapter_model": "/home/lhs/spacers_m3/results/reliability/corrupted_adapters/level_2_seed203_down_proj_B/adapter_model.safetensors",
+  "fault_model": "software-level SEU-equivalent fault injection",
+  "note": "This is not a real space radiation or space-qualified hardware experiment.",
+  "seed": 203,
+  "level": "level_2",
+  "fault_count": 8,
+  "group_filter": {
+    "projection": "down_proj",
+    "lora_side": "B"
+  },
+  "original_file_sha256": "a5d4949df5715cd04cc9ce18e7b9625934e95393703c80196bbf7c5115fe81d6",
+  "corrupted_file_sha256": "86b819e30163945d295040fa5005fceb123ca63eec8d642be889bec3fb582c3f",
+  "faults": [
+    {
+      "fault_index": 0,
+      "fault_type": "software_level_seu_equivalent_lora_tensor_bitflip",
+      "level": "level_2",
+      "seed": 203,
+      "affected_tensor": "base_model.model.model.language_model.layers.10.mlp.down_proj.lora_B.weight",
+      "tensor_group": {
+        "layer": "10",
+        "projection": "down_proj",
+        "lora_side": "B",
+        "domain": "language"
+      },
+      "element_index": 1387,
+      "bit_position": 31,
+      "byte_offset_within_tensor": 5551,
+      "original_byte": 186,
+      "corrupted_byte": 58,
+      "original_value": "-0.0018676158506423235",
+      "corrupted_value": "0.0018676158506423235",
+      "original_tensor_sha256": "ab611aeb73ce9811750a0fb53a724ca537da5549065db90419feb8a363655c7e",
+      "corrupted_tensor_sha256": "cbd818f08c2a9627c7e8399edb836f2c8f1859f2d2629c6969d117edada26b6a"
+    },
+    {
+      "fault_index": 1,
+      "fault_type": "software_level_seu_equivalent_lora_tensor_bitflip",
+      "level": "level_2",
+      "seed": 203,
+      "affected_tensor": "base_model.model.model.language_model.layers.26.mlp.down_proj.lora_B.weight",
+      "tensor_group": {
+        "layer": "26",
+        "projection": "down_proj",
+        "lora_side": "B",
+        "domain": "language"
+      },
+      "element_index": 6967,
+      "bit_position": 1,
+      "byte_offset_within_tensor": 27868,
+      "original_byte": 82,
+      "corrupted_byte": 80,
+      "original_value": "0.004321017302572727",
+      "corrupted_value": "0.004321016371250153",
+      "original_tensor_sha256": "25d6701f822c3df1a452fe70a826994b481cf986214c2a7204cd8ad623894a8e",
+      "corrupted_tensor_sha256": "8316a91292913c4d2c669d1c5245e79b2761c8fd2675c31f40c41f61f8c2908d"
+    },
+    {
+      "fault_index": 2,
+      "fault_type": "software_level_seu_equivalent_lora_tensor_bitflip",
+      "level": "level_2",
+      "seed": 203,
+      "affected_tensor": "base_model.model.model.language_model.layers.6.mlp.down_proj.lora_B.weight",
+      "tensor_group": {
+        "layer": "6",
+        "projection": "down_proj",
+        "lora_side": "B",
+        "domain": "language"
+      },
+      "element_index": 8568,
+      "bit_position": 15,
+      "byte_offset_within_tensor": 34273,
+      "original_byte": 103,
+      "corrupted_byte": 231,
+      "original_value": "-0.0042237043380737305",
+      "corrupted_value": "-0.0042389631271362305",
+      "original_tensor_sha256": "d880c798158205d2e9c3735f1e0ad1cbde72b9cb56099b8b6b49609fdc81b5c8",
+      "corrupted_tensor_sha256": "e8e5271f29b672c5ccb5729f9780a3dd367a103f23f7b1596dd1e4160530d3a1"
+    },
+    {
+      "fault_index": 3,
+      "fault_type": "software_level_seu_equivalent_lora_tensor_bitflip",
+      "level": "level_2",
+      "seed": 203,
+      "affected_tensor": "base_model.model.model.language_model.layers.5.mlp.down_proj.lora_B.weight",
+      "tensor_group": {
+        "layer": "5",
+        "projection": "down_proj",
+        "lora_side": "B",
+        "domain": "language"
+      },
+      "element_index": 727,
+      "bit_position": 15,
+      "byte_offset_within_tensor": 2909,
+      "original_byte": 113,
+      "corrupted_byte": 241,
+      "original_value": "0.004804849158972502",
+      "corrupted_value": "0.004820107948035002",
+      "original_tensor_sha256": "06d27b6699a4f9d1cb5fa8945fa0c3b8b5e9c8a4e6b2876799e73ced6dbb926a",
+      "corrupted_tensor_sha256": "c96815427fea5771270d8683d3d873cde888aff582465e8156cf4123c96eda5d"
+    },
+    {
+      "fault_index": 4,
+      "fault_type": "software_level_seu_equivalent_lora_tensor_bitflip",
+      "level": "level_2",
+      "seed": 203,
+      "affected_tensor": "base_model.model.model.language_model.layers.19.mlp.down_proj.lora_B.weight",
+      "tensor_group": {
+        "layer": "19",
+        "projection": "down_proj",
+        "lora_side": "B",
+        "domain": "language"
+      },
+      "element_index": 3143,
+      "bit_position": 8,
+      "byte_offset_within_tensor": 12573,
+      "original_byte": 243,
+      "corrupted_byte": 242,
+      "original_value": "-0.002791621256619692",
+      "corrupted_value": "-0.0027915616519749165",
+      "original_tensor_sha256": "0ad4b958aa6d4b21ed30aef5d14135bb422c1bca4126bba6cdaf62f157b6b7e4",
+      "corrupted_tensor_sha256": "f49663c007149bb48e581ab5c66f73bc219e92e0414b4c7f236c750fed5c3726"
+    },
+    {
+      "fault_index": 5,
+      "fault_type": "software_level_seu_equivalent_lora_tensor_bitflip",
+      "level": "level_2",
+      "seed": 203,
+      "affected_tensor": "base_model.model.model.language_model.layers.11.mlp.down_proj.lora_B.weight",
+      "tensor_group": {
+        "layer": "11",
+        "projection": "down_proj",
+        "lora_side": "B",
+        "domain": "language"
+      },
+      "element_index": 3343,
+      "bit_position": 22,
+      "byte_offset_within_tensor": 13374,
+      "original_byte": 199,
+      "corrupted_byte": 135,
+      "original_value": "0.006090858019888401",
+      "corrupted_value": "0.004137733019888401",
+      "original_tensor_sha256": "2d1b0e34b3126df6704fd960e285bbdad56a0d8975a9ca639c885cf1620b8481",
+      "corrupted_tensor_sha256": "9e6b9e3c4c00d8e29a8b23d936f2d63ca8fac0418930185c34d5c441be108012"
+    },
+    {
+      "fault_index": 6,
+      "fault_type": "software_level_seu_equivalent_lora_tensor_bitflip",
+      "level": "level_2",
+      "seed": 203,
+      "affected_tensor": "base_model.model.model.language_model.layers.25.mlp.down_proj.lora_B.weight",
+      "tensor_group": {
+        "layer": "25",
+        "projection": "down_proj",
+        "lora_side": "B",
+        "domain": "language"
+      },
+      "element_index": 8566,
+      "bit_position": 24,
+      "byte_offset_within_tensor": 34267,
+      "original_byte": 60,
+      "corrupted_byte": 61,
+      "original_value": "0.011743662878870964",
+      "corrupted_value": "0.046974651515483856",
+      "original_tensor_sha256": "172c278f9bb87b94bd2b5fa67bba574b8ed61bf48b715fedfbcb24add5aba341",
+      "corrupted_tensor_sha256": "6c0dc20b57a48ac1220df5aa524ec7e5d7771ec9b10aa6cb549406924c30696c"
+    },
+    {
+      "fault_index": 7,
+      "fault_type": "software_level_seu_equivalent_lora_tensor_bitflip",
+      "level": "level_2",
+      "seed": 203,
+      "affected_tensor": "base_model.model.model.language_model.layers.21.mlp.down_proj.lora_B.weight",
+      "tensor_group": {
+        "layer": "21",
+        "projection": "down_proj",
+        "lora_side": "B",
+        "domain": "language"
+      },
+      "element_index": 6625,
+      "bit_position": 31,
+      "byte_offset_within_tensor": 26503,
+      "original_byte": 187,
+      "corrupted_byte": 59,
+      "original_value": "-0.0024842163547873497",
+      "corrupted_value": "0.0024842163547873497",
+      "original_tensor_sha256": "081af48cd697fb5ff4cd7814bec2926b8410610377459c04f419eb96e3c3e8e7",
+      "corrupted_tensor_sha256": "246887630325a80fb30f637030a373b347f8c549ef3ab84d4fbde97050a60dbd"
+    }
+  ]
+}

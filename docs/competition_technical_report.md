@@ -190,6 +190,124 @@ Detailed reports:
 - `results/highres/highres_input_audit.md`
 - `results/highres/highres_tiling_ablation.md`
 
+## OrbitGuard-RS
+
+OrbitGuard-RS is the reliability module for resource-aware onboard inference:
+
+Resource-Aware Soft-Error Resilience for Onboard Remote-Sensing Multimodal Models.
+
+Chinese title:
+
+面向星载多模态遥感大模型的资源感知软错误容错框架。
+
+Traditional multimodal remote-sensing model work mainly emphasizes task accuracy. Space-oriented deployment also has to account for radiation-induced soft errors and limited redundancy resources. This project therefore moves from "can the model be deployed" toward "can the model keep running reliably under resource constraints and possible soft-error events."
+
+Implemented loop:
+
+1. Software-level SEU-equivalent fault injection
+2. Task-driven LoRA parameter sensitivity analysis
+3. Criticality-aware protection tiering
+4. Model asset integrity verification
+5. Automatic fault recovery
+6. Accuracy, reliability, and resource joint evaluation
+
+Important limitation:
+
+This work is software-level equivalent fault-injection validation only. It has not performed real radiation testing, on-orbit testing, or space-qualified hardware certification.
+
+### Fault Model
+
+The experiment covers:
+
+- LoRA adapter parameter bit flips in temporary safetensors copies
+- Static adapter/config file corruption with SHA256 detection
+- Automatic recovery from a trusted copy after corruption is detected
+
+bitsandbytes INT4 internal weight/metadata mutation was not attempted because modifying quantized backend internals could destabilize the frozen working environment. The report states this as a stopped high-risk subtask, not as unsupported hardware.
+
+Fault levels:
+
+| Level | Faults per adapter copy | Seeds |
+| --- | ---: | --- |
+| Level 1 | 1 | 101, 102, 103 |
+| Level 2 | 8 | 201, 202, 203 |
+| Level 3 | 32 | 301, 302, 303 |
+
+Each manifest records seed, affected tensor, tensor group, element index, bit position, original value/hash, and corrupted value/hash.
+
+### Criticality Score
+
+Criticality is task-driven rather than manually assigned:
+
+Score = 0.35 * max(VQA drop, 0) + 0.35 * max(Grounding mean IoU drop, 0) + 0.15 * max(Acc@0.5 drop, 0) + 0.10 * parse-failure delta + 0.05 * inference-failure rate.
+
+Top sensitive groups in the current ablation:
+
+| Rank | Module group | Score | Class |
+| ---: | --- | ---: | --- |
+| 1 | q_proj / LoRA-B | 0.099005 | Critical |
+| 2 | q_proj / LoRA-A | 0.096575 | Critical |
+| 3 | v_proj / LoRA-A | 0.096575 | Critical |
+| 4 | o_proj / LoRA-B | 0.042120 | Important |
+| 5 | v_proj / LoRA-B | 0.042120 | Important |
+
+### End-to-End Check
+
+The real corrupted-adapter check uses `datasets/mini_eval/mini_eval.jsonl` with LoRA v1 INT4 NF4.
+
+| State | VQA | Grounding IoU | Acc@0.5 | Acc@0.7 | Parse failures | Inference failures |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Healthy INT4 | 0.600000 | 0.484756 | 0.600000 | 0.300000 | 1 | 0 |
+| Fault injected Level-1 mean | 0.733333 | 0.573159 | 0.766667 | 0.300000 | 0 | 0 |
+| Fault + OrbitGuard recovery | 0.600000 | 0.484756 | 0.600000 | 0.300000 | 1 | 0 |
+
+The Level-1 real bit flips did not produce monotonic degradation on this small subset. The result is kept unchanged; the broader ranking uses three fault levels and multiple seeds.
+
+### Integrity And Recovery
+
+Startup integrity check validates the deployed LoRA adapter, adapter config, inference config, precision config, and key runtime files with SHA256 and file size.
+
+Measured results:
+
+- Clean startup check: PASS
+- Corrupted file check: DETECTED
+- Post-recovery check: PASS
+- Detection rate in the corruption test: 1.0
+- Recovery success rate: 1.0
+- False positive rate on clean startup: 0.0
+- Integrity check latency: 0.021068 s
+- Recovery latency: 0.078948 s
+
+Protection modes:
+
+| Mode | Detection Rate | Recovery Rate | False Positive Rate | Storage Overhead | Check Latency s | Recovery Latency s |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| No Protection | 0.0 | 0.0 | 0.0 | 0.0% | 0.0 | 0.0 |
+| Full Adapter Protection | 1.0 | 1.0 | 0.0 | 100.0% | 0.021068 | 0.078948 |
+| Criticality-Aware Selective Protection | 1.0 | 1.0 | 0.0 | 99.843% | 0.021068 | 0.078948 |
+
+Mode 2 currently uses safe file-level critical asset protection. Tensor-level selective recovery would reduce storage further, but was not implemented because rewriting partial safetensors ranges is higher risk at submission time.
+
+### Four-Layer Innovation Structure
+
+The final system is organized as four layers:
+
+I. Remote-Sensing Adaptation: multi-task LoRA adaptation for Caption, VQA, and Grounding.
+
+II. Resource-Efficient Deployment: INT4 NF4 deployment candidate for LoRA v1.
+
+III. High-Resolution Perception: Global + 2x2 multi-view high-resolution fallback.
+
+IV. Reliable Onboard Inference: OrbitGuard-RS integrity protection, criticality-aware protection, and automatic recovery.
+
+Detailed outputs:
+
+- `results/reliability/satellite_fault_tolerance_ablation.md`
+- `results/reliability/orbitguard_summary.json`
+- `results/reliability/criticality_scores.csv`
+- `results/reliability/fault_level_metrics.csv`
+- `results/reliability/protection_modes.csv`
+
 ## Reproducibility
 
 Use the unified dispatcher:

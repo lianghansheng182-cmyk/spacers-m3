@@ -1,0 +1,59 @@
+run:
+  name: orbitguard_rs_v1
+  seed: 20260825
+  output_dir: results/reliability
+
+model:
+  base_model: models/Qwen3-VL-2B-Instruct
+  adapter: results/lora/qwen3_vl_2b_lora_v1/adapter_final
+  precision: int4_nf4
+  prompt: prompt_v1_for_vrsbench
+
+assets:
+  adapter:
+    - results/lora/qwen3_vl_2b_lora_v1/adapter_final/adapter_config.json
+    - results/lora/qwen3_vl_2b_lora_v1/adapter_final/adapter_model.safetensors
+    - results/lora/qwen3_vl_2b_lora_v1/adapter_final/README.md
+  inference_config:
+    - configs/lora/qwen3_vl_2b_lora_v1.yaml
+    - scripts/benchmarks/run_benchmark.py
+    - scripts/lora/evaluate_lora_adapter.py
+    - src/inference/run_batch.py
+    - src/evaluation/evaluate_mini_eval.py
+
+fault_model:
+  name: software_level_seu_equivalent_fault_injection
+  disclaimer: not_real_space_radiation_or_space_qualified_hardware_test
+  lora_fault_levels:
+    level_1:
+      bit_flips: 1
+      seeds: [101, 102, 103]
+    level_2:
+      bit_flips: 8
+      seeds: [201, 202, 203]
+    level_3:
+      bit_flips: 32
+      seeds: [301, 302, 303]
+  sampled_groups:
+    - {projection: q_proj, lora_side: A}
+    - {projection: q_proj, lora_side: B}
+    - {projection: v_proj, lora_side: A}
+    - {projection: v_proj, lora_side: B}
+    - {projection: o_proj, lora_side: B}
+    - {projection: down_proj, lora_side: B}
+
+evaluation:
+  healthy_reference:
+    mini_eval: results/lora/qwen3_vl_2b_lora_v1_eval/mini_eval_prompt_v1/summary.json
+    vrsbench_90_int4: results/quantization/lora_v1_int4_eval_vrsbench90/summary.json
+  fixed_subset: datasets/mini_eval/mini_eval.jsonl
+  minimum_real_subset: 30
+
+protection:
+  mode_0: no_protection
+  mode_1: full_adapter_protection
+  mode_2: criticality_aware_selective_protection
+  criticality_thresholds:
+    critical: 0.08
+    important: 0.025
+  selective_granularity: tensor_group_metadata_and_file_level_restore

@@ -1,0 +1,519 @@
+{
+  "input_path": "datasets/mini_eval/mini_eval.jsonl",
+  "output_dir": "/home/lhs/spacers_m3/results/reliability/healthy_int4_mini_eval",
+  "predictions_path": "/home/lhs/spacers_m3/results/reliability/healthy_int4_mini_eval/predictions.jsonl",
+  "metrics_path": "/home/lhs/spacers_m3/results/reliability/healthy_int4_mini_eval/metrics.json",
+  "error_cases_path": "/home/lhs/spacers_m3/results/reliability/healthy_int4_mini_eval/error_cases.jsonl",
+  "run_config_path": "/home/lhs/spacers_m3/results/reliability/healthy_int4_mini_eval/run_config.json",
+  "sample_count": 30,
+  "success_count": 30,
+  "failure_count": 0,
+  "total_runtime_s": 74.692029,
+  "model_load_time_s": 4.189888,
+  "latency_mean_s": 2.18008,
+  "latency_p95_s": 6.157958,
+  "peak_vram_mb": 1658.34,
+  "adapter_size_mb": 33.311,
+  "prompt_version": "v1",
+  "precision": "int4",
+  "max_new_tokens": 256,
+  "grounding_max_new_tokens": 32,
+  "stop_grounding_after_brace": true,
+  "metrics": {
+    "sample_count": 30,
+    "prediction_count": 30,
+    "success_count": 30,
+    "failure_count": 0,
+    "caption": {
+      "count": 10,
+      "metric": null,
+      "note": "Caption predictions are saved only; no automatic caption metric is reported for this run."
+    },
+    "vqa": {
+      "count": 10,
+      "correct": 6,
+      "accuracy": 0.6,
+      "normalization": "NFKC, lowercase, punctuation-to-space, whitespace collapse, number words 0-10"
+    },
+    "grounding": {
+      "count": 10,
+      "parsed_count": 9,
+      "mean_iou": 0.484756,
+      "acc_at_0_5": 0.6,
+      "acc_at_0_7": 0.3
+    },
+    "error_case_count": 8,
+    "error_case_counts": {
+      "grounding_low_iou": 3,
+      "grounding_parse_failure": 1,
+      "vqa_wrong": 4
+    },
+    "per_sample": [
+      {
+        "id": "cap_001",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_002",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_003",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_004",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_005",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_006",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_007",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_008",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_009",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "cap_010",
+        "task": "caption",
+        "success": true
+      },
+      {
+        "id": "vqa_001",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "bridge",
+        "normalized_answer": "expressway toll station",
+        "exact_match": false
+      },
+      {
+        "id": "vqa_002",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "yes",
+        "normalized_answer": "yes",
+        "exact_match": true
+      },
+      {
+        "id": "vqa_003",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "1",
+        "normalized_answer": "1",
+        "exact_match": true
+      },
+      {
+        "id": "vqa_004",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "rural",
+        "normalized_answer": "rural",
+        "exact_match": true
+      },
+      {
+        "id": "vqa_005",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "urban",
+        "normalized_answer": "urban",
+        "exact_match": true
+      },
+      {
+        "id": "vqa_006",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "railway station",
+        "normalized_answer": "train station",
+        "exact_match": false
+      },
+      {
+        "id": "vqa_007",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "1",
+        "normalized_answer": "1",
+        "exact_match": true
+      },
+      {
+        "id": "vqa_008",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "bottom",
+        "normalized_answer": "middle",
+        "exact_match": false
+      },
+      {
+        "id": "vqa_009",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "yes",
+        "normalized_answer": "yes",
+        "exact_match": true
+      },
+      {
+        "id": "vqa_010",
+        "task": "vqa",
+        "success": true,
+        "normalized_prediction": "storage tank",
+        "normalized_answer": "chimney",
+        "exact_match": false
+      },
+      {
+        "id": "grounding_001",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": [
+          22.0,
+          39.0,
+          32.0,
+          61.0
+        ],
+        "target_bbox": [
+          25,
+          40,
+          33,
+          60
+        ],
+        "iou": 0.583333,
+        "acc_at_0_5": true,
+        "acc_at_0_7": false,
+        "raw_parsed_bbox": [
+          22.0,
+          39.0,
+          32.0,
+          61.0
+        ],
+        "normalized_bbox_0_100": [
+          22.0,
+          39.0,
+          32.0,
+          61.0
+        ],
+        "detected_bbox_space": "normalized_0_100",
+        "parse_status": "ok",
+        "parse_error": null
+      },
+      {
+        "id": "grounding_002",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": [
+          10.0,
+          95.0,
+          19.0,
+          100.0
+        ],
+        "target_bbox": [
+          11,
+          96,
+          24,
+          100
+        ],
+        "iou": 0.492308,
+        "acc_at_0_5": false,
+        "acc_at_0_7": false,
+        "raw_parsed_bbox": [
+          10.0,
+          95.0,
+          19.0,
+          100.0
+        ],
+        "normalized_bbox_0_100": [
+          10.0,
+          95.0,
+          19.0,
+          100.0
+        ],
+        "detected_bbox_space": "normalized_0_100",
+        "parse_status": "ok",
+        "parse_error": null
+      },
+      {
+        "id": "grounding_003",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": [
+          86.0,
+          29.0,
+          92.0,
+          36.0
+        ],
+        "target_bbox": [
+          87,
+          29,
+          92,
+          36
+        ],
+        "iou": 0.833333,
+        "acc_at_0_5": true,
+        "acc_at_0_7": true,
+        "raw_parsed_bbox": [
+          86.0,
+          29.0,
+          92.0,
+          36.0
+        ],
+        "normalized_bbox_0_100": [
+          86.0,
+          29.0,
+          92.0,
+          36.0
+        ],
+        "detected_bbox_space": "normalized_0_100",
+        "parse_status": "ok",
+        "parse_error": null
+      },
+      {
+        "id": "grounding_004",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": [
+          85.0,
+          82.0,
+          92.0,
+          90.0
+        ],
+        "target_bbox": [
+          86,
+          82,
+          91,
+          90
+        ],
+        "iou": 0.714286,
+        "acc_at_0_5": true,
+        "acc_at_0_7": true,
+        "raw_parsed_bbox": [
+          85.0,
+          82.0,
+          92.0,
+          90.0
+        ],
+        "normalized_bbox_0_100": [
+          85.0,
+          82.0,
+          92.0,
+          90.0
+        ],
+        "detected_bbox_space": "normalized_0_100",
+        "parse_status": "ok",
+        "parse_error": null
+      },
+      {
+        "id": "grounding_005",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": [
+          0.0,
+          39.0,
+          9.0,
+          61.0
+        ],
+        "target_bbox": [
+          1,
+          40,
+          9,
+          60
+        ],
+        "iou": 0.808081,
+        "acc_at_0_5": true,
+        "acc_at_0_7": true,
+        "raw_parsed_bbox": [
+          0.0,
+          39.0,
+          9.0,
+          61.0
+        ],
+        "normalized_bbox_0_100": [
+          0.0,
+          39.0,
+          9.0,
+          61.0
+        ],
+        "detected_bbox_space": "normalized_0_100",
+        "parse_status": "ok",
+        "parse_error": null
+      },
+      {
+        "id": "grounding_006",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": [
+          61.0,
+          81.0,
+          67.0,
+          91.0
+        ],
+        "target_bbox": [
+          63,
+          29,
+          68,
+          36
+        ],
+        "iou": 0.0,
+        "acc_at_0_5": false,
+        "acc_at_0_7": false,
+        "raw_parsed_bbox": [
+          61.0,
+          81.0,
+          67.0,
+          91.0
+        ],
+        "normalized_bbox_0_100": [
+          61.0,
+          81.0,
+          67.0,
+          91.0
+        ],
+        "detected_bbox_space": "normalized_0_100",
+        "parse_status": "ok",
+        "parse_error": null
+      },
+      {
+        "id": "grounding_007",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": [
+          61.0,
+          80.0,
+          67.0,
+          99.0
+        ],
+        "target_bbox": [
+          62,
+          82,
+          66,
+          90
+        ],
+        "iou": 0.280702,
+        "acc_at_0_5": false,
+        "acc_at_0_7": false,
+        "raw_parsed_bbox": [
+          61.0,
+          80.0,
+          67.0,
+          99.0
+        ],
+        "normalized_bbox_0_100": [
+          61.0,
+          80.0,
+          67.0,
+          99.0
+        ],
+        "detected_bbox_space": "normalized_0_100",
+        "parse_status": "ok",
+        "parse_error": null
+      },
+      {
+        "id": "grounding_008",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": null,
+        "target_bbox": [
+          25,
+          5,
+          35,
+          10
+        ],
+        "iou": 0.0,
+        "acc_at_0_5": false,
+        "acc_at_0_7": false,
+        "raw_parsed_bbox": null,
+        "normalized_bbox_0_100": null,
+        "detected_bbox_space": null,
+        "parse_status": "failed",
+        "parse_error": "no supported bbox found"
+      },
+      {
+        "id": "grounding_009",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": [
+          6.0,
+          36.0,
+          13.0,
+          57.0
+        ],
+        "target_bbox": [
+          5,
+          24,
+          12,
+          57
+        ],
+        "iou": 0.5,
+        "acc_at_0_5": true,
+        "acc_at_0_7": false,
+        "raw_parsed_bbox": [
+          6.0,
+          36.0,
+          13.0,
+          57.0
+        ],
+        "normalized_bbox_0_100": [
+          6.0,
+          36.0,
+          13.0,
+          57.0
+        ],
+        "detected_bbox_space": "normalized_0_100",
+        "parse_status": "ok",
+        "parse_error": null
+      },
+      {
+        "id": "grounding_010",
+        "task": "grounding",
+        "success": true,
+        "parsed_bbox": [
+          77.0,
+          58.0,
+          86.0,
+          93.0
+        ],
+        "target_bbox": [
+          78,
+          59,
+          84,
+          94
+        ],
+        "iou": 0.635514,
+        "acc_at_0_5": true,
+        "acc_at_0_7": false,
+        "raw_parsed_bbox": [
+          77.0,
+          58.0,
+          86.0,
+          93.0
+        ],
+        "normalized_bbox_0_100": [
+          77.0,
+          58.0,
+          86.0,
+          93.0
+        ],
+        "detected_bbox_space": "normalized_0_100",
+        "parse_status": "ok",
+        "parse_error": null
+      }
+    ]
+  }
+}

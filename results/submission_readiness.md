@@ -17,6 +17,7 @@ Created: 2026-08-25
 - README now records the frozen model policy, environment setup, INT4 benchmark commands, result locations, and data policy.
 - Technical report draft exists at `docs/competition_technical_report.md`.
 - High-resolution global+2x2 tiling ablation is implemented, evaluated, and documented under `results/highres/`.
+- OrbitGuard-RS reliability prototype is implemented and documented under `results/reliability/`, including software-level LoRA bit-flip manifests, integrity detection, automatic recovery, and resource-overhead accounting.
 - Raw benchmark data is kept under `data/raw/`, which is excluded by `.gitignore`.
 - Model weights, adapter checkpoints, and large raw datasets remain excluded by `.gitignore`.
 - Result outputs are isolated under benchmark-specific `results/` subdirectories.
@@ -31,6 +32,7 @@ Created: 2026-08-25
 - BF16 fallback is supported by the shared precision backend, but the new benchmark reports currently record INT4 as the completed path.
 - Final technical report may still need formatting for the competition template, but the core narrative and metrics are now collected.
 - High-resolution tiling is reproducible and technically feasible, but it is not recommended as the default deployment path because the accuracy gains are small relative to latency cost.
+- OrbitGuard-RS selective protection currently uses safe file-level critical asset protection; tensor-level selective recovery was not implemented because it would require higher-risk safetensors rewriting.
 
 ## BLOCKED
 
@@ -49,6 +51,7 @@ Created: 2026-08-25
 | XLRS-Bench Lite | partial | internal partial, 44 / 74 shards | `results/xlrs_bench/partial_44shards_int4/` |
 | LEVIR-CC | ready with metric caveat | official test split, METEOR blocked | `results/levir_cc/` |
 | High-resolution tiling | ready as ablation | XLRS partial + MME-RS A/B | `results/highres/highres_tiling_ablation.md` |
+| OrbitGuard-RS | ready as software-level prototype | SEU-equivalent fault injection + recovery | `results/reliability/satellite_fault_tolerance_ablation.md` |
 
 ## Next Highest Priority
 

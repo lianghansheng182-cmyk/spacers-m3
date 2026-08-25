@@ -121,6 +121,26 @@ python scripts/benchmarks/run_benchmark.py levir-cc \
 
 LEVIR-CC METEOR needs Java for the official scorer. BLEU, ROUGE-L, and CIDEr run without Java in the current environment.
 
+OrbitGuard-RS software-level reliability ablation:
+
+```bash
+python scripts/reliability/run_fault_injection.py \
+  --config configs/reliability/orbitguard_v1.yaml
+python scripts/reliability/write_orbitguard_summary.py
+```
+
+Optional real corrupted-adapter mini_eval check:
+
+```bash
+python scripts/reliability/run_fault_injection.py \
+  --config configs/reliability/orbitguard_v1.yaml \
+  --run-inference \
+  --max-fault-runs 3 \
+  --output-dir results/reliability/real_fault_eval
+```
+
+OrbitGuard-RS is software-level SEU-equivalent validation only. It is not a real space radiation experiment or hardware qualification result.
+
 ## Current Results
 
 The consolidated result table is tracked at:
@@ -156,6 +176,8 @@ results/submission_readiness.md
 - `results/submission_readiness.md`
 - `results/highres/highres_input_audit.md`
 - `results/highres/highres_tiling_ablation.md`
+- `results/reliability/satellite_fault_tolerance_ablation.md`
+- `results/reliability/orbitguard_summary.json`
 
 ## Data Policy
 

@@ -50,6 +50,9 @@ results/raw/
 results/predictions/
 results/lora/**/adapter_final/
 results/lora/**/checkpoint-step-*/
+results/reliability/**/protected_cache/
+results/reliability/**/corrupted_adapters/
+results/reliability/**/tmp/
 
 # Local smoke-test inputs and temporary downloads
 data/test/demo.jpeg

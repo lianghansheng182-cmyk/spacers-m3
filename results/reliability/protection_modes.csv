@@ -1,0 +1,4 @@
+mode,detection_rate,recovery_success_rate,false_positive_rate,storage_overhead_pct,integrity_check_latency_s,recovery_latency_s,protected_bytes_ratio
+Mode 0: No Protection,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Mode 1: Full Adapter Protection,1.0,1.0,0.0,100.0,0.021068,0.078948,1.0
+Mode 2: Criticality-Aware Selective Protection,1.0,1.0,0.0,99.843,0.021068,0.078948,0.998434
