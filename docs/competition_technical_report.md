@@ -288,17 +288,61 @@ Protection modes:
 
 Mode 2 currently uses safe file-level critical asset protection. Tensor-level selective recovery would reduce storage further, but was not implemented because rewriting partial safetensors ranges is higher risk at submission time.
 
-### SpaceRS-Agent Four-Layer Innovation Structure
+## SpaceBudget-RS
+
+SpaceBudget-RS adds task-aware dynamic compute budgeting for onboard remote-sensing MLLM inference. It does not retrain the model, modify the LoRA adapter, change evaluation sets, or tune prompts. The module changes only the pre-inference visual compute budget and optional high-resolution route.
+
+Traditional fixed-budget inference applies the same visual token budget to all images and questions. That is poorly matched to satellite-side deployment, where energy, memory, latency, and task priority can change at runtime. SpaceBudget-RS uses deterministic pre-inference metadata to select a compute profile:
+
+| Profile | max_pixels | Mean language visual tokens on MME-RS | Mean language visual tokens on XLRS |
+| --- | ---: | ---: | ---: |
+| ECO | 262144 | 240.146667 | 251.334957 |
+| BALANCED | 1048576 | 981.946667 | 1011.769481 |
+| PRECISION | 4194304 | 3963.646667 | 4086.888528 |
+
+The AUTO policy is fixed and reproducible. It uses task/category text, question text, image metadata, and resource mode only; it never uses ground-truth answers or model predictions for routing.
+
+Measured INT4 NF4 results:
+
+| Benchmark | Budget | Accuracy | Mean visual tokens | Mean latency s | Peak VRAM MB | Parse failures |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| MME-RS Lite | ECO | 0.360000 | 240.146667 | 0.338364 | 1667.78 | 0 |
+| MME-RS Lite | BALANCED | 0.473333 | 981.946667 | 0.599638 | 1850.04 | 0 |
+| MME-RS Lite | PRECISION | 0.493333 | 3963.646667 | 2.834247 | 2597.24 | 0 |
+| MME-RS Lite | AUTO | 0.460000 | 735.126667 | 0.561876 | 1850.04 | 0 |
+| XLRS Lite current set | ECO | 0.374459 | 251.334957 | 0.294910 | 1715.27 | 0 |
+| XLRS Lite current set | BALANCED | 0.389069 | 1011.769481 | 0.555370 | 1901.08 | 0 |
+| XLRS Lite current set | PRECISION | 0.388528 | 4086.888528 | 3.429975 | 2646.94 | 1 |
+| XLRS Lite current set | AUTO | 0.397186 | 986.916667 | 0.711017 | 1901.08 | 0 |
+
+AUTO reduced MME-RS mean visual tokens by 25.1358% versus fixed BALANCED with a 0.013333 accuracy drop. On XLRS, AUTO reduced mean visual tokens by 2.4564% and improved accuracy by 0.008117 versus fixed BALANCED. PRECISION is not selected as the default deployment path because its token and latency cost is much higher and did not consistently improve XLRS accuracy.
+
+Resource scenarios:
+
+- Power-Limited: force ECO.
+- Normal: use AUTO or BALANCED.
+- Urgent Precision: use PRECISION and enable HiRes fallback only for categories where tiling is justified.
+
+Detailed outputs:
+
+- `results/spacebudget/visual_token_audit.md`
+- `results/spacebudget/spacebudget_ablation.md`
+- `results/spacebudget/spacebudget_summary.json`
+- `results/spacebudget/figures/`
+
+### SpaceRS-Agent Five-Layer Innovation Structure
 
 The final system is packaged as **SpaceRS-Agent**. These module names are project-internal names, not claims of external products.
 
-I. **RemoteLoRA**: remote-sensing Caption/VQA/Grounding capability adaptation with LoRA v1.
+I. **SpaceBudget-RS**: task-aware dynamic control of visual token budgets and high-resolution fallback.
 
-II. **OrbitQuant**: INT4 NF4 resource-constrained deployment for Qwen3-VL-2B-Instruct + LoRA v1.
+II. **RemoteLoRA**: remote-sensing Caption/VQA/Grounding capability adaptation with LoRA v1.
 
-III. **HiRes-View**: optional Global + 2x2 high-resolution multi-view fallback.
+III. **OrbitQuant**: INT4 NF4 resource-constrained deployment for Qwen3-VL-2B-Instruct + LoRA v1.
 
-IV. **OrbitGuard-RS**: software-level soft-error integrity detection, criticality-aware protection, and automatic recovery.
+IV. **HiRes-View**: optional Global + 2x2 high-resolution multi-view fallback.
+
+V. **OrbitGuard-RS**: software-level soft-error integrity detection, criticality-aware protection, and automatic recovery.
 
 Report-ready figures are generated under `results/reliability/figures/`:
 
@@ -326,6 +370,13 @@ Use the unified dispatcher:
 cd /home/lhs/spacers_m3
 source .venv/bin/activate
 python scripts/benchmarks/run_benchmark.py <benchmark> --precision int4
+```
+
+For SpaceBudget-RS on MME-RS Lite and XLRS-Lite:
+
+```bash
+python scripts/benchmarks/run_benchmark.py mme-rs-lite --precision int4 --resource-mode auto
+python scripts/benchmarks/run_benchmark.py xlrs-lite --precision int4 --resource-mode auto
 ```
 
 Benchmark names:

@@ -1,0 +1,24 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='760' height='460' viewBox='0 0 760 460'>
+<rect width='100%' height='100%' fill='white'/>
+<text x='380.0' y='28' text-anchor='middle' font-size='20' font-family='Arial'>Accuracy vs Latency</text>
+<line x1='70' y1='390' x2='690' y2='390' stroke='#333'/>
+<line x1='70' y1='390' x2='70' y2='70' stroke='#333'/>
+<text x='380.0' y='440' text-anchor='middle' font-size='13' font-family='Arial'>Mean latency (s)</text>
+<text transform='translate(20 230.0) rotate(-90)' text-anchor='middle' font-size='13' font-family='Arial'>Accuracy</text>
+<circle cx='78.6' cy='390.0' r='7' fill='#2a9d8f'/>
+<text x='88.6' y='380.0' font-size='11' font-family='Arial'>MME-RS ECO 0.360</text>
+<circle cx='130.3' cy='118.0' r='7' fill='#2878b5'/>
+<text x='140.3' y='108.0' font-size='11' font-family='Arial'>MME-RS BALANCED 0.473</text>
+<circle cx='572.2' cy='70.0' r='7' fill='#d1495b'/>
+<text x='582.2' y='60.0' font-size='11' font-family='Arial'>MME-RS PRECISION 0.493</text>
+<circle cx='122.8' cy='150.0' r='7' fill='#7b2cbf'/>
+<text x='132.8' y='140.0' font-size='11' font-family='Arial'>MME-RS AUTO 0.460</text>
+<circle cx='70.0' cy='355.3' r='7' fill='#2a9d8f'/>
+<text x='80.0' y='345.3' font-size='11' font-family='Arial'>XLRS ECO 0.374</text>
+<circle cx='121.5' cy='320.2' r='7' fill='#2878b5'/>
+<text x='131.5' y='310.2' font-size='11' font-family='Arial'>XLRS BALANCED 0.389</text>
+<circle cx='690.0' cy='321.5' r='7' fill='#d1495b'/>
+<text x='700.0' y='311.5' font-size='11' font-family='Arial'>XLRS PRECISION 0.389</text>
+<circle cx='152.3' cy='300.8' r='7' fill='#7b2cbf'/>
+<text x='162.3' y='290.8' font-size='11' font-family='Arial'>XLRS AUTO 0.397</text>
+</svg>

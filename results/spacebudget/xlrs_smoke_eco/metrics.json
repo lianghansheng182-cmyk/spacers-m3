@@ -1,0 +1,20 @@
+{
+  "sample_count": 3,
+  "correct": 0,
+  "accuracy_micro": 0.0,
+  "accuracy_macro_category": 0.0,
+  "parse_failures": 0,
+  "multi_answer_count": 0,
+  "category_counts": {
+    "Complex reasoning/Anomaly Detection and Interpretation": 3
+  },
+  "category_accuracy": {
+    "Complex reasoning/Anomaly Detection and Interpretation": 0.0
+  },
+  "l2_counts": {
+    "default": 3
+  },
+  "l2_accuracy": {
+    "default": 0.0
+  }
+}

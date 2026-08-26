@@ -1,0 +1,17 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='520' viewBox='0 0 900 520'>
+<rect width='100%' height='100%' fill='white'/>
+<text x='450.0' y='30' text-anchor='middle' font-size='20' font-family='Arial'>AUTO vs Fixed BALANCED Accuracy</text>
+<line x1='90' y1='1999.9' x2='810' y2='1999.9' stroke='#999'/>
+<rect x='90.0' y='90.0' width='172.0' height='1909.9' fill='#2878b5'/>
+<text x='176.0' y='84.0' text-anchor='middle' font-size='10' font-family='Arial'>0.473</text>
+<text x='176.0' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 176.0,446)'>MME-RS BALANCED</text>
+<rect x='270.0' y='143.8' width='172.0' height='1856.1' fill='#2878b5'/>
+<text x='356.0' y='137.8' text-anchor='middle' font-size='10' font-family='Arial'>0.460</text>
+<text x='356.0' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 356.0,446)'>MME-RS AUTO</text>
+<rect x='450.0' y='430.0' width='172.0' height='1569.9' fill='#2878b5'/>
+<text x='536.0' y='424.0' text-anchor='middle' font-size='10' font-family='Arial'>0.389</text>
+<text x='536.0' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 536.0,446)'>XLRS BALANCED</text>
+<rect x='630.0' y='397.2' width='172.0' height='1602.6' fill='#2878b5'/>
+<text x='716.0' y='391.2' text-anchor='middle' font-size='10' font-family='Arial'>0.397</text>
+<text x='716.0' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 716.0,446)'>XLRS AUTO</text>
+</svg>

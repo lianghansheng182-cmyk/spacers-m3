@@ -1,0 +1,23 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='520' viewBox='0 0 900 520'>
+<rect width='100%' height='100%' fill='white'/>
+<text x='450.0' y='30' text-anchor='middle' font-size='20' font-family='Arial'>ECO / BALANCED / PRECISION Accuracy</text>
+<line x1='90' y1='1348.0' x2='810' y2='1348.0' stroke='#999'/>
+<rect x='90.0' y='430.0' width='112.0' height='918.0' fill='#2878b5'/>
+<text x='146.0' y='424.0' text-anchor='middle' font-size='10' font-family='Arial'>0.360</text>
+<text x='146.0' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 146.0,446)'>MME-RS ECO</text>
+<rect x='210.0' y='141.0' width='112.0' height='1207.0' fill='#2878b5'/>
+<text x='266.0' y='135.0' text-anchor='middle' font-size='10' font-family='Arial'>0.473</text>
+<text x='266.0' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 266.0,446)'>MME-RS BALANCED</text>
+<rect x='330.0' y='90.0' width='112.0' height='1258.0' fill='#2878b5'/>
+<text x='386.0' y='84.0' text-anchor='middle' font-size='10' font-family='Arial'>0.493</text>
+<text x='386.0' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 386.0,446)'>MME-RS PRECISION</text>
+<rect x='450.0' y='393.1' width='112.0' height='954.9' fill='#2878b5'/>
+<text x='506.0' y='387.1' text-anchor='middle' font-size='10' font-family='Arial'>0.374</text>
+<text x='506.0' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 506.0,446)'>XLRS ECO</text>
+<rect x='570.0' y='355.9' width='112.0' height='992.1' fill='#2878b5'/>
+<text x='626.0' y='349.9' text-anchor='middle' font-size='10' font-family='Arial'>0.389</text>
+<text x='626.0' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 626.0,446)'>XLRS BALANCED</text>
+<rect x='690.0' y='357.3' width='112.0' height='990.7' fill='#2878b5'/>
+<text x='746.0' y='351.3' text-anchor='middle' font-size='10' font-family='Arial'>0.389</text>
+<text x='746.0' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 746.0,446)'>XLRS PRECISION</text>
+</svg>

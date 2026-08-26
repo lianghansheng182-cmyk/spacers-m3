@@ -1,0 +1,592 @@
+[
+  {
+    "Question_id": "perception/remote_sensing/position/2527",
+    "Image": "dota_v2_dota_v2_dota_v2_P7036.png",
+    "Text": "Where is the yellow crane in the picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) In the upper right area of the picture",
+      "(B) In the upper left area of the picture",
+      "(C) In the lower right area of the picture",
+      "(D) In the lower left area of the picture",
+      "(E) This image doesn't feature the position."
+    ],
+    "Ground truth": "A",
+    "Category": "position",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "A",
+    "Parsed output": "A",
+    "Inference error": null,
+    "Latency s": 4.276816,
+    "Peak VRAM MB": 2582.2,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P7036.png",
+      "original_width": 7360,
+      "original_height": 4912,
+      "original_pixels": 36152320
+    },
+    "Tiling mode": "none",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          7360,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        104,
+        156
+      ]
+    ],
+    "SpaceBudget decision": {
+      "resource_mode": "precision",
+      "precision": "INT4 NF4",
+      "max_pixels": 4194304,
+      "tiling_mode": "none",
+      "reason": "explicit PRECISION profile"
+    },
+    "Patch visual tokens": 16224,
+    "Language visual tokens": 4056,
+    "Image token count": 4056
+  },
+  {
+    "Question_id": "perception/remote_sensing/position/1567",
+    "Image": "dota_v2_dota_v2_dota_v2_P4541.png",
+    "Text": "Where is the tennis court located in this picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) In the middle right area of this picture",
+      "(B) In the top left corner of this picture",
+      "(C) In the top right area of this picture",
+      "(D) In the bottom right corner of this picture",
+      "(E) This image doesn't feature the position."
+    ],
+    "Ground truth": "B",
+    "Category": "position",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "B",
+    "Parsed output": "B",
+    "Inference error": null,
+    "Latency s": 2.925073,
+    "Peak VRAM MB": 2585.59,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P4541.png",
+      "original_width": 2432,
+      "original_height": 3244,
+      "original_pixels": 7889408
+    },
+    "Tiling mode": "none",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          2432,
+          3244
+        ],
+        "original_width": 2432,
+        "original_height": 3244
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        148,
+        110
+      ]
+    ],
+    "SpaceBudget decision": {
+      "resource_mode": "precision",
+      "precision": "INT4 NF4",
+      "max_pixels": 4194304,
+      "tiling_mode": "none",
+      "reason": "explicit PRECISION profile"
+    },
+    "Patch visual tokens": 16280,
+    "Language visual tokens": 4070,
+    "Image token count": 4070
+  },
+  {
+    "Question_id": "perception/remote_sensing/position/1379",
+    "Image": "dota_v2_dota_v2_dota_v2_P3979.png",
+    "Text": "Where is the white tower in the picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) To the left above the picture, amidst the green trees.",
+      "(B) To the left corner of the picture, amidst the red trees.",
+      "(C) To the right at the bottom in the picture, amidst the green trees.",
+      "(D) To the right above the picture, amidst the green trees.",
+      "(E) This image doesn't feature the position."
+    ],
+    "Ground truth": "D",
+    "Category": "position",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "D",
+    "Parsed output": "D",
+    "Inference error": null,
+    "Latency s": 2.900142,
+    "Peak VRAM MB": 2584.91,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P3979.png",
+      "original_width": 7360,
+      "original_height": 4912,
+      "original_pixels": 36152320
+    },
+    "Tiling mode": "none",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          7360,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        104,
+        156
+      ]
+    ],
+    "SpaceBudget decision": {
+      "resource_mode": "precision",
+      "precision": "INT4 NF4",
+      "max_pixels": 4194304,
+      "tiling_mode": "none",
+      "reason": "explicit PRECISION profile"
+    },
+    "Patch visual tokens": 16224,
+    "Language visual tokens": 4056,
+    "Image token count": 4056
+  },
+  {
+    "Question_id": "perception/remote_sensing/position/1433",
+    "Image": "dota_v2_dota_v2_dota_v2_P4155.png",
+    "Text": "Where is the gray billboard with gorillas in the picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) In the upper left area of the picture",
+      "(B) In the upper right area of the picture",
+      "(C) In the lower right area of the picture",
+      "(D) At the top of the Y-shaped intersection in the middle of the picture",
+      "(E) This image doesn't feature the position."
+    ],
+    "Ground truth": "D",
+    "Category": "position",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "D",
+    "Parsed output": "D",
+    "Inference error": null,
+    "Latency s": 2.915225,
+    "Peak VRAM MB": 2583.49,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P4155.png",
+      "original_width": 7360,
+      "original_height": 4912,
+      "original_pixels": 36152320
+    },
+    "Tiling mode": "none",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          7360,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        104,
+        156
+      ]
+    ],
+    "SpaceBudget decision": {
+      "resource_mode": "precision",
+      "precision": "INT4 NF4",
+      "max_pixels": 4194304,
+      "tiling_mode": "none",
+      "reason": "explicit PRECISION profile"
+    },
+    "Patch visual tokens": 16224,
+    "Language visual tokens": 4056,
+    "Image token count": 4056
+  },
+  {
+    "Question_id": "perception/remote_sensing/position/3193",
+    "Image": "dota_v2_dota_v2_dota_v2_P8717.png",
+    "Text": "Where is the structure of blue, yellow, and green alternating colors in the picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) In the lower right corner of the picture.",
+      "(B) At the bottom left of the picture",
+      "(C) Inside the heart-shaped water area at the top left of the picture.",
+      "(D) In the upper right corner of the picture.",
+      "(E) This image doesn't feature the position."
+    ],
+    "Ground truth": "C",
+    "Category": "position",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "C",
+    "Parsed output": "C",
+    "Inference error": null,
+    "Latency s": 2.961102,
+    "Peak VRAM MB": 2596.2,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P8717.png",
+      "original_width": 4096,
+      "original_height": 4097,
+      "original_pixels": 16781312
+    },
+    "Tiling mode": "none",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          4096,
+          4097
+        ],
+        "original_width": 4096,
+        "original_height": 4097
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        128,
+        128
+      ]
+    ],
+    "SpaceBudget decision": {
+      "resource_mode": "precision",
+      "precision": "INT4 NF4",
+      "max_pixels": 4194304,
+      "tiling_mode": "none",
+      "reason": "explicit PRECISION profile"
+    },
+    "Patch visual tokens": 16384,
+    "Language visual tokens": 4096,
+    "Image token count": 4096
+  },
+  {
+    "Question_id": "perception/remote_sensing/position/2512",
+    "Image": "dota_v2_dota_v2_dota_v2_P7015.png",
+    "Text": "Where are the red and white cell towers in the picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) In the upper left area of the picture",
+      "(B) In the upper right area of the picture",
+      "(C) In the middle-left area of the picture",
+      "(D) In the lower left area of the picture",
+      "(E) This image doesn't feature the position."
+    ],
+    "Ground truth": "C",
+    "Category": "position",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "A",
+    "Parsed output": "A",
+    "Inference error": null,
+    "Latency s": 2.922473,
+    "Peak VRAM MB": 2591.63,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P7015.png",
+      "original_width": 4096,
+      "original_height": 4096,
+      "original_pixels": 16777216
+    },
+    "Tiling mode": "none",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          4096,
+          4096
+        ],
+        "original_width": 4096,
+        "original_height": 4096
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        128,
+        128
+      ]
+    ],
+    "SpaceBudget decision": {
+      "resource_mode": "precision",
+      "precision": "INT4 NF4",
+      "max_pixels": 4194304,
+      "tiling_mode": "none",
+      "reason": "explicit PRECISION profile"
+    },
+    "Patch visual tokens": 16384,
+    "Language visual tokens": 4096,
+    "Image token count": 4096
+  },
+  {
+    "Question_id": "perception/remote_sensing/position/1199",
+    "Image": "dota_v2_dota_v2_dota_v2_P3543.png",
+    "Text": "Where is the largest vacant lot in the picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) In the upper left area of the picture.",
+      "(B) In the upper right area of the picture.",
+      "(C) In the center area of the picture.",
+      "(D) In the bottom area of the picture.",
+      "(E) This image doesn't feature the position."
+    ],
+    "Ground truth": "C",
+    "Category": "position",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "C",
+    "Parsed output": "C",
+    "Inference error": null,
+    "Latency s": 2.884308,
+    "Peak VRAM MB": 2581.46,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P3543.png",
+      "original_width": 7360,
+      "original_height": 4912,
+      "original_pixels": 36152320
+    },
+    "Tiling mode": "none",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          7360,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        104,
+        156
+      ]
+    ],
+    "SpaceBudget decision": {
+      "resource_mode": "precision",
+      "precision": "INT4 NF4",
+      "max_pixels": 4194304,
+      "tiling_mode": "none",
+      "reason": "explicit PRECISION profile"
+    },
+    "Patch visual tokens": 16224,
+    "Language visual tokens": 4056,
+    "Image token count": 4056
+  },
+  {
+    "Question_id": "perception/remote_sensing/position/2983",
+    "Image": "dota_v2_dota_v2_dota_v2_P8102.png",
+    "Text": "Where is the circular mini amusement park with amusement facilities located in the picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) In the left area of the picture",
+      "(B) In the right area of the picture",
+      "(C) In the low area of the picture",
+      "(D) In the top area of the picture",
+      "(E) This image doesn't feature the position."
+    ],
+    "Ground truth": "D",
+    "Category": "position",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "A",
+    "Parsed output": "A",
+    "Inference error": null,
+    "Latency s": 2.921097,
+    "Peak VRAM MB": 2582.07,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P8102.png",
+      "original_width": 7360,
+      "original_height": 4912,
+      "original_pixels": 36152320
+    },
+    "Tiling mode": "none",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          7360,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        104,
+        156
+      ]
+    ],
+    "SpaceBudget decision": {
+      "resource_mode": "precision",
+      "precision": "INT4 NF4",
+      "max_pixels": 4194304,
+      "tiling_mode": "none",
+      "reason": "explicit PRECISION profile"
+    },
+    "Patch visual tokens": 16224,
+    "Language visual tokens": 4056,
+    "Image token count": 4056
+  },
+  {
+    "Question_id": "perception/remote_sensing/position/3639",
+    "Image": "top_potsdam_2_14_RGB_Potsdam.png",
+    "Text": "Where is the white umbrella object in the picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) In the lower right area of the picture",
+      "(B) In the right left area of the picture",
+      "(C) In the middle area of the picture",
+      "(D) In the upper right area of the picture",
+      "(E) This image doesn't feature the position."
+    ],
+    "Ground truth": "B",
+    "Category": "position",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "B",
+    "Parsed output": "B",
+    "Inference error": null,
+    "Latency s": 2.959265,
+    "Peak VRAM MB": 2591.02,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/top_potsdam_2_14_RGB_Potsdam.png",
+      "original_width": 6000,
+      "original_height": 6000,
+      "original_pixels": 36000000
+    },
+    "Tiling mode": "none",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          6000,
+          6000
+        ],
+        "original_width": 6000,
+        "original_height": 6000
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        128,
+        128
+      ]
+    ],
+    "SpaceBudget decision": {
+      "resource_mode": "precision",
+      "precision": "INT4 NF4",
+      "max_pixels": 4194304,
+      "tiling_mode": "none",
+      "reason": "explicit PRECISION profile"
+    },
+    "Patch visual tokens": 16384,
+    "Language visual tokens": 4096,
+    "Image token count": 4096
+  },
+  {
+    "Question_id": "perception/remote_sensing/position/1205",
+    "Image": "dota_v2_dota_v2_dota_v2_P3555.png",
+    "Text": "Where the river is in the picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) In the right area of the picture.",
+      "(B) In the upper right area of the picture.",
+      "(C) In the upper area of the picture.",
+      "(D) In the left area of the picture.",
+      "(E) This image doesn't feature the position."
+    ],
+    "Ground truth": "D",
+    "Category": "position",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "D",
+    "Parsed output": "D",
+    "Inference error": null,
+    "Latency s": 2.909713,
+    "Peak VRAM MB": 2580.85,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P3555.png",
+      "original_width": 7360,
+      "original_height": 4912,
+      "original_pixels": 36152320
+    },
+    "Tiling mode": "none",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          7360,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        104,
+        156
+      ]
+    ],
+    "SpaceBudget decision": {
+      "resource_mode": "precision",
+      "precision": "INT4 NF4",
+      "max_pixels": 4194304,
+      "tiling_mode": "none",
+      "reason": "explicit PRECISION profile"
+    },
+    "Patch visual tokens": 16224,
+    "Language visual tokens": 4056,
+    "Image token count": 4056
+  }
+]

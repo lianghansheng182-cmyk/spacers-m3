@@ -1,0 +1,679 @@
+{
+  "profiles": {
+    "ECO": 262144,
+    "BALANCED": 1048576,
+    "PRECISION": 4194304
+  },
+  "runs": {
+    "MME-RS": {
+      "ECO": {
+        "benchmark": "MME-RS",
+        "budget": "ECO",
+        "run_dir": "results/spacebudget/mme_eco",
+        "sample_count": 150,
+        "failure_count": 0,
+        "parse_failures": 0,
+        "accuracy": 0.36,
+        "latency_mean_s": 0.338364,
+        "latency_p95_s": 0.456903,
+        "peak_vram_mb": 1667.78,
+        "visual_tokens": {
+          "patch": {
+            "count": 150,
+            "mean": 960.586667,
+            "p50": 912.0,
+            "p95": 1024.0,
+            "min": 912,
+            "max": 1024
+          },
+          "language": {
+            "count": 150,
+            "mean": 240.146667,
+            "p50": 228.0,
+            "p95": 256.0,
+            "min": 228,
+            "max": 256
+          }
+        },
+        "metrics": {
+          "sample_count": 150,
+          "correct": 54,
+          "accuracy": 0.36,
+          "parse_failures": 0,
+          "by_task": {
+            "Perception": {
+              "Remote Sensing": {
+                "position": {
+                  "true": 20,
+                  "false": 30,
+                  "is_E": 0
+                },
+                "color": {
+                  "true": 22,
+                  "false": 28,
+                  "is_E": 0
+                },
+                "count": {
+                  "true": 12,
+                  "false": 38,
+                  "is_E": 4
+                }
+              }
+            }
+          }
+        },
+        "by_task_accuracy": {
+          "position": 0.4,
+          "color": 0.44,
+          "count": 0.24
+        }
+      },
+      "BALANCED": {
+        "benchmark": "MME-RS",
+        "budget": "BALANCED",
+        "run_dir": "results/spacebudget/mme_balanced",
+        "sample_count": 150,
+        "failure_count": 0,
+        "parse_failures": 0,
+        "accuracy": 0.473333,
+        "latency_mean_s": 0.599638,
+        "latency_p95_s": 0.716166,
+        "peak_vram_mb": 1850.04,
+        "visual_tokens": {
+          "patch": {
+            "count": 150,
+            "mean": 3927.786667,
+            "p50": 3800.0,
+            "p95": 4096.0,
+            "min": 3800,
+            "max": 4096
+          },
+          "language": {
+            "count": 150,
+            "mean": 981.946667,
+            "p50": 950.0,
+            "p95": 1024.0,
+            "min": 950,
+            "max": 1024
+          }
+        },
+        "metrics": {
+          "sample_count": 150,
+          "correct": 71,
+          "accuracy": 0.473333,
+          "parse_failures": 0,
+          "by_task": {
+            "Perception": {
+              "Remote Sensing": {
+                "position": {
+                  "true": 33,
+                  "false": 17,
+                  "is_E": 0
+                },
+                "color": {
+                  "true": 26,
+                  "false": 24,
+                  "is_E": 1
+                },
+                "count": {
+                  "true": 12,
+                  "false": 38,
+                  "is_E": 4
+                }
+              }
+            }
+          }
+        },
+        "by_task_accuracy": {
+          "position": 0.66,
+          "color": 0.52,
+          "count": 0.24
+        }
+      },
+      "PRECISION": {
+        "benchmark": "MME-RS",
+        "budget": "PRECISION",
+        "run_dir": "results/spacebudget/mme_precision",
+        "sample_count": 150,
+        "failure_count": 0,
+        "parse_failures": 0,
+        "accuracy": 0.493333,
+        "latency_mean_s": 2.834247,
+        "latency_p95_s": 3.034765,
+        "peak_vram_mb": 2597.24,
+        "visual_tokens": {
+          "patch": {
+            "count": 150,
+            "mean": 15854.586667,
+            "p50": 16224.0,
+            "p95": 16384.0,
+            "min": 3828,
+            "max": 16432
+          },
+          "language": {
+            "count": 150,
+            "mean": 3963.646667,
+            "p50": 4056.0,
+            "p95": 4096.0,
+            "min": 957,
+            "max": 4108
+          }
+        },
+        "metrics": {
+          "sample_count": 150,
+          "correct": 74,
+          "accuracy": 0.493333,
+          "parse_failures": 0,
+          "by_task": {
+            "Perception": {
+              "Remote Sensing": {
+                "position": {
+                  "true": 36,
+                  "false": 14,
+                  "is_E": 0
+                },
+                "color": {
+                  "true": 26,
+                  "false": 24,
+                  "is_E": 2
+                },
+                "count": {
+                  "true": 12,
+                  "false": 38,
+                  "is_E": 6
+                }
+              }
+            }
+          }
+        },
+        "by_task_accuracy": {
+          "position": 0.72,
+          "color": 0.52,
+          "count": 0.24
+        }
+      },
+      "AUTO": {
+        "benchmark": "MME-RS",
+        "budget": "AUTO",
+        "run_dir": "results/spacebudget/mme_auto",
+        "sample_count": 150,
+        "failure_count": 0,
+        "parse_failures": 0,
+        "accuracy": 0.46,
+        "latency_mean_s": 0.561876,
+        "latency_p95_s": 0.815746,
+        "peak_vram_mb": 1850.04,
+        "visual_tokens": {
+          "patch": {
+            "count": 150,
+            "mean": 2940.506667,
+            "p50": 3800.0,
+            "p95": 4096.0,
+            "min": 912,
+            "max": 4096
+          },
+          "language": {
+            "count": 150,
+            "mean": 735.126667,
+            "p50": 950.0,
+            "p95": 1024.0,
+            "min": 228,
+            "max": 1024
+          }
+        },
+        "metrics": {
+          "sample_count": 150,
+          "correct": 69,
+          "accuracy": 0.46,
+          "parse_failures": 0,
+          "by_task": {
+            "Perception": {
+              "Remote Sensing": {
+                "position": {
+                  "true": 30,
+                  "false": 20,
+                  "is_E": 1
+                },
+                "color": {
+                  "true": 29,
+                  "false": 21,
+                  "is_E": 1
+                },
+                "count": {
+                  "true": 10,
+                  "false": 40,
+                  "is_E": 11
+                }
+              }
+            }
+          }
+        },
+        "by_task_accuracy": {
+          "position": 0.6,
+          "color": 0.58,
+          "count": 0.2
+        }
+      }
+    },
+    "XLRS": {
+      "ECO": {
+        "benchmark": "XLRS",
+        "budget": "ECO",
+        "run_dir": "results/spacebudget/xlrs_eco_full",
+        "sample_count": 1848,
+        "failure_count": 0,
+        "parse_failures": 0,
+        "accuracy": 0.374459,
+        "latency_mean_s": 0.29491,
+        "latency_p95_s": 0.432953,
+        "peak_vram_mb": 1715.27,
+        "visual_tokens": {
+          "patch": {
+            "count": 1848,
+            "mean": 1005.339827,
+            "p50": 1024.0,
+            "p95": 1024.0,
+            "min": 912,
+            "max": 1024
+          },
+          "language": {
+            "count": 1848,
+            "mean": 251.334957,
+            "p50": 256.0,
+            "p95": 256.0,
+            "min": 228,
+            "max": 256
+          }
+        },
+        "metrics": {
+          "sample_count": 1848,
+          "correct": 692,
+          "accuracy_micro": 0.374459,
+          "accuracy_macro_category": 0.460686,
+          "parse_failures": 0,
+          "multi_answer_count": 0,
+          "category_counts": {
+            "Complex reasoning/Anomaly Detection and Interpretation": 100,
+            "Complex reasoning/Environmental condition reasoning": 100,
+            "Counting/Counting with complex reasoning": 100,
+            "Counting/Overall counting": 60,
+            "Land use classification/Regional Land use classification": 200,
+            "Object properties/Object color": 728,
+            "Object properties/Object motion state": 60,
+            "Object spatial relationship/Object spatial relationship": 500
+          },
+          "category_accuracy": {
+            "Complex reasoning/Anomaly Detection and Interpretation": 0.68,
+            "Complex reasoning/Environmental condition reasoning": 0.75,
+            "Counting/Counting with complex reasoning": 0.36,
+            "Counting/Overall counting": 0.25,
+            "Land use classification/Regional Land use classification": 0.625,
+            "Object properties/Object color": 0.266484,
+            "Object properties/Object motion state": 0.45,
+            "Object spatial relationship/Object spatial relationship": 0.304
+          },
+          "l2_counts": {
+            "default": 1848
+          },
+          "l2_accuracy": {
+            "default": 0.374459
+          }
+        },
+        "by_task_accuracy": {
+          "Complex reasoning/Anomaly Detection and Interpretation": 0.68,
+          "Complex reasoning/Environmental condition reasoning": 0.75,
+          "Counting/Counting with complex reasoning": 0.36,
+          "Counting/Overall counting": 0.25,
+          "Land use classification/Regional Land use classification": 0.625,
+          "Object properties/Object color": 0.266484,
+          "Object properties/Object motion state": 0.45,
+          "Object spatial relationship/Object spatial relationship": 0.304
+        }
+      },
+      "BALANCED": {
+        "benchmark": "XLRS",
+        "budget": "BALANCED",
+        "run_dir": "results/xlrs_bench/partial_44shards_int4",
+        "sample_count": 1848,
+        "failure_count": 0,
+        "parse_failures": 0,
+        "accuracy": 0.389069,
+        "latency_mean_s": 0.55537,
+        "latency_p95_s": 0.681128,
+        "peak_vram_mb": 1901.08,
+        "visual_tokens": {
+          "patch": {
+            "count": 1848,
+            "mean": 4047.077922,
+            "p50": 4096.0,
+            "p95": 4096.0,
+            "min": 3800,
+            "max": 4096
+          },
+          "language": {
+            "count": 1848,
+            "mean": 1011.769481,
+            "p50": 1024.0,
+            "p95": 1024.0,
+            "min": 950,
+            "max": 1024
+          }
+        },
+        "metrics": {
+          "sample_count": 1848,
+          "correct": 719,
+          "accuracy_micro": 0.389069,
+          "accuracy_macro_category": 0.478757,
+          "parse_failures": 0,
+          "multi_answer_count": 0,
+          "category_counts": {
+            "Complex reasoning/Anomaly Detection and Interpretation": 100,
+            "Complex reasoning/Environmental condition reasoning": 100,
+            "Counting/Counting with complex reasoning": 100,
+            "Counting/Overall counting": 60,
+            "Land use classification/Regional Land use classification": 200,
+            "Object properties/Object color": 728,
+            "Object properties/Object motion state": 60,
+            "Object spatial relationship/Object spatial relationship": 500
+          },
+          "category_accuracy": {
+            "Complex reasoning/Anomaly Detection and Interpretation": 0.68,
+            "Complex reasoning/Environmental condition reasoning": 0.77,
+            "Counting/Counting with complex reasoning": 0.41,
+            "Counting/Overall counting": 0.216667,
+            "Land use classification/Regional Land use classification": 0.64,
+            "Object properties/Object color": 0.274725,
+            "Object properties/Object motion state": 0.516667,
+            "Object spatial relationship/Object spatial relationship": 0.322
+          },
+          "l2_counts": {
+            "default": 1848
+          },
+          "l2_accuracy": {
+            "default": 0.389069
+          }
+        },
+        "by_task_accuracy": {
+          "Complex reasoning/Anomaly Detection and Interpretation": 0.68,
+          "Complex reasoning/Environmental condition reasoning": 0.77,
+          "Counting/Counting with complex reasoning": 0.41,
+          "Counting/Overall counting": 0.216667,
+          "Land use classification/Regional Land use classification": 0.64,
+          "Object properties/Object color": 0.274725,
+          "Object properties/Object motion state": 0.516667,
+          "Object spatial relationship/Object spatial relationship": 0.322
+        }
+      },
+      "PRECISION": {
+        "benchmark": "XLRS",
+        "budget": "PRECISION",
+        "run_dir": "results/spacebudget/xlrs_precision_full",
+        "sample_count": 1848,
+        "failure_count": 0,
+        "parse_failures": 1,
+        "accuracy": 0.388528,
+        "latency_mean_s": 3.429975,
+        "latency_p95_s": 4.174926,
+        "peak_vram_mb": 2646.94,
+        "visual_tokens": {
+          "patch": {
+            "count": 1848,
+            "mean": 16347.554113,
+            "p50": 16384.0,
+            "p95": 16384.0,
+            "min": 7568,
+            "max": 16432
+          },
+          "language": {
+            "count": 1848,
+            "mean": 4086.888528,
+            "p50": 4096.0,
+            "p95": 4096.0,
+            "min": 1892,
+            "max": 4108
+          }
+        },
+        "metrics": {
+          "sample_count": 1848,
+          "correct": 718,
+          "accuracy_micro": 0.388528,
+          "accuracy_macro_category": 0.477319,
+          "parse_failures": 1,
+          "multi_answer_count": 0,
+          "category_counts": {
+            "Complex reasoning/Anomaly Detection and Interpretation": 100,
+            "Complex reasoning/Environmental condition reasoning": 100,
+            "Counting/Counting with complex reasoning": 100,
+            "Counting/Overall counting": 60,
+            "Land use classification/Regional Land use classification": 200,
+            "Object properties/Object color": 728,
+            "Object properties/Object motion state": 60,
+            "Object spatial relationship/Object spatial relationship": 500
+          },
+          "category_accuracy": {
+            "Complex reasoning/Anomaly Detection and Interpretation": 0.64,
+            "Complex reasoning/Environmental condition reasoning": 0.74,
+            "Counting/Counting with complex reasoning": 0.43,
+            "Counting/Overall counting": 0.316667,
+            "Land use classification/Regional Land use classification": 0.695,
+            "Object properties/Object color": 0.28022,
+            "Object properties/Object motion state": 0.416667,
+            "Object spatial relationship/Object spatial relationship": 0.3
+          },
+          "l2_counts": {
+            "default": 1848
+          },
+          "l2_accuracy": {
+            "default": 0.388528
+          }
+        },
+        "by_task_accuracy": {
+          "Complex reasoning/Anomaly Detection and Interpretation": 0.64,
+          "Complex reasoning/Environmental condition reasoning": 0.74,
+          "Counting/Counting with complex reasoning": 0.43,
+          "Counting/Overall counting": 0.316667,
+          "Land use classification/Regional Land use classification": 0.695,
+          "Object properties/Object color": 0.28022,
+          "Object properties/Object motion state": 0.416667,
+          "Object spatial relationship/Object spatial relationship": 0.3
+        }
+      },
+      "AUTO": {
+        "benchmark": "XLRS",
+        "budget": "AUTO",
+        "run_dir": "results/spacebudget/xlrs_auto_full",
+        "sample_count": 1848,
+        "failure_count": 0,
+        "parse_failures": 0,
+        "accuracy": 0.397186,
+        "latency_mean_s": 0.711017,
+        "latency_p95_s": 0.939976,
+        "peak_vram_mb": 1901.08,
+        "visual_tokens": {
+          "patch": {
+            "count": 1848,
+            "mean": 3947.666667,
+            "p50": 4096.0,
+            "p95": 4096.0,
+            "min": 912,
+            "max": 4096
+          },
+          "language": {
+            "count": 1848,
+            "mean": 986.916667,
+            "p50": 1024.0,
+            "p95": 1024.0,
+            "min": 228,
+            "max": 1024
+          }
+        },
+        "metrics": {
+          "sample_count": 1848,
+          "correct": 734,
+          "accuracy_micro": 0.397186,
+          "accuracy_macro_category": 0.481261,
+          "parse_failures": 0,
+          "multi_answer_count": 0,
+          "category_counts": {
+            "Complex reasoning/Anomaly Detection and Interpretation": 100,
+            "Complex reasoning/Environmental condition reasoning": 100,
+            "Counting/Counting with complex reasoning": 100,
+            "Counting/Overall counting": 60,
+            "Land use classification/Regional Land use classification": 200,
+            "Object properties/Object color": 728,
+            "Object properties/Object motion state": 60,
+            "Object spatial relationship/Object spatial relationship": 500
+          },
+          "category_accuracy": {
+            "Complex reasoning/Anomaly Detection and Interpretation": 0.69,
+            "Complex reasoning/Environmental condition reasoning": 0.77,
+            "Counting/Counting with complex reasoning": 0.42,
+            "Counting/Overall counting": 0.216667,
+            "Land use classification/Regional Land use classification": 0.655,
+            "Object properties/Object color": 0.287088,
+            "Object properties/Object motion state": 0.483333,
+            "Object spatial relationship/Object spatial relationship": 0.328
+          },
+          "l2_counts": {
+            "default": 1848
+          },
+          "l2_accuracy": {
+            "default": 0.397186
+          }
+        },
+        "by_task_accuracy": {
+          "Complex reasoning/Anomaly Detection and Interpretation": 0.69,
+          "Complex reasoning/Environmental condition reasoning": 0.77,
+          "Counting/Counting with complex reasoning": 0.42,
+          "Counting/Overall counting": 0.216667,
+          "Land use classification/Regional Land use classification": 0.655,
+          "Object properties/Object color": 0.287088,
+          "Object properties/Object motion state": 0.483333,
+          "Object spatial relationship/Object spatial relationship": 0.328
+        }
+      }
+    }
+  },
+  "summary_rows": [
+    {
+      "benchmark": "MME-RS",
+      "budget": "ECO",
+      "sample_count": 150,
+      "accuracy": 0.36,
+      "mean_language_visual_tokens": 240.146667,
+      "p50_language_visual_tokens": 228.0,
+      "p95_language_visual_tokens": 256.0,
+      "latency_mean_s": 0.338364,
+      "latency_p95_s": 0.456903,
+      "peak_vram_mb": 1667.78,
+      "failure_count": 0,
+      "parse_failures": 0
+    },
+    {
+      "benchmark": "MME-RS",
+      "budget": "BALANCED",
+      "sample_count": 150,
+      "accuracy": 0.473333,
+      "mean_language_visual_tokens": 981.946667,
+      "p50_language_visual_tokens": 950.0,
+      "p95_language_visual_tokens": 1024.0,
+      "latency_mean_s": 0.599638,
+      "latency_p95_s": 0.716166,
+      "peak_vram_mb": 1850.04,
+      "failure_count": 0,
+      "parse_failures": 0
+    },
+    {
+      "benchmark": "MME-RS",
+      "budget": "PRECISION",
+      "sample_count": 150,
+      "accuracy": 0.493333,
+      "mean_language_visual_tokens": 3963.646667,
+      "p50_language_visual_tokens": 4056.0,
+      "p95_language_visual_tokens": 4096.0,
+      "latency_mean_s": 2.834247,
+      "latency_p95_s": 3.034765,
+      "peak_vram_mb": 2597.24,
+      "failure_count": 0,
+      "parse_failures": 0
+    },
+    {
+      "benchmark": "MME-RS",
+      "budget": "AUTO",
+      "sample_count": 150,
+      "accuracy": 0.46,
+      "mean_language_visual_tokens": 735.126667,
+      "p50_language_visual_tokens": 950.0,
+      "p95_language_visual_tokens": 1024.0,
+      "latency_mean_s": 0.561876,
+      "latency_p95_s": 0.815746,
+      "peak_vram_mb": 1850.04,
+      "failure_count": 0,
+      "parse_failures": 0
+    },
+    {
+      "benchmark": "XLRS",
+      "budget": "ECO",
+      "sample_count": 1848,
+      "accuracy": 0.374459,
+      "mean_language_visual_tokens": 251.334957,
+      "p50_language_visual_tokens": 256.0,
+      "p95_language_visual_tokens": 256.0,
+      "latency_mean_s": 0.29491,
+      "latency_p95_s": 0.432953,
+      "peak_vram_mb": 1715.27,
+      "failure_count": 0,
+      "parse_failures": 0
+    },
+    {
+      "benchmark": "XLRS",
+      "budget": "BALANCED",
+      "sample_count": 1848,
+      "accuracy": 0.389069,
+      "mean_language_visual_tokens": 1011.769481,
+      "p50_language_visual_tokens": 1024.0,
+      "p95_language_visual_tokens": 1024.0,
+      "latency_mean_s": 0.55537,
+      "latency_p95_s": 0.681128,
+      "peak_vram_mb": 1901.08,
+      "failure_count": 0,
+      "parse_failures": 0
+    },
+    {
+      "benchmark": "XLRS",
+      "budget": "PRECISION",
+      "sample_count": 1848,
+      "accuracy": 0.388528,
+      "mean_language_visual_tokens": 4086.888528,
+      "p50_language_visual_tokens": 4096.0,
+      "p95_language_visual_tokens": 4096.0,
+      "latency_mean_s": 3.429975,
+      "latency_p95_s": 4.174926,
+      "peak_vram_mb": 2646.94,
+      "failure_count": 0,
+      "parse_failures": 1
+    },
+    {
+      "benchmark": "XLRS",
+      "budget": "AUTO",
+      "sample_count": 1848,
+      "accuracy": 0.397186,
+      "mean_language_visual_tokens": 986.916667,
+      "p50_language_visual_tokens": 1024.0,
+      "p95_language_visual_tokens": 1024.0,
+      "latency_mean_s": 0.711017,
+      "latency_p95_s": 0.939976,
+      "peak_vram_mb": 1901.08,
+      "failure_count": 0,
+      "parse_failures": 0
+    }
+  ],
+  "figures": [
+    "results/spacebudget/figures/accuracy_vs_visual_tokens.svg",
+    "results/spacebudget/figures/accuracy_vs_latency.svg",
+    "results/spacebudget/figures/task_budget_sensitivity.svg",
+    "results/spacebudget/figures/spacebudget_architecture.svg",
+    "results/spacebudget/figures/eco_balanced_precision_comparison.svg",
+    "results/spacebudget/figures/auto_vs_fixed.svg"
+  ]
+}

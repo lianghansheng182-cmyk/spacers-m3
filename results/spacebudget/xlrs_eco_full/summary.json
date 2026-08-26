@@ -1,0 +1,70 @@
+{
+  "run_config_path": "/home/lhs/spacers_m3/results/spacebudget/xlrs_eco_full/run_config.json",
+  "predictions_path": "/home/lhs/spacers_m3/results/spacebudget/xlrs_eco_full/predictions.jsonl",
+  "metrics_path": "/home/lhs/spacers_m3/results/spacebudget/xlrs_eco_full/metrics.json",
+  "sample_count": 1848,
+  "failure_count": 0,
+  "model_load_time_s": 5.949536,
+  "latency_mean_s": 0.29491,
+  "latency_p95_s": 0.432953,
+  "peak_vram_mb": 1715.27,
+  "resolution_stats": {
+    "min_width": 1361,
+    "max_width": 11500,
+    "min_height": 1196,
+    "max_height": 10000,
+    "max_pixels": 100000000
+  },
+  "visual_tokens": {
+    "patch": {
+      "count": 1848,
+      "mean": 1005.339827,
+      "p50": 1024.0,
+      "p95": 1024.0,
+      "min": 912,
+      "max": 1024
+    },
+    "language": {
+      "count": 1848,
+      "mean": 251.334957,
+      "p50": 256.0,
+      "p95": 256.0,
+      "min": 228,
+      "max": 256
+    }
+  },
+  "metrics": {
+    "sample_count": 1848,
+    "correct": 692,
+    "accuracy_micro": 0.374459,
+    "accuracy_macro_category": 0.460686,
+    "parse_failures": 0,
+    "multi_answer_count": 0,
+    "category_counts": {
+      "Complex reasoning/Anomaly Detection and Interpretation": 100,
+      "Complex reasoning/Environmental condition reasoning": 100,
+      "Counting/Counting with complex reasoning": 100,
+      "Counting/Overall counting": 60,
+      "Land use classification/Regional Land use classification": 200,
+      "Object properties/Object color": 728,
+      "Object properties/Object motion state": 60,
+      "Object spatial relationship/Object spatial relationship": 500
+    },
+    "category_accuracy": {
+      "Complex reasoning/Anomaly Detection and Interpretation": 0.68,
+      "Complex reasoning/Environmental condition reasoning": 0.75,
+      "Counting/Counting with complex reasoning": 0.36,
+      "Counting/Overall counting": 0.25,
+      "Land use classification/Regional Land use classification": 0.625,
+      "Object properties/Object color": 0.266484,
+      "Object properties/Object motion state": 0.45,
+      "Object spatial relationship/Object spatial relationship": 0.304
+    },
+    "l2_counts": {
+      "default": 1848
+    },
+    "l2_accuracy": {
+      "default": 0.374459
+    }
+  }
+}

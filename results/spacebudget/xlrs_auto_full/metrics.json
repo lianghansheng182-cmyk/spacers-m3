@@ -1,0 +1,34 @@
+{
+  "sample_count": 1848,
+  "correct": 734,
+  "accuracy_micro": 0.397186,
+  "accuracy_macro_category": 0.481261,
+  "parse_failures": 0,
+  "multi_answer_count": 0,
+  "category_counts": {
+    "Complex reasoning/Anomaly Detection and Interpretation": 100,
+    "Complex reasoning/Environmental condition reasoning": 100,
+    "Counting/Counting with complex reasoning": 100,
+    "Counting/Overall counting": 60,
+    "Land use classification/Regional Land use classification": 200,
+    "Object properties/Object color": 728,
+    "Object properties/Object motion state": 60,
+    "Object spatial relationship/Object spatial relationship": 500
+  },
+  "category_accuracy": {
+    "Complex reasoning/Anomaly Detection and Interpretation": 0.69,
+    "Complex reasoning/Environmental condition reasoning": 0.77,
+    "Counting/Counting with complex reasoning": 0.42,
+    "Counting/Overall counting": 0.216667,
+    "Land use classification/Regional Land use classification": 0.655,
+    "Object properties/Object color": 0.287088,
+    "Object properties/Object motion state": 0.483333,
+    "Object spatial relationship/Object spatial relationship": 0.328
+  },
+  "l2_counts": {
+    "default": 1848
+  },
+  "l2_accuracy": {
+    "default": 0.397186
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "run_config_path": "/home/lhs/spacers_m3/results/spacebudget/mme_smoke_eco/run_config.json",
+  "predictions_path": "/home/lhs/spacers_m3/results/spacebudget/mme_smoke_eco/predictions.json",
+  "metrics_path": "/home/lhs/spacers_m3/results/spacebudget/mme_smoke_eco/metrics.json",
+  "official_eval": {
+    "available": true,
+    "returncode": 0,
+    "stdout_path": "/home/lhs/spacers_m3/results/spacebudget/mme_smoke_eco/official_eval_stdout.txt"
+  },
+  "sample_count": 3,
+  "failure_count": 0,
+  "model_load_time_s": 13.906745,
+  "latency_mean_s": 0.927484,
+  "latency_p95_s": 1.809459,
+  "peak_vram_mb": 1663.31,
+  "visual_tokens": {
+    "patch": {
+      "count": 3,
+      "mean": 920.0,
+      "p50": 912.0,
+      "p95": 933.6,
+      "min": 912,
+      "max": 936
+    },
+    "language": {
+      "count": 3,
+      "mean": 230.0,
+      "p50": 228.0,
+      "p95": 233.4,
+      "min": 228,
+      "max": 234
+    }
+  },
+  "metrics": {
+    "sample_count": 3,
+    "correct": 1,
+    "accuracy": 0.333333,
+    "parse_failures": 0,
+    "by_task": {
+      "Perception": {
+        "Remote Sensing": {
+          "position": {
+            "true": 1,
+            "false": 2,
+            "is_E": 0
+          }
+        }
+      }
+    }
+  }
+}

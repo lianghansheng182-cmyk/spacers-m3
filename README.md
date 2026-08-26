@@ -60,6 +60,8 @@ Supported benchmark names:
 
 Use `--limit N` for smoke runs where supported. Use `--precision bf16`, `--precision int8`, or `--precision int4` to select the backend. For MME-RS Lite and XLRS-Lite, `--tiling-mode grid_2x2` enables the high-resolution multi-view ablation.
 
+For MME-RS Lite and XLRS-Lite, SpaceBudget-RS can select the visual compute budget through `--resource-mode fixed|eco|balanced|precision|auto`. `fixed` preserves the explicit `--max-pixels` value. `auto` is a deterministic task-aware rule that uses only pre-inference task/question/image metadata.
+
 ## Reproduction Commands
 
 VRSBench 90-sample internal validation:
@@ -109,6 +111,26 @@ python scripts/benchmarks/run_benchmark.py mme-rs-lite \
   --precision int4 \
   --tiling-mode grid_2x2 \
   --output-dir results/highres/mme_rs_tiling_full_int4
+```
+
+SpaceBudget-RS dynamic visual-budget ablation:
+
+```bash
+python scripts/benchmarks/run_benchmark.py mme-rs-lite \
+  --precision int4 \
+  --resource-mode auto \
+  --output-dir results/spacebudget/mme_auto
+```
+
+```bash
+python scripts/benchmarks/run_benchmark.py xlrs-lite \
+  --precision int4 \
+  --resource-mode auto \
+  --output-dir results/spacebudget/xlrs_auto_full
+```
+
+```bash
+python scripts/spacebudget/build_spacebudget_reports.py
 ```
 
 LEVIR-CC official test split:

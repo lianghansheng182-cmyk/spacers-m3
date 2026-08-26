@@ -1,0 +1,38 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='520' viewBox='0 0 900 520'>
+<rect width='100%' height='100%' fill='white'/>
+<text x='450.0' y='30' text-anchor='middle' font-size='20' font-family='Arial'>Task Sensitivity: BALANCED - ECO Accuracy</text>
+<line x1='90' y1='391.4' x2='810' y2='391.4' stroke='#999'/>
+<rect x='90.0' y='90.0' width='57.5' height='301.4' fill='#2878b5'/>
+<text x='118.7' y='84.0' text-anchor='middle' font-size='10' font-family='Arial'>0.260</text>
+<text x='118.7' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 118.7,446)'>MME-RS position</text>
+<rect x='155.5' y='298.6' width='57.5' height='92.7' fill='#2878b5'/>
+<text x='184.2' y='292.6' text-anchor='middle' font-size='10' font-family='Arial'>0.080</text>
+<text x='184.2' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 184.2,446)'>MME-RS color</text>
+<rect x='220.9' y='391.4' width='57.5' height='0.0' fill='#2878b5'/>
+<text x='249.6' y='385.4' text-anchor='middle' font-size='10' font-family='Arial'>0.000</text>
+<text x='249.6' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 249.6,446)'>MME-RS count</text>
+<rect x='286.4' y='391.4' width='57.5' height='0.0' fill='#2878b5'/>
+<text x='315.1' y='385.4' text-anchor='middle' font-size='10' font-family='Arial'>0.000</text>
+<text x='315.1' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 315.1,446)'>XLRS Complex reasoning/Anomaly Detection and Interpretation</text>
+<rect x='351.8' y='368.2' width='57.5' height='23.2' fill='#2878b5'/>
+<text x='380.5' y='362.2' text-anchor='middle' font-size='10' font-family='Arial'>0.020</text>
+<text x='380.5' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 380.5,446)'>XLRS Complex reasoning/Environmental condition reasoning</text>
+<rect x='417.3' y='333.4' width='57.5' height='58.0' fill='#2878b5'/>
+<text x='446.0' y='327.4' text-anchor='middle' font-size='10' font-family='Arial'>0.050</text>
+<text x='446.0' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 446.0,446)'>XLRS Counting/Counting with complex reasoning</text>
+<rect x='482.7' y='391.4' width='57.5' height='38.6' fill='#d1495b'/>
+<text x='511.5' y='444.0' text-anchor='middle' font-size='10' font-family='Arial'>-0.033</text>
+<text x='511.5' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 511.5,446)'>XLRS Counting/Overall counting</text>
+<rect x='548.2' y='374.0' width='57.5' height='17.4' fill='#2878b5'/>
+<text x='576.9' y='368.0' text-anchor='middle' font-size='10' font-family='Arial'>0.015</text>
+<text x='576.9' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 576.9,446)'>XLRS Land use classification/Regional Land use classification</text>
+<rect x='613.6' y='381.8' width='57.5' height='9.6' fill='#2878b5'/>
+<text x='642.4' y='375.8' text-anchor='middle' font-size='10' font-family='Arial'>0.008</text>
+<text x='642.4' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 642.4,446)'>XLRS Object properties/Object color</text>
+<rect x='679.1' y='314.1' width='57.5' height='77.3' fill='#2878b5'/>
+<text x='707.8' y='308.1' text-anchor='middle' font-size='10' font-family='Arial'>0.067</text>
+<text x='707.8' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 707.8,446)'>XLRS Object properties/Object motion state</text>
+<rect x='744.5' y='370.5' width='57.5' height='20.9' fill='#2878b5'/>
+<text x='773.3' y='364.5' text-anchor='middle' font-size='10' font-family='Arial'>0.018</text>
+<text x='773.3' y='446' text-anchor='middle' font-size='9' font-family='Arial' transform='rotate(45 773.3,446)'>XLRS Object spatial relationship/Object spatial relationship</text>
+</svg>

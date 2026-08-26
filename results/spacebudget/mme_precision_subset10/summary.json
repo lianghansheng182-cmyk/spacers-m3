@@ -1,0 +1,51 @@
+{
+  "run_config_path": "/home/lhs/spacers_m3/results/spacebudget/mme_precision_subset10/run_config.json",
+  "predictions_path": "/home/lhs/spacers_m3/results/spacebudget/mme_precision_subset10/predictions.json",
+  "metrics_path": "/home/lhs/spacers_m3/results/spacebudget/mme_precision_subset10/metrics.json",
+  "official_eval": {
+    "available": true,
+    "returncode": 0,
+    "stdout_path": "/home/lhs/spacers_m3/results/spacebudget/mme_precision_subset10/official_eval_stdout.txt"
+  },
+  "sample_count": 10,
+  "failure_count": 0,
+  "model_load_time_s": 5.505822,
+  "latency_mean_s": 3.057521,
+  "latency_p95_s": 3.684745,
+  "peak_vram_mb": 2596.2,
+  "visual_tokens": {
+    "patch": {
+      "count": 10,
+      "mean": 16277.6,
+      "p50": 16224.0,
+      "p95": 16384.0,
+      "min": 16224,
+      "max": 16384
+    },
+    "language": {
+      "count": 10,
+      "mean": 4069.4,
+      "p50": 4056.0,
+      "p95": 4096.0,
+      "min": 4056,
+      "max": 4096
+    }
+  },
+  "metrics": {
+    "sample_count": 10,
+    "correct": 8,
+    "accuracy": 0.8,
+    "parse_failures": 0,
+    "by_task": {
+      "Perception": {
+        "Remote Sensing": {
+          "position": {
+            "true": 8,
+            "false": 2,
+            "is_E": 0
+          }
+        }
+      }
+    }
+  }
+}

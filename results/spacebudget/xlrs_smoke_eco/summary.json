@@ -1,0 +1,56 @@
+{
+  "run_config_path": "/home/lhs/spacers_m3/results/spacebudget/xlrs_smoke_eco/run_config.json",
+  "predictions_path": "/home/lhs/spacers_m3/results/spacebudget/xlrs_smoke_eco/predictions.jsonl",
+  "metrics_path": "/home/lhs/spacers_m3/results/spacebudget/xlrs_smoke_eco/metrics.json",
+  "sample_count": 3,
+  "failure_count": 0,
+  "model_load_time_s": 13.233548,
+  "latency_mean_s": 1.087638,
+  "latency_p95_s": 2.333661,
+  "peak_vram_mb": 1673.9,
+  "resolution_stats": {
+    "min_width": 4096,
+    "max_width": 10000,
+    "min_height": 4096,
+    "max_height": 10000,
+    "max_pixels": 100000000
+  },
+  "visual_tokens": {
+    "patch": {
+      "count": 3,
+      "mean": 1024.0,
+      "p50": 1024.0,
+      "p95": 1024.0,
+      "min": 1024,
+      "max": 1024
+    },
+    "language": {
+      "count": 3,
+      "mean": 256.0,
+      "p50": 256.0,
+      "p95": 256.0,
+      "min": 256,
+      "max": 256
+    }
+  },
+  "metrics": {
+    "sample_count": 3,
+    "correct": 0,
+    "accuracy_micro": 0.0,
+    "accuracy_macro_category": 0.0,
+    "parse_failures": 0,
+    "multi_answer_count": 0,
+    "category_counts": {
+      "Complex reasoning/Anomaly Detection and Interpretation": 3
+    },
+    "category_accuracy": {
+      "Complex reasoning/Anomaly Detection and Interpretation": 0.0
+    },
+    "l2_counts": {
+      "default": 3
+    },
+    "l2_accuracy": {
+      "default": 0.0
+    }
+  }
+}

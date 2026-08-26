@@ -29,6 +29,12 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from src.inference.highres_tiling import make_tiled_views, tiling_prompt_prefix  # noqa: E402
+from src.inference.spacebudget_router import (  # noqa: E402
+    choose_budget,
+    language_visual_tokens_from_grid,
+    summarize_token_values,
+    visual_patch_tokens_from_grid,
+)
 from src.utils.resource_monitor import ResourceMonitor  # noqa: E402
 
 
@@ -53,6 +59,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--tiling-mode", choices=("none", "grid_2x2"), default="none")
     parser.add_argument("--tile-overlap", type=float, default=0.0)
     parser.add_argument("--category-contains", default=None)
+    parser.add_argument("--resource-mode", choices=("fixed", "eco", "balanced", "precision", "auto"), default="fixed")
+    parser.add_argument("--spacebudget-allow-tiling", action="store_true")
     return parser.parse_args()
 
 
@@ -265,6 +273,8 @@ def main() -> int:
     }
     latencies: list[float] = []
     peak_vram_values: list[float] = []
+    language_visual_token_values: list[int] = []
+    patch_visual_token_values: list[int] = []
     failures = 0
     resolution_stats: dict[str, Any] = {
         "min_width": None,
@@ -288,6 +298,8 @@ def main() -> int:
         "tiling_mode": args.tiling_mode,
         "tile_overlap": args.tile_overlap,
         "category_contains": args.category_contains,
+        "resource_mode": args.resource_mode,
+        "spacebudget_allow_tiling": args.spacebudget_allow_tiling,
     }
     write_json(run_config_path, run_config)
 
@@ -299,10 +311,44 @@ def main() -> int:
         image_meta: dict[str, Any] = {}
         tile_metadata: list[dict[str, Any]] = []
         image_grid_thw = None
+        patch_visual_tokens = 0
+        language_visual_tokens = 0
+        image_token_count = 0
+        budget_decision: dict[str, Any] = {}
         monitor = ResourceMonitor()
         try:
             image, image_meta = image_from_row(row)
-            tiled_views = make_tiled_views(image, args.tiling_mode, args.tile_overlap)
+            if args.resource_mode == "fixed":
+                effective_max_pixels = args.max_pixels
+                effective_tiling_mode = args.tiling_mode
+                budget_decision = {
+                    "resource_mode": "fixed",
+                    "precision": "INT4 NF4",
+                    "max_pixels": effective_max_pixels,
+                    "tiling_mode": effective_tiling_mode,
+                    "reason": "fixed evaluator arguments",
+                }
+            else:
+                decision = choose_budget(
+                    resource_mode=args.resource_mode,
+                    task="xlrs",
+                    question=row.get("question"),
+                    category=row.get("category"),
+                    original_width=image.size[0],
+                    original_height=image.size[1],
+                    fixed_max_pixels=args.max_pixels,
+                    allow_tiling=args.spacebudget_allow_tiling,
+                )
+                effective_max_pixels = decision.max_pixels
+                effective_tiling_mode = decision.tiling_mode
+                budget_decision = {
+                    "resource_mode": decision.resource_mode,
+                    "precision": decision.precision,
+                    "max_pixels": decision.max_pixels,
+                    "tiling_mode": decision.tiling_mode,
+                    "reason": decision.reason,
+                }
+            tiled_views = make_tiled_views(image, effective_tiling_mode, args.tile_overlap)
             tile_metadata = [
                 {
                     "tile_id": item.metadata.tile_id,
@@ -320,10 +366,10 @@ def main() -> int:
             resolution_stats["max_height"] = max(resolution_stats["max_height"], height)
             resolution_stats["max_pixels"] = max(resolution_stats["max_pixels"], image_meta["original_pixels"])
             prompt = build_prompt(row)
-            if args.tiling_mode != "none":
+            if effective_tiling_mode != "none":
                 prompt = tiling_prompt_prefix() + "\n" + prompt
             content: list[dict[str, Any]] = [
-                {"type": "image", "image": item.image, "max_pixels": args.max_pixels}
+                {"type": "image", "image": item.image, "max_pixels": effective_max_pixels}
                 for item in tiled_views
             ]
             content.append({"type": "text", "text": prompt})
@@ -338,6 +384,11 @@ def main() -> int:
             inputs = processor(text=[text], images=image_inputs, videos=video_inputs, padding=True, return_tensors="pt")
             if hasattr(inputs, "image_grid_thw") and inputs.image_grid_thw is not None:
                 image_grid_thw = inputs.image_grid_thw.cpu().tolist()
+                patch_visual_tokens = visual_patch_tokens_from_grid(image_grid_thw)
+                language_visual_tokens = language_visual_tokens_from_grid(image_grid_thw)
+            image_token_id = getattr(base_model.config, "image_token_id", None)
+            if image_token_id is not None:
+                image_token_count = int((inputs.input_ids == int(image_token_id)).sum().item())
             inputs = inputs.to(device)
             monitor.start()
             with torch.inference_mode():
@@ -364,6 +415,10 @@ def main() -> int:
         report = monitor.get_report()
         latencies.append(report["latency_s"])
         peak_vram_values.append(report["peak_vram_mb"])
+        if language_visual_tokens:
+            language_visual_token_values.append(language_visual_tokens)
+        if patch_visual_tokens:
+            patch_visual_token_values.append(patch_visual_tokens)
         result = {
             "index": int(row.get("index", index)),
             "row_number": index,
@@ -382,9 +437,13 @@ def main() -> int:
             "latency_s": report["latency_s"],
             "peak_vram_mb": report["peak_vram_mb"],
             "image": image_meta,
-            "tiling_mode": args.tiling_mode,
+            "tiling_mode": budget_decision.get("tiling_mode", args.tiling_mode),
             "tile_metadata": tile_metadata,
             "image_grid_thw": image_grid_thw,
+            "spacebudget_decision": budget_decision,
+            "patch_visual_tokens": patch_visual_tokens,
+            "language_visual_tokens": language_visual_tokens,
+            "image_token_count": image_token_count,
         }
         update_metrics(metrics_accumulator, result)
         append_jsonl(predictions_path, result)
@@ -407,6 +466,10 @@ def main() -> int:
         "latency_p95_s": round(percentile(latencies, 0.95), 6),
         "peak_vram_mb": round(max(peak_vram_values), 2) if peak_vram_values else 0.0,
         "resolution_stats": resolution_stats,
+        "visual_tokens": {
+            "patch": summarize_token_values(patch_visual_token_values),
+            "language": summarize_token_values(language_visual_token_values),
+        },
         "metrics": metrics,
     }
     write_json(metrics_path, metrics)

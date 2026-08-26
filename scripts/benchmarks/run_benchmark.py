@@ -30,6 +30,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--tiling-mode", choices=("none", "grid_2x2"), default="none")
     parser.add_argument("--tile-overlap", type=float, default=0.0)
     parser.add_argument("--category-contains", default=None)
+    parser.add_argument(
+        "--resource-mode",
+        choices=("fixed", "eco", "balanced", "precision", "auto"),
+        default="fixed",
+        help="SpaceBudget-RS mode for benchmark adapters that support dynamic visual budgets.",
+    )
+    parser.add_argument("--spacebudget-allow-tiling", action="store_true")
     return parser.parse_args()
 
 
@@ -73,6 +80,9 @@ def build_command(args: argparse.Namespace) -> list[str]:
         add_common(command, args)
         command.extend(["--output-dir", str(args.output_dir or REPO_ROOT / "results" / "mme_realworld_rs")])
         command.extend(["--tiling-mode", args.tiling_mode, "--tile-overlap", str(args.tile_overlap)])
+        command.extend(["--resource-mode", args.resource_mode])
+        if args.spacebudget_allow_tiling:
+            command.append("--spacebudget-allow-tiling")
         if args.category_contains is not None:
             command.extend(["--category-contains", args.category_contains])
     elif args.benchmark == "xlrs-lite":
@@ -80,6 +90,9 @@ def build_command(args: argparse.Namespace) -> list[str]:
         add_common(command, args)
         command.extend(["--output-dir", str(args.output_dir or REPO_ROOT / "results" / "xlrs_bench" / "full_lite_int4")])
         command.extend(["--tiling-mode", args.tiling_mode, "--tile-overlap", str(args.tile_overlap)])
+        command.extend(["--resource-mode", args.resource_mode])
+        if args.spacebudget_allow_tiling:
+            command.append("--spacebudget-allow-tiling")
         if args.category_contains is not None:
             command.extend(["--category-contains", args.category_contains])
     elif args.benchmark == "levir-cc":

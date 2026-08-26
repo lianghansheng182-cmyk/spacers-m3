@@ -1,0 +1,17 @@
+{
+  "sample_count": 10,
+  "correct": 8,
+  "accuracy": 0.8,
+  "parse_failures": 0,
+  "by_task": {
+    "Perception": {
+      "Remote Sensing": {
+        "position": {
+          "true": 8,
+          "false": 2,
+          "is_E": 0
+        }
+      }
+    }
+  }
+}

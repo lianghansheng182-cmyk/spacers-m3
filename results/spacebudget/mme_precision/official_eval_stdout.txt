@@ -1,0 +1,34 @@
+/home/lhs/spacers_m3/results/spacebudget/mme_precision/predictions.json
+
+  0%|          | 0/150 [00:00<?, ?it/s]
+100%|██████████| 150/150 [00:00<00:00, 516539.90it/s]
+********************************Reasoning (Task Start)
+++++++++++++++++Monitoring (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	Monitoring (0 items)
+++++++++++++++++OCR with Complex Context (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	OCR with Complex Context (0 items)
+++++++++++++++++Diagram and Table (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	Diagram and Table (0 items)
+++++++++++++++++Autonomous_Driving (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	Autonomous_Driving (0 items)
+++++++++++++++++Remote Sensing (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	Remote Sensing (0 items)
+********************************Acc 0.0000	 E choice 0 	Reasoning (0 items)
+
+********************************Perception (Task Start)
+++++++++++++++++Monitoring (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	Monitoring (0 items)
+++++++++++++++++OCR with Complex Context (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	OCR with Complex Context (0 items)
+++++++++++++++++Diagram and Table (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	Diagram and Table (0 items)
+++++++++++++++++Autonomous_Driving (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	Autonomous_Driving (0 items)
+++++++++++++++++Remote Sensing (Subtask Start)
+----	Acc 0.7200	Position (50 items)
+----	Acc 0.5200	Color (50 items)
+----	Acc 0.2400	Count (50 items)
+++++++++++++++++	 Acc 0.4933	 E choice 8 	Remote Sensing (150 items)
+********************************Acc 0.4933	 E choice 8 	Perception (150 items)
+
+********************************Overall Acc 0.4933
