@@ -1,0 +1,51 @@
+{
+  "run_config_path": "/home/lhs/spacers_m3/results/final_acceptance/mme_bf16_fallback/run_config.json",
+  "predictions_path": "/home/lhs/spacers_m3/results/final_acceptance/mme_bf16_fallback/predictions.json",
+  "metrics_path": "/home/lhs/spacers_m3/results/final_acceptance/mme_bf16_fallback/metrics.json",
+  "official_eval": {
+    "available": true,
+    "returncode": 0,
+    "stdout_path": "/home/lhs/spacers_m3/results/final_acceptance/mme_bf16_fallback/official_eval_stdout.txt"
+  },
+  "sample_count": 1,
+  "failure_count": 0,
+  "model_load_time_s": 3.409545,
+  "latency_mean_s": 1.987937,
+  "latency_p95_s": 1.987937,
+  "peak_vram_mb": 4381.61,
+  "visual_tokens": {
+    "patch": {
+      "count": 1,
+      "mean": 3800.0,
+      "p50": 3800.0,
+      "p95": 3800.0,
+      "min": 3800,
+      "max": 3800
+    },
+    "language": {
+      "count": 1,
+      "mean": 950.0,
+      "p50": 950.0,
+      "p95": 950.0,
+      "min": 950,
+      "max": 950
+    }
+  },
+  "metrics": {
+    "sample_count": 1,
+    "correct": 1,
+    "accuracy": 1.0,
+    "parse_failures": 0,
+    "by_task": {
+      "Perception": {
+        "Remote Sensing": {
+          "position": {
+            "true": 1,
+            "false": 0,
+            "is_E": 0
+          }
+        }
+      }
+    }
+  }
+}

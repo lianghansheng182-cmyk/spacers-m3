@@ -1,6 +1,6 @@
-# SPACERS-M3 Technical Report Draft
+# SPACERS-M3 Technical Report
 
-Date: 2026-08-25
+Date: 2026-08-26
 
 ## Model Decision
 
@@ -13,6 +13,21 @@ The final main model is Qwen3-VL-2B-Instruct with the LoRA v1 adapter.
 - LoRA v2: retained as an ablation experiment only
 
 LoRA v1 is kept as the main model because it improved VQA and preserved the best overall Grounding behavior among the stable LoRA experiments. LoRA v2 improved VQA and removed the single Grounding parse failure, but its 90-sample Grounding localization metrics regressed.
+
+## Final Core Results
+
+The final one-page result summary is maintained in `results/final_core_results.md`. The key representative results are:
+
+| Layer | Protocol | Result |
+| --- | --- | --- |
+| RemoteLoRA | INTERNAL, VRSBench 90 | Base VQA 0.600000 -> LoRA v1 VQA 0.700000 |
+| OrbitQuant | INTERNAL, VRSBench 90 | BF16 peak VRAM 4203 MB -> INT4 peak VRAM 1660 MB; INT4 VQA 0.733333 and Grounding mean IoU 0.509680 |
+| HiRes-View | PARTIAL, XLRS-Bench Lite local 1848 samples | Single-view 0.389069 -> global+2x2 0.405303 |
+| SpaceBudget-RS | PARTIAL, XLRS-Bench Lite local 1848 samples | Fixed BALANCED 0.389069 -> AUTO 0.397186 with 2.46% lower mean visual tokens |
+| SpaceBudget-RS | OFFICIAL LITE, MME-RealWorld-RS Lite 150 | Fixed BALANCED 0.473333 -> AUTO 0.460000 with 25.14% lower mean visual tokens |
+| OrbitGuard-RS | INTERNAL, software equivalent fault injection | Detection 100%, recovery 100%, false positive 0%, integrity check about 21 ms, recovery about 79 ms |
+
+These results support one coherent system story: onboard remote-sensing MLLM inference is improved through coordinated design across task adaptation, low-bit deployment, high-resolution perception, dynamic compute budgeting, and software-level reliability protection.
 
 ## Training Data
 
@@ -323,6 +338,13 @@ Resource scenarios:
 - Normal: use AUTO or BALANCED.
 - Urgent Precision: use PRECISION and enable HiRes fallback only for categories where tiling is justified.
 
+Pareto interpretation:
+
+- On MME-RS Lite, PRECISION reaches the highest accuracy but increases mean visual tokens from 981.95 to 3963.65 and mean latency from 0.60 s to 2.83 s compared with BALANCED. It is therefore a special-purpose precision mode rather than the default.
+- On XLRS-Lite local samples, PRECISION is dominated by AUTO: AUTO has higher accuracy, lower visual token count, lower latency, lower peak VRAM, and no parse failure.
+- ECO is the lowest-cost mode and remains useful for power-limited operation, but it loses accuracy on both MME-RS and XLRS.
+- AUTO is the preferred dynamic policy for XLRS and a useful MME resource-saving ablation; it should not be described as universally better than fixed BALANCED.
+
 Detailed outputs:
 
 - `results/spacebudget/visual_token_audit.md`
@@ -330,9 +352,35 @@ Detailed outputs:
 - `results/spacebudget/spacebudget_summary.json`
 - `results/spacebudget/figures/`
 
+## Ablation Summary
+
+The final branch contains only five innovation modules with experimental evidence:
+
+| Module | Ablation conclusion |
+| --- | --- |
+| RemoteLoRA | LoRA v1 improves VQA on VRSBench 90 and remains the main adapter; LoRA v2 is not selected because Grounding localization regressed. |
+| OrbitQuant | INT4 NF4 substantially reduces measured VRAM. The internal VRSBench result does not show obvious accuracy loss, but the report does not claim INT4 universally improves accuracy. |
+| HiRes-View | Global+2x2 tiling improves the XLRS local shard subset, but it is slower and is kept as an optional fallback instead of a default path. |
+| SpaceBudget-RS | Dynamic AUTO routing can reduce visual token use and gives a better XLRS Pareto point, but MME shows a small accuracy tradeoff. |
+| OrbitGuard-RS | Software-level equivalent fault injection validates integrity detection and recovery behavior; it is not a real radiation or space-qualified hardware test. |
+
+## Domestic AI Chip Migration Plan
+
+The current implementation targets PyTorch, Transformers, PEFT, and bitsandbytes on an NVIDIA RTX 5060 Laptop GPU. Migration to domestic AI accelerators should be staged and measured rather than assumed:
+
+1. Replace bitsandbytes INT4 with the target accelerator's supported low-bit runtime, keeping the same LoRA v1 adapter and evaluation manifests.
+2. Port the unified dispatcher and benchmark adapters first, because they isolate model loading, precision backend, prompts, datasets, and output formats.
+3. Revalidate processor behavior and visual token accounting. SpaceBudget-RS depends on actual Qwen3-VL processor outputs, so token counts must be re-audited after runtime migration.
+4. Re-measure latency, P95, peak memory, parse failures, and accuracy for VRSBench, MME-RS Lite, XLRS-Lite, and LEVIR-CC before claiming deployment parity.
+5. Keep OrbitGuard-RS file-level integrity checks hardware-independent. Device-specific memory fault injection should be added only after the target runtime exposes safe low-level hooks.
+
 ### SpaceRS-Agent Five-Layer Innovation Structure
 
 The final system is packaged as **SpaceRS-Agent**. These module names are project-internal names, not claims of external products.
+
+Final architecture figure:
+
+- `docs/figures/spacers_agent_architecture.svg`
 
 I. **SpaceBudget-RS**: task-aware dynamic control of visual token budgets and high-resolution fallback.
 
@@ -343,6 +391,8 @@ III. **OrbitQuant**: INT4 NF4 resource-constrained deployment for Qwen3-VL-2B-In
 IV. **HiRes-View**: optional Global + 2x2 high-resolution multi-view fallback.
 
 V. **OrbitGuard-RS**: software-level soft-error integrity detection, criticality-aware protection, and automatic recovery.
+
+The five modules are not presented as independent utilities. They form a deployment-oriented chain for satellite remote-sensing scenarios: RemoteLoRA supplies task capability, HiRes-View handles high-resolution details when needed, SpaceBudget-RS controls visual compute under resource modes, OrbitQuant makes the frozen model practical under limited memory, and OrbitGuard-RS protects the deployed assets against software-level equivalent faults.
 
 Report-ready figures are generated under `results/reliability/figures/`:
 
@@ -394,6 +444,10 @@ Full command examples are documented in `README.md`.
 - MME result is official Lite Remote Sensing subset only, not the full MME-RealWorld leaderboard.
 - XLRS result is a 44 / 74 shard partial run because the remaining shards could not be downloaded in the current environment.
 - LEVIR-CC METEOR is missing because Java is unavailable.
+- HiRes-View is an optional fallback. It improves the XLRS local subset but increases latency and is not the default main path.
+- INT4 NF4 is selected for deployment efficiency. The internal result is favorable, but this should not be generalized as a guaranteed precision improvement across all datasets.
+- SpaceBudget-RS AUTO is deterministic and uses only pre-inference metadata. It does not use ground-truth answers or model outputs for routing.
+- OrbitGuard-RS is a software-level equivalent fault-injection and integrity-recovery module, not a real radiation, on-orbit, or space-qualified hardware test.
 - No additional LoRA or prompt tuning should be run for this delivery branch.
 
 ## Key Commits
@@ -403,3 +457,4 @@ Full command examples are documented in `README.md`.
 - Quantization validation: `1d26b35c7ba27ba43fcc4a60d5c9c5dcfeb1a30f`
 - Remaining benchmark adapters/results: `78c6d2a9d9e62d0c6d37c929a48237a8f114a753`
 - Benchmark dispatcher and reproduction README: `5755253a2111e2714625d766f447cf6accc148dc`
+- SpaceBudget-RS dynamic compute budgeting: `2acffcde76c508218e908ac6355ae1ffcfda8b7e`

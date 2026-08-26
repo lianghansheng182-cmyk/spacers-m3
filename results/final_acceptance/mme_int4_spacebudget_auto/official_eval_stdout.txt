@@ -1,0 +1,32 @@
+/home/lhs/spacers_m3/results/final_acceptance/mme_int4_spacebudget_auto/predictions.json
+
+  0%|          | 0/1 [00:00<?, ?it/s]
+100%|██████████| 1/1 [00:00<00:00, 19065.02it/s]
+********************************Reasoning (Task Start)
+++++++++++++++++Monitoring (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	Monitoring (0 items)
+++++++++++++++++OCR with Complex Context (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	OCR with Complex Context (0 items)
+++++++++++++++++Diagram and Table (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	Diagram and Table (0 items)
+++++++++++++++++Autonomous_Driving (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	Autonomous_Driving (0 items)
+++++++++++++++++Remote Sensing (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	Remote Sensing (0 items)
+********************************Acc 0.0000	 E choice 0 	Reasoning (0 items)
+
+********************************Perception (Task Start)
+++++++++++++++++Monitoring (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	Monitoring (0 items)
+++++++++++++++++OCR with Complex Context (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	OCR with Complex Context (0 items)
+++++++++++++++++Diagram and Table (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	Diagram and Table (0 items)
+++++++++++++++++Autonomous_Driving (Subtask Start)
+++++++++++++++++	 Acc 0.0000	 E choice 0 	Autonomous_Driving (0 items)
+++++++++++++++++Remote Sensing (Subtask Start)
+----	Acc 1.0000	Position (1 items)
+++++++++++++++++	 Acc 1.0000	 E choice 0 	Remote Sensing (1 items)
+********************************Acc 1.0000	 E choice 0 	Perception (1 items)
+
+********************************Overall Acc 1.0000

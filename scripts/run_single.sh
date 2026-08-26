@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROJECT_DIR="/home/lhs/spacers_m3"
-PYTHON="${PROJECT_DIR}/.venv/bin/python"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+PYTHON="${PYTHON:-${PROJECT_DIR}/.venv/bin/python}"
 IMAGE="${PROJECT_DIR}/data/test/demo.jpeg"
 OUTPUT="${PROJECT_DIR}/results/smoke_test.json"
 QUESTION="请详细描述图像中的主要场景、物体及其空间位置关系。"

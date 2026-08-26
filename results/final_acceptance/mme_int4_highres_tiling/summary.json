@@ -1,0 +1,51 @@
+{
+  "run_config_path": "/home/lhs/spacers_m3/results/final_acceptance/mme_int4_highres_tiling/run_config.json",
+  "predictions_path": "/home/lhs/spacers_m3/results/final_acceptance/mme_int4_highres_tiling/predictions.json",
+  "metrics_path": "/home/lhs/spacers_m3/results/final_acceptance/mme_int4_highres_tiling/metrics.json",
+  "official_eval": {
+    "available": true,
+    "returncode": 0,
+    "stdout_path": "/home/lhs/spacers_m3/results/final_acceptance/mme_int4_highres_tiling/official_eval_stdout.txt"
+  },
+  "sample_count": 1,
+  "failure_count": 0,
+  "model_load_time_s": 4.451819,
+  "latency_mean_s": 3.922061,
+  "latency_p95_s": 3.922061,
+  "peak_vram_mb": 2777.34,
+  "visual_tokens": {
+    "patch": {
+      "count": 1,
+      "mean": 19000.0,
+      "p50": 19000.0,
+      "p95": 19000.0,
+      "min": 19000,
+      "max": 19000
+    },
+    "language": {
+      "count": 1,
+      "mean": 4750.0,
+      "p50": 4750.0,
+      "p95": 4750.0,
+      "min": 4750,
+      "max": 4750
+    }
+  },
+  "metrics": {
+    "sample_count": 1,
+    "correct": 0,
+    "accuracy": 0.0,
+    "parse_failures": 0,
+    "by_task": {
+      "Perception": {
+        "Remote Sensing": {
+          "position": {
+            "true": 0,
+            "false": 1,
+            "is_E": 0
+          }
+        }
+      }
+    }
+  }
+}

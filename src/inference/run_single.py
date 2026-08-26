@@ -13,12 +13,13 @@ from transformers import AutoProcessor, Qwen3VLForConditionalGeneration
 
 
 MODEL_ID = "Qwen/Qwen3-VL-2B-Instruct"
-DEFAULT_LOCAL_MODEL_DIR = "/home/lhs/spacers_m3/models/Qwen3-VL-2B-Instruct"
+REPO_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_LOCAL_MODEL_DIR = REPO_ROOT / "models" / "Qwen3-VL-2B-Instruct"
 
 
 def build_error(message: str, exc: BaseException | None = None) -> str:
     tips = [
-        "确认已激活虚拟环境：source /home/lhs/spacers_m3/.venv/bin/activate",
+        "确认已激活项目虚拟环境：source .venv/bin/activate",
         "确认 GPU 可见：nvidia-smi && python -c \"import torch; print(torch.cuda.is_available())\"",
         "若模型下载失败，检查网络或 Hugging Face 访问权限，并重试运行脚本。",
         "若出现 CUDA OOM，关闭占用显存的进程，或换更小图片后重试；本脚本不做量化。",
@@ -62,7 +63,7 @@ def main() -> int:
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     dtype = pick_dtype(device)
     gpu_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else ""
-    model_load_path = os.environ.get("SPACERS_M3_MODEL_PATH", DEFAULT_LOCAL_MODEL_DIR)
+    model_load_path = os.environ.get("SPACERS_M3_MODEL_PATH", str(DEFAULT_LOCAL_MODEL_DIR))
     if not Path(model_load_path).exists():
         model_load_path = MODEL_ID
 

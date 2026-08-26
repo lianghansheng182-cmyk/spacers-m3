@@ -1,0 +1,51 @@
+{
+  "run_config_path": "/home/lhs/spacers_m3/results/final_acceptance/mme_int4_spacebudget_auto/run_config.json",
+  "predictions_path": "/home/lhs/spacers_m3/results/final_acceptance/mme_int4_spacebudget_auto/predictions.json",
+  "metrics_path": "/home/lhs/spacers_m3/results/final_acceptance/mme_int4_spacebudget_auto/metrics.json",
+  "official_eval": {
+    "available": true,
+    "returncode": 0,
+    "stdout_path": "/home/lhs/spacers_m3/results/final_acceptance/mme_int4_spacebudget_auto/official_eval_stdout.txt"
+  },
+  "sample_count": 1,
+  "failure_count": 0,
+  "model_load_time_s": 8.899019,
+  "latency_mean_s": 2.807038,
+  "latency_p95_s": 2.807038,
+  "peak_vram_mb": 1828.2,
+  "visual_tokens": {
+    "patch": {
+      "count": 1,
+      "mean": 3800.0,
+      "p50": 3800.0,
+      "p95": 3800.0,
+      "min": 3800,
+      "max": 3800
+    },
+    "language": {
+      "count": 1,
+      "mean": 950.0,
+      "p50": 950.0,
+      "p95": 950.0,
+      "min": 950,
+      "max": 950
+    }
+  },
+  "metrics": {
+    "sample_count": 1,
+    "correct": 1,
+    "accuracy": 1.0,
+    "parse_failures": 0,
+    "by_task": {
+      "Perception": {
+        "Remote Sensing": {
+          "position": {
+            "true": 1,
+            "false": 0,
+            "is_E": 0
+          }
+        }
+      }
+    }
+  }
+}

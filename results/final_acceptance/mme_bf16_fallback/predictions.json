@@ -1,0 +1,61 @@
+[
+  {
+    "Question_id": "perception/remote_sensing/position/2527",
+    "Image": "dota_v2_dota_v2_dota_v2_P7036.png",
+    "Text": "Where is the yellow crane in the picture?",
+    "Question Type": "Multiple Choice",
+    "Answer choices": [
+      "(A) In the upper right area of the picture",
+      "(B) In the upper left area of the picture",
+      "(C) In the lower right area of the picture",
+      "(D) In the lower left area of the picture",
+      "(E) This image doesn't feature the position."
+    ],
+    "Ground truth": "A",
+    "Category": "position",
+    "Subtask": "Remote Sensing",
+    "Task": "Perception",
+    "Output": "A",
+    "Parsed output": "A",
+    "Inference error": null,
+    "Latency s": 1.987937,
+    "Peak VRAM MB": 4381.61,
+    "Image metadata": {
+      "image_path": "/home/lhs/spacers_m3/data/raw/mme_realworld_lite/extracted/data/imgs/dota_v2_dota_v2_dota_v2_P7036.png",
+      "original_width": 7360,
+      "original_height": 4912,
+      "original_pixels": 36152320
+    },
+    "Tiling mode": "none",
+    "Tile metadata": [
+      {
+        "tile_id": "global",
+        "crop_xyxy": [
+          0,
+          0,
+          7360,
+          4912
+        ],
+        "original_width": 7360,
+        "original_height": 4912
+      }
+    ],
+    "Image grid thw": [
+      [
+        1,
+        50,
+        76
+      ]
+    ],
+    "SpaceBudget decision": {
+      "resource_mode": "fixed",
+      "precision": "INT4 NF4",
+      "max_pixels": 1048576,
+      "tiling_mode": "none",
+      "reason": "fixed evaluator arguments"
+    },
+    "Patch visual tokens": 3800,
+    "Language visual tokens": 950,
+    "Image token count": 950
+  }
+]
