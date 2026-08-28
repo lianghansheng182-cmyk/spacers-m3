@@ -136,11 +136,25 @@ def verify_integrity(manifest_path: Path, root_override: Path | None = None) -> 
 def materialize_backup(manifest: dict[str, Any], backup_dir: Path) -> dict[str, Any]:
     backup_dir = backup_dir.resolve()
     copied: list[dict[str, Any]] = []
+    skipped_same_file: list[dict[str, Any]] = []
     for entry in manifest["assets"]:
         source = Path(entry["path"])
         if not source.exists() or not source.is_file():
             continue
-        destination = backup_dir / entry["relative_path"]
+        relative_path = Path(entry["relative_path"])
+        if relative_path.is_absolute():
+            relative_path = Path("external_assets") / str(relative_path).lstrip("/")
+        destination = backup_dir / relative_path
+        if source.resolve() == destination.resolve():
+            skipped_same_file.append(
+                {
+                    "role": entry.get("role"),
+                    "source": str(source),
+                    "backup": str(destination),
+                    "reason": "source_and_backup_resolve_to_same_file",
+                }
+            )
+            continue
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, destination)
         copied.append(
@@ -156,6 +170,7 @@ def materialize_backup(manifest: dict[str, Any], backup_dir: Path) -> dict[str, 
         "created_at_unix": time.time(),
         "backup_dir": str(backup_dir),
         "copied_files": copied,
+        "skipped_same_file": skipped_same_file,
         "total_backup_bytes": sum(row["size_bytes"] for row in copied),
     }
     write_json(backup_dir / "backup_manifest.json", payload)
