@@ -174,8 +174,14 @@ def main() -> int:
     error_cases_path.write_text("", encoding="utf-8")
 
     samples = load_jsonl(args.input.resolve())
+    eval_dataset_path = args.input.resolve()
     if args.limit is not None:
         samples = samples[: args.limit]
+        eval_dataset_path = output_dir / "eval_subset.jsonl"
+        eval_dataset_path.write_text(
+            "".join(json.dumps(sample, ensure_ascii=False) + "\n" for sample in samples),
+            encoding="utf-8",
+        )
     device = pick_device()
     dtype = pick_dtype(device)
     q_config = quantization_config(args.precision)
@@ -281,7 +287,12 @@ def main() -> int:
         print(f"[{index:03d}/{len(samples):03d}] {sample.get('id')} {sample.get('task')} {'ok' if success else 'error'} latency={report['latency_s']:.3f}s")
 
     total_runtime_s = time.perf_counter() - total_start
-    metrics = evaluate_files(predictions_path=predictions_path, dataset_path=args.input.resolve(), output_path=metrics_path, error_cases_path=error_cases_path)
+    metrics = evaluate_files(
+        predictions_path=predictions_path,
+        dataset_path=eval_dataset_path,
+        output_path=metrics_path,
+        error_cases_path=error_cases_path,
+    )
     adapter_size_bytes = sum(path.stat().st_size for path in args.adapter_path.rglob("*") if path.is_file())
     summary = {
         "input_path": str(args.input),
