@@ -417,7 +417,7 @@ Detailed outputs:
 Use the unified dispatcher:
 
 ```bash
-cd /home/lhs/spacers_m3
+cd spacers_m3
 source .venv/bin/activate
 python scripts/benchmarks/run_benchmark.py <benchmark> --precision int4
 ```

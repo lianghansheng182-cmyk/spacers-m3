@@ -73,6 +73,8 @@ def build_command(args: argparse.Namespace) -> list[str]:
                 "--stop-grounding-after-brace",
             ]
         )
+        if args.limit is not None:
+            command.extend(["--limit", str(args.limit)])
         return command
 
     if args.benchmark == "mme-rs-lite":

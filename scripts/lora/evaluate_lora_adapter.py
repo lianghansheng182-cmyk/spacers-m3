@@ -39,6 +39,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--grounding-max-new-tokens", type=int, default=None)
     parser.add_argument("--stop-grounding-after-brace", action="store_true")
     parser.add_argument("--max-pixels", type=int, default=1024 * 1024)
+    parser.add_argument("--limit", type=int, default=None, help="Optional sample limit for smoke runs.")
     return parser.parse_args()
 
 
@@ -173,6 +174,8 @@ def main() -> int:
     error_cases_path.write_text("", encoding="utf-8")
 
     samples = load_jsonl(args.input.resolve())
+    if args.limit is not None:
+        samples = samples[: args.limit]
     device = pick_device()
     dtype = pick_dtype(device)
     q_config = quantization_config(args.precision)
