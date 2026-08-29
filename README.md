@@ -9,6 +9,21 @@ git clone -b release/submission-final https://github.com/lianghansheng182-cmyk/s
 cd spacers_m3
 ```
 
+## Verified Runtime
+
+Recommended validation environment:
+
+- WSL2 / Linux
+- Ubuntu 24.04
+- Python 3.12
+- CUDA 13.0 runtime
+- NVIDIA GPU
+- Verified GPU: RTX 5060 Laptop, compute capability sm_120
+
+The locked wheel configuration in `requirements-verified.txt` and `requirements-linux-cu130.txt` is for the verified Linux/WSL CUDA 13 environment.
+
+Windows users should prefer WSL2 Ubuntu. The current submission has not been validated in native Windows Python. Do not assume native Windows Python 3.14 can directly install the Linux/Python 3.12/CUDA 13 wheels.
+
 Frozen model policy:
 
 - Base model: Qwen3-VL-2B-Instruct
@@ -21,13 +36,19 @@ No LoRA v3, prompt tuning, or benchmark-set modification is part of the current 
 
 ## Environment
 
+Verified Linux/WSL path:
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install -r requirements.txt
+python -m pip install -r requirements-verified.txt
 ```
 
-Expected local paths:
+`requirements.txt` is a generic Python package list and intentionally does not pin the Linux CUDA wheel URL. Use it only after installing a compatible PyTorch build for your platform.
+
+## External Artifacts
+
+Expected final local paths:
 
 - Base model: `models/Qwen3-VL-2B-Instruct`
 - LoRA v1 adapter: `results/lora/qwen3_vl_2b_lora_v1/adapter_final`
@@ -55,11 +76,39 @@ spacers_m3/
 
 The tracked VRSBench mini and 90-sample internal validation images are already under `datasets/`. External benchmark raw data and model artifacts must be supplied separately.
 
+Artifact policy:
+
+- Included with Git/submission: source code, configs, docs, small result summaries, `datasets/mini_eval`, and `datasets/vrsbench_eval_v1`.
+- Supplied separately: `models/Qwen3-VL-2B-Instruct`, LoRA v1 `adapter_final`, and external benchmark raw data under `data/raw/`.
+- Public benchmark raw data is excluded from Git because of size and redistribution constraints.
+- Model weights and adapter checkpoints are excluded from Git because of size. The final submission package should include the LoRA v1 adapter separately when allowed.
+
+LoRA v1 adapter reference:
+
+- Expected directory: `results/lora/qwen3_vl_2b_lora_v1/adapter_final/`
+- Expected size: about 34 MB
+- Key files: `adapter_config.json`, `adapter_model.safetensors`, `README.md`
+- SHA256 manifest: `docs/lora_v1_adapter_manifest.sha256`
+
+Base model reference:
+
+- Model: `Qwen3-VL-2B-Instruct`
+- Expected directory: `models/Qwen3-VL-2B-Instruct/`
+- The main code path uses the local directory and does not depend on an online Hugging Face API. Download the model before running offline inference.
+
+Benchmark data reference:
+
+- VRSBench smoke/internal validation: included under `datasets/mini_eval/` and `datasets/vrsbench_eval_v1/`.
+- MME-RealWorld-RS Lite: place under `data/raw/mme_realworld_lite/`.
+- XLRS-Bench Lite: place under `data/raw/xlrs_bench_lite/`. Current committed XLRS experiment is PARTIAL, 44 / 74 shards.
+- LEVIR-CC: place under `data/raw/levir_cc/`.
+
 ## Quick Checks
 
 ```bash
 nvidia-smi
 python scripts/check_environment.py
+python scripts/check_artifacts.py --skip-raw
 python scripts/benchmarks/run_benchmark.py --help
 ```
 
@@ -97,7 +146,25 @@ Use `--limit N` for smoke runs where supported. Use `--precision bf16`, `--preci
 
 For MME-RS Lite and XLRS-Lite, SpaceBudget-RS can select the visual compute budget through `--resource-mode fixed|eco|balanced|precision|auto`. `fixed` preserves the explicit `--max-pixels` value. `auto` is a deterministic task-aware rule that uses only pre-inference task/question/image metadata.
 
-Minimal INT4 main-path smoke:
+## Smoke Sequence
+
+Step 1: environment check.
+
+```bash
+python scripts/check_environment.py
+```
+
+Expected output: OS, Python, torch, CUDA, GPU, compute capability, and key package versions. Warnings are diagnostic and do not mask the root cause.
+
+Step 2: artifact precheck.
+
+```bash
+python scripts/check_artifacts.py --skip-raw
+```
+
+Expected output: `[PASS]` for tracked VRSBench data, base model, and LoRA adapter. Use `python scripts/check_artifacts.py` before full external benchmark runs.
+
+Step 3: minimal INT4 main-path smoke.
 
 ```bash
 python scripts/benchmarks/run_benchmark.py vrsbench \
@@ -106,7 +173,9 @@ python scripts/benchmarks/run_benchmark.py vrsbench \
   --output-dir results/smoke/vrsbench_int4
 ```
 
-BF16 fallback smoke:
+Expected output: one prediction, `failure_count: 0`, and summary files under `results/smoke/vrsbench_int4/`.
+
+Step 4: BF16 fallback smoke.
 
 ```bash
 python scripts/benchmarks/run_benchmark.py vrsbench \
@@ -115,7 +184,9 @@ python scripts/benchmarks/run_benchmark.py vrsbench \
   --output-dir results/smoke/vrsbench_bf16
 ```
 
-SpaceBudget AUTO smoke:
+Expected output: one prediction, `failure_count: 0`, and summary files under `results/smoke/vrsbench_bf16/`.
+
+Step 5: SpaceBudget AUTO smoke.
 
 ```bash
 python scripts/benchmarks/run_benchmark.py mme-rs-lite \
@@ -125,7 +196,9 @@ python scripts/benchmarks/run_benchmark.py mme-rs-lite \
   --output-dir results/smoke/mme_spacebudget_auto
 ```
 
-HiRes-View grid_2x2 smoke:
+Expected output: one MME-RS Lite prediction, official evaluator return code 0, and summary files under `results/smoke/mme_spacebudget_auto/`.
+
+Step 6: HiRes-View grid_2x2 smoke.
 
 ```bash
 python scripts/benchmarks/run_benchmark.py xlrs-lite \
@@ -135,11 +208,29 @@ python scripts/benchmarks/run_benchmark.py xlrs-lite \
   --output-dir results/smoke/xlrs_highres_grid_2x2
 ```
 
-Benchmark dispatcher help:
+Expected output: one XLRS prediction, visual token statistics, and summary files under `results/smoke/xlrs_highres_grid_2x2/`.
+
+Step 7: OrbitGuard integrity smoke.
 
 ```bash
-python scripts/benchmarks/run_benchmark.py --help
+python scripts/reliability/run_fault_injection.py \
+  --config configs/reliability/orbitguard_v1.yaml \
+  --max-fault-runs 1 \
+  --output-dir results/smoke/orbitguard_integrity
 ```
+
+Expected output: clean integrity PASS, corruption DETECTED, recovery PASS, and summary files under `results/smoke/orbitguard_integrity/`.
+
+Step 8: run full benchmarks only after the smoke sequence passes.
+
+```bash
+python scripts/benchmarks/run_benchmark.py vrsbench --precision int4
+python scripts/benchmarks/run_benchmark.py mme-rs-lite --precision int4
+python scripts/benchmarks/run_benchmark.py xlrs-lite --precision int4
+python scripts/benchmarks/run_benchmark.py levir-cc --precision int4
+```
+
+Expected output: benchmark-specific prediction and metric files under `results/`.
 
 ## Reproduction Commands
 

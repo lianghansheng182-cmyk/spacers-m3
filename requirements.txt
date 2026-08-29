@@ -1,6 +1,5 @@
---extra-index-url https://download.pytorch.org/whl/cu130
-torch==2.13.0+cu130
-torchvision @ https://download.pytorch.org/whl/cu130/torchvision-0.28.0%2Bcu130-cp312-cp312-manylinux_2_28_x86_64.whl
+# Generic package list. For the verified Linux/WSL CUDA 13 environment,
+# use requirements-verified.txt instead.
 transformers==4.57.6
 accelerate==1.14.0
 peft==0.20.0

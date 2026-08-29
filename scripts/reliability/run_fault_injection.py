@@ -64,6 +64,13 @@ def command(args: list[str]) -> str:
         return f"ERROR: {type(exc).__name__}: {exc}"
 
 
+def display_path(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(REPO_ROOT))
+    except ValueError:
+        return str(path.resolve())
+
+
 def metric_bundle(summary: dict[str, Any]) -> dict[str, Any]:
     metrics = summary["metrics"]
     grounding = metrics["grounding"]
@@ -357,7 +364,7 @@ def main() -> int:
     if not healthy_summary_path.exists():
         healthy_summary_path = REPO_ROOT / "results/lora/qwen3_vl_2b_lora_v1_eval/vrsbench_eval_v1_prompt_v1/summary.json"
     healthy = metric_bundle(load_json(healthy_summary_path))
-    healthy["metric_source"] = str(healthy_summary_path.relative_to(REPO_ROOT))
+    healthy["metric_source"] = display_path(healthy_summary_path)
 
     runs: list[dict[str, Any]] = []
     level_items = list(config["fault_model"]["lora_fault_levels"].items())
@@ -390,7 +397,7 @@ def main() -> int:
                     "fault_count": spec["bit_flips"],
                     "group_filter": group_filter,
                     "group_key": group_key,
-                    "fault_manifest_path": str((output_adapter / "fault_manifest.json").relative_to(REPO_ROOT)),
+                    "fault_manifest_path": display_path(output_adapter / "fault_manifest.json"),
                     "metrics": metrics,
                 }
             )
@@ -460,7 +467,7 @@ def main() -> int:
     summary = {
         "created_at_unix": time.time(),
         "git_commit": command(["git", "rev-parse", "HEAD"]),
-        "config_path": str(config_path.relative_to(REPO_ROOT)),
+        "config_path": display_path(config_path),
         "config": config,
         "environment": {
             "python": command([sys.executable, "--version"]),
@@ -469,7 +476,7 @@ def main() -> int:
             "gpu": command([sys.executable, "-c", "import torch; print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'N/A')"]),
         },
         "integrity": {
-            "manifest_path": str(manifest_path.relative_to(REPO_ROOT)),
+            "manifest_path": display_path(manifest_path),
             "clean_check": clean_check,
             "corrupted_check": corrupted_check,
             "recovered_check": recovered_check,
