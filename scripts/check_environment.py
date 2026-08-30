@@ -4,10 +4,13 @@
 from __future__ import annotations
 
 import importlib.metadata
+import io
 import platform
 import shutil
 import subprocess
 import sys
+import warnings
+from contextlib import redirect_stderr
 from datetime import datetime
 from pathlib import Path
 
@@ -33,21 +36,36 @@ def torch_info() -> dict[str, str]:
         "gpu": "N/A",
         "compute_capability": "N/A",
         "gpu_total_memory_mb": "N/A",
+        "suppressed_torch_warnings": "0",
+        "suppressed_torch_stderr": "",
     }
+    warning_records: list[warnings.WarningMessage] = []
+    stderr_buffer = io.StringIO()
     try:
-        import torch
+        with warnings.catch_warnings(record=True) as caught, redirect_stderr(stderr_buffer):
+            warnings.simplefilter("always", UserWarning)
+            import torch
+
+            info["torch"] = torch.__version__
+            info["cuda_runtime"] = str(torch.version.cuda)
+            info["cuda_available"] = str(torch.cuda.is_available())
+            if torch.cuda.is_available():
+                props = torch.cuda.get_device_properties(0)
+                info["gpu"] = torch.cuda.get_device_name(0)
+                info["compute_capability"] = f"{props.major}.{props.minor}"
+                info["gpu_total_memory_mb"] = f"{props.total_memory / 1024**2:.2f}"
+            warning_records = list(caught)
     except Exception as exc:
         info["torch_import_error"] = f"{type(exc).__name__}: {exc}"
+        captured = stderr_buffer.getvalue().strip()
+        if captured:
+            info["suppressed_torch_stderr"] = captured
         return info
 
-    info["torch"] = torch.__version__
-    info["cuda_runtime"] = str(torch.version.cuda)
-    info["cuda_available"] = str(torch.cuda.is_available())
-    if torch.cuda.is_available():
-        props = torch.cuda.get_device_properties(0)
-        info["gpu"] = torch.cuda.get_device_name(0)
-        info["compute_capability"] = f"{props.major}.{props.minor}"
-        info["gpu_total_memory_mb"] = f"{props.total_memory / 1024**2:.2f}"
+    captured = stderr_buffer.getvalue().strip()
+    info["suppressed_torch_warnings"] = str(len(warning_records))
+    if captured:
+        info["suppressed_torch_stderr"] = captured
     return info
 
 
@@ -80,23 +98,27 @@ def collect_environment_info() -> tuple[list[str], list[str]]:
 
     if platform.system().lower() == "windows":
         warnings.append(
-            "Windows native Python is not the verified submission environment. "
-            "Use WSL2 Ubuntu for the documented path."
+            "Native Windows Python is not the verified submission environment. "
+            "The verified path is Ubuntu/Linux; Windows users may use WSL2 Ubuntu."
         )
     if (py.major, py.minor) != RECOMMENDED_PYTHON:
         warnings.append(f"Recommended Python is 3.12; current Python is {py.major}.{py.minor}.")
     if torch["torch"] == "MISSING":
-        warnings.append("PyTorch is missing or failed to import.")
+        warnings.append("[ERROR] PyTorch is missing or failed to import.")
     elif torch["cuda_available"] != "True":
         warnings.append("CUDA is not available to PyTorch; GPU INT4/BF16 smoke will not run.")
-    if torch.get("compute_capability") == "12.0" and "cu126" in torch.get("torch", ""):
+    suppressed_torch_text = torch.get("suppressed_torch_stderr", "")
+    if (
+        torch.get("compute_capability") == "12.0"
+        and (not str(torch.get("cuda_runtime", "")).startswith("13") or "cu126" in torch.get("torch", ""))
+    ) or any(token in suppressed_torch_text for token in ("sm_120", "no kernel image", "not compatible")):
         warnings.append(
-            "This GPU reports sm_120, but the installed PyTorch build appears to be cu126; "
-            "use the verified Linux/WSL CUDA 13 environment if kernels fail."
+            "GPU reports sm_120, while the current PyTorch build may not include matching kernels. "
+            "Use the verified Linux/CUDA environment for inference."
         )
     for name in ("peft", "PyYAML"):
         if packages[name] == "MISSING":
-            warnings.append(f"{name} is missing; install the verified requirements before running benchmarks.")
+            warnings.append(f"[MISSING] {name} is missing; install the verified requirements before running benchmarks.")
 
     lines: list[str] = [
         "=" * 40,
@@ -129,10 +151,19 @@ def collect_environment_info() -> tuple[list[str], list[str]]:
         pass
     if "torch_import_error" in torch:
         lines.extend(["", "--- Torch Import Error ---", torch["torch_import_error"]])
+    if torch.get("suppressed_torch_warnings") != "0" or torch.get("suppressed_torch_stderr"):
+        lines.extend(
+            [
+                "",
+                "--- Suppressed Torch Import Diagnostics ---",
+                f"UserWarning count: {torch.get('suppressed_torch_warnings', '0')}",
+                "Long PyTorch import/CUDA diagnostics were captured locally so the structured check remains readable.",
+            ]
+        )
     lines.append("")
     lines.append("--- Warnings ---")
     if warnings:
-        lines.extend(f"[WARNING] {warning}" for warning in warnings)
+        lines.extend(warning if warning.startswith("[") else f"[WARNING] {warning}" for warning in warnings)
     else:
         lines.append("[PASS] Environment matches the verified reproduction profile closely enough.")
     return lines, warnings

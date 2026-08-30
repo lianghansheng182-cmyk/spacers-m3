@@ -11,6 +11,8 @@ export SPACERS_M3_MODEL_PATH="${SPACERS_M3_MODEL_PATH:-${PROJECT_DIR}/models/Qwe
 
 cd "${PROJECT_DIR}"
 exec "${PYTHON}" "${PROJECT_DIR}/src/inference/run_single.py" \
+  --model-path "${SPACERS_M3_MODEL_PATH}" \
   --image "${IMAGE}" \
   --question "${QUESTION}" \
-  --output "${OUTPUT}"
+  --output "${OUTPUT}" \
+  --max-pixels 1048576

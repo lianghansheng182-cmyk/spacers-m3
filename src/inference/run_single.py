@@ -45,9 +45,11 @@ def to_device(inputs: Any, device: torch.device) -> Any:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run one Qwen3-VL image inference.")
+    parser.add_argument("--model-path", default=None, help="Local Qwen3-VL model directory.")
     parser.add_argument("--image", required=True, help="Path to a local image.")
     parser.add_argument("--question", required=True, help="Question about the image.")
     parser.add_argument("--output", required=True, help="UTF-8 JSON output path.")
+    parser.add_argument("--max-pixels", type=int, default=1024 * 1024, help="Per-image visual pixel budget.")
     return parser.parse_args()
 
 
@@ -63,7 +65,7 @@ def main() -> int:
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     dtype = pick_dtype(device)
     gpu_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else ""
-    model_load_path = os.environ.get("SPACERS_M3_MODEL_PATH", str(DEFAULT_LOCAL_MODEL_DIR))
+    model_load_path = args.model_path or os.environ.get("SPACERS_M3_MODEL_PATH", str(DEFAULT_LOCAL_MODEL_DIR))
     if not Path(model_load_path).exists():
         model_load_path = MODEL_ID
 
@@ -96,7 +98,7 @@ def main() -> int:
                     {
                         "type": "image",
                         "image": str(image_path),
-                        "max_pixels": 1024 * 1024,
+                        "max_pixels": args.max_pixels,
                     },
                     {"type": "text", "text": args.question},
                 ],

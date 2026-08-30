@@ -1,6 +1,6 @@
 # SPACERS-M3 Qwen3-VL LoRA Benchmarks
 
-All commands below assume the repository root as the working directory. Do not hard-code a user-specific path such as `/home/lhs`.
+All commands below assume the repository root as the working directory. Do not hard-code a user-specific absolute path.
 
 Recommended checkout:
 
@@ -23,6 +23,10 @@ Recommended validation environment:
 The locked wheel configuration in `requirements-verified.txt` and `requirements-linux-cu130.txt` is for the verified Linux/WSL CUDA 13 environment.
 
 Windows users should prefer WSL2 Ubuntu. The current submission has not been validated in native Windows Python. Do not assume native Windows Python 3.14 can directly install the Linux/Python 3.12/CUDA 13 wheels.
+
+Detailed reproduction guide:
+
+[Detailed Reproduction Guide](docs/reproduction_guide.md)
 
 Frozen model policy:
 
@@ -126,6 +130,19 @@ QUESTION="Describe this remote sensing image." \
 OUTPUT=results/custom_smoke.json \
 bash scripts/run_single.sh
 ```
+
+If bash is unavailable, run the equivalent Python entry directly:
+
+```bash
+python src/inference/run_single.py \
+  --model-path models/Qwen3-VL-2B-Instruct \
+  --image datasets/mini_eval/images/00002_0000.png \
+  --question "Describe this remote sensing image." \
+  --output results/smoke_test.json \
+  --max-pixels 1048576
+```
+
+This single-image smoke validates local Qwen3-VL model loading and image inference. The LoRA v1 adapter is validated by the INT4/BF16 benchmark smoke commands below.
 
 ## Unified Benchmark Entry
 

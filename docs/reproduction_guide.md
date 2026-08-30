@@ -156,6 +156,25 @@ Warnings are diagnostic. They do not hide the original failure.
 
 ## 10. INT4 Smoke
 
+Optional single-image smoke through the Linux/WSL bash wrapper:
+
+```bash
+bash scripts/run_single.sh
+```
+
+If bash is unavailable, run the same Python entry directly:
+
+```bash
+python src/inference/run_single.py \
+  --model-path models/Qwen3-VL-2B-Instruct \
+  --image datasets/mini_eval/images/00002_0000.png \
+  --question "Describe this remote sensing image." \
+  --output results/smoke_test.json \
+  --max-pixels 1048576
+```
+
+This single-image smoke validates local Qwen3-VL model loading and image inference. It is not the LoRA adapter validation path.
+
 ```bash
 python scripts/benchmarks/run_benchmark.py vrsbench \
   --precision int4 \
