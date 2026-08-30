@@ -59,7 +59,7 @@ def write_text(path: Path, text: str) -> None:
 
 def command(args: list[str]) -> str:
     try:
-        return subprocess.check_output(args, cwd=REPO_ROOT, text=True).strip()
+        return subprocess.check_output(args, cwd=REPO_ROOT, text=True, stderr=subprocess.DEVNULL).strip()
     except Exception as exc:
         return f"ERROR: {type(exc).__name__}: {exc}"
 

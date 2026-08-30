@@ -47,6 +47,7 @@ def git_commit(repo_root: Path) -> str:
             ["git", "rev-parse", "HEAD"],
             cwd=repo_root,
             text=True,
+            stderr=subprocess.DEVNULL,
         ).strip()
     except Exception:
         return "unknown"

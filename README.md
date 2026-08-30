@@ -48,6 +48,12 @@ source .venv/bin/activate
 python -m pip install -r requirements-verified.txt
 ```
 
+Equivalent one-click setup for the verified Ubuntu/Linux path:
+
+```bash
+bash scripts/setup_linux.sh
+```
+
 `requirements.txt` is a generic Python package list and intentionally does not pin the Linux CUDA wheel URL. Use it only after installing a compatible PyTorch build for your platform.
 
 ## External Artifacts
@@ -164,6 +170,14 @@ Use `--limit N` for smoke runs where supported. Use `--precision bf16`, `--preci
 For MME-RS Lite and XLRS-Lite, SpaceBudget-RS can select the visual compute budget through `--resource-mode fixed|eco|balanced|precision|auto`. `fixed` preserves the explicit `--max-pixels` value. `auto` is a deterministic task-aware rule that uses only pre-inference task/question/image metadata.
 
 ## Smoke Sequence
+
+One-click smoke after artifacts are placed:
+
+```bash
+bash scripts/smoke_test.sh
+```
+
+The script runs the environment check, artifact check, INT4 main path, BF16 fallback, SpaceBudget AUTO, HiRes grid_2x2, and OrbitGuard integrity smoke. The individual commands below are kept for debugging.
 
 Step 1: environment check.
 

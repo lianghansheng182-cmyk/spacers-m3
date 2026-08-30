@@ -57,6 +57,9 @@ results/reliability/**/tmp/
 # Local smoke-test inputs and temporary downloads
 data/test/demo.jpeg
 data/raw/
+submission_final/
+submission_final_PRECHECK.zip
+submission_final_PRECHECK.zip.sha256
 *.tmp
 *.temp
 *.part
