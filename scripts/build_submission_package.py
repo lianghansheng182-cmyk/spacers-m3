@@ -17,7 +17,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / "submission_final"
-ZIP_PATH = ROOT / "submission_final_PRECHECK_v2.zip"
+ZIP_PATH = ROOT / "submission_final_PRECHECK_v3.zip"
 FONT_PATH = Path("/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc")
 COMMIT = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
 
@@ -202,9 +202,11 @@ def build_docs() -> None:
 
         状态说明：
 
-        - `submission_final_PRECHECK_v2.zip` 可用于内部核验。
+        - `submission_final_PRECHECK_v3.zip` 可用于内部核验。
         - 正式上传前仍需人工加入盖章版参赛申报表，并按赛事要求将压缩包重命名为“单位+姓名+作品名称+联系方式”。
         - 本包不包含 Qwen3-VL-2B-Instruct 基座模型和公开 benchmark raw data；LoRA v1 adapter 已放入 `03_model/`。
+        - 外部 artifact 仅包括基座模型、公开 benchmark raw data 和后续可能单独分发的大容量文件；LoRA v1 adapter 已随包提供。
+        - 正式复现环境为 WSL2 Ubuntu / Linux。Windows native 仅作为静态检查或有限单图替代流程，不作为正式 full smoke 验证环境。
 
         ## Directory Layout
 
@@ -283,7 +285,7 @@ def build_docs() -> None:
             └── levir_cc/
         ```
 
-        `scripts/smoke_test.sh` 会在包内自动将 `../03_model/qwen3_vl_2b_lora_v1_adapter` 链接到代码默认 adapter 路径。基座模型和公开 benchmark raw data 需要按说明单独放置。
+        LoRA v1 adapter 已随包放置于 `../03_model/qwen3_vl_2b_lora_v1_adapter/`。`scripts/check_artifacts.py` 会直接识别该路径，不需要先运行 `scripts/smoke_test.sh`。`scripts/smoke_test.sh` 会在需要时将它链接到代码默认 adapter 路径。基座模型和公开 benchmark raw data 需要按说明单独放置。
         """,
     )
     write_text(
@@ -318,7 +320,7 @@ def build_docs() -> None:
 
         | Item | Status | Notes |
         | --- | --- | --- |
-        | Algorithm model | PASS | LoRA v1 adapter included; base model documented as external artifact. |
+        | Algorithm model | PASS | LoRA v1 adapter included in `03_model`; base model documented as external artifact. |
         | Complete source code | PASS | Runtime source, configs, scripts, docs, and small eval datasets included. |
         | Technical report | PASS | Markdown source and generated PDF included. |
         | Environment config | PASS | requirements files and setup script included. |
@@ -353,6 +355,7 @@ def build_docs() -> None:
         - Qwen3-VL-2B-Instruct base model: not included.
         - Public benchmark raw data: not included.
         - Stamped registration form: not included in precheck package.
+        - LoRA v1 adapter: included in this package, not an external artifact.
 
         ## Included Model Artifact
 
@@ -430,6 +433,12 @@ def copy_results() -> None:
             copy_tree(src, result_root / rel.removeprefix("results/"))
 
 
+def copy_smoke_logs() -> None:
+    src = ROOT / "docs/smoke_logs"
+    if src.exists():
+        copy_tree(src, PACKAGE / DIR_REPRO / "logs")
+
+
 def copy_model() -> None:
     adapter_src = ROOT / "results/lora/qwen3_vl_2b_lora_v1/adapter_final"
     adapter_dst = PACKAGE / DIR_MODEL / "qwen3_vl_2b_lora_v1_adapter"
@@ -484,6 +493,7 @@ def build_package() -> None:
     copy_source()
     copy_model()
     copy_results()
+    copy_smoke_logs()
     copy_file(ROOT / "docs/competition_technical_report.md", PACKAGE / DIR_REPORT / "competition_technical_report.md")
     copy_file(ROOT / "docs/figures/spacers_agent_architecture.svg", PACKAGE / DIR_REPORT / "figures/spacers_agent_architecture.svg")
     markdown_to_pdf(ROOT / "docs/competition_technical_report.md", PACKAGE / DIR_REPORT / "technical_report.pdf", "SPACERS-M3 技术报告")
@@ -507,7 +517,7 @@ def make_zip() -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--zip", action="store_true", help="Also create submission_final_PRECHECK_v2.zip")
+    parser.add_argument("--zip", action="store_true", help="Also create submission_final_PRECHECK_v3.zip")
     args = parser.parse_args()
     build_package()
     if args.zip:

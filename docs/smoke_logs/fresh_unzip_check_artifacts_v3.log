@@ -1,0 +1,28 @@
+Input root: <TEMP_DIR>
+Source root: <TEMP_DIR>
+Package root: <TEMP_DIR>
+[PASS] mini_eval manifest: <TEMP_DIR>
+[PASS] mini_eval images: <TEMP_DIR>
+[PASS] VRSBench 90 manifest: <TEMP_DIR>
+[PASS] VRSBench 90 images: <TEMP_DIR>
+[PASS] base model directory: <TEMP_DIR>
+[PASS] base model config.json: <TEMP_DIR>
+[PASS] base model generation_config.json: <TEMP_DIR>
+[PASS] base model tokenizer_config.json: <TEMP_DIR>
+[PASS] base model preprocessor_config.json: <TEMP_DIR>
+[PASS] base model weight file: *.safetensors or *.bin
+LoRA v1 adapter candidates:
+  - <TEMP_DIR>
+  - <TEMP_DIR>
+[PASS] Detected LoRA v1 adapter directory: <TEMP_DIR>
+[PASS] LoRA v1 adapter_config.json: <TEMP_DIR>
+[PASS] LoRA v1 adapter_config.json sha256=d5be846a7ee1e164dee38cf8a526fcb8de60c2dcd1b96a97e877d38e55b20ede size_mb=0.001
+[PASS] LoRA v1 adapter_model.safetensors: <TEMP_DIR>
+[PASS] LoRA v1 adapter_model.safetensors sha256=a5d4949df5715cd04cc9ce18e7b9625934e95393703c80196bbf7c5115fe81d6 size_mb=33.305
+[PASS] LoRA v1 README.md: <TEMP_DIR>
+[PASS] LoRA v1 README.md sha256=e34d4cbe24b794b76844a32cc674672e9e6613a5c5f53b924ba72f74e4c17e0f size_mb=0.005
+[PASS] MME-RealWorld-Lite raw data: <TEMP_DIR>
+[PASS] XLRS-Bench-lite raw data: <TEMP_DIR>
+[PASS] LEVIR-CC raw data: <TEMP_DIR>
+[WARNING] XLRS arrow shards present: 44/74
+[PASS] Artifact precheck completed.

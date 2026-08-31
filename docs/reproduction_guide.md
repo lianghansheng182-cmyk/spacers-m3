@@ -15,7 +15,7 @@ This guide describes the validated cross-machine setup for the final submission 
 - Python 3.12
 - CUDA 13.0 runtime
 
-Windows users should prefer WSL2 Ubuntu. Native Windows Python is not the verified submission environment.
+Use WSL2 Ubuntu or Linux for formal reproduction. Native Windows Python is limited to static checks or a small single-image fallback path when users install their own compatible Windows wheels; it is not the validated full inference or benchmark smoke environment.
 
 ## 3. Checkout
 
@@ -61,9 +61,17 @@ model.safetensors
 
 The inference code expects the local model directory. Do not rely on a hidden Hugging Face cache for reproducible runs.
 
-## 6. Place The LoRA Adapter
+## 6. LoRA Adapter
 
-Expected path:
+In the official submission package, the LoRA v1 adapter is already included at:
+
+```text
+03_model/qwen3_vl_2b_lora_v1_adapter/
+```
+
+When commands are run from `02_source_code/`, `scripts/check_artifacts.py` detects `../03_model/qwen3_vl_2b_lora_v1_adapter/` directly. `scripts/smoke_test.sh` links it into the code default path automatically when needed.
+
+Git-only clone fallback path:
 
 ```text
 results/lora/qwen3_vl_2b_lora_v1/adapter_final/
@@ -113,7 +121,7 @@ Notes:
 Run a fast path check before model loading:
 
 ```bash
-python scripts/check_artifacts.py --skip-raw
+python scripts/check_artifacts.py
 ```
 
 Expected output includes:
@@ -122,13 +130,13 @@ Expected output includes:
 [PASS] mini_eval manifest
 [PASS] VRSBench 90 manifest
 [PASS] base model directory
-[PASS] LoRA v1 adapter directory
+[PASS] Detected LoRA v1 adapter directory
 ```
 
-Before full external benchmark runs:
+For static source-only checks without public raw data:
 
 ```bash
-python scripts/check_artifacts.py
+python scripts/check_artifacts.py --skip-raw
 ```
 
 If a required artifact is missing, the script prints the exact expected path.
@@ -155,6 +163,26 @@ The script reports:
 Warnings are diagnostic. They do not hide the original failure.
 
 ## 10. INT4 Smoke
+
+For the official submission package, run the complete smoke sequence from the source-code directory:
+
+```bash
+cd 02_source_code
+bash scripts/setup_linux.sh
+python scripts/check_artifacts.py
+bash scripts/smoke_test.sh
+```
+
+Expected output:
+
+- environment profile saved to `logs/environment_info.txt`
+- LoRA v1 adapter detected either at `results/lora/qwen3_vl_2b_lora_v1/adapter_final/` or at packaged path `../03_model/qwen3_vl_2b_lora_v1_adapter/`
+- INT4 and BF16 VRSBench smoke each report `success_count: 1` and `failure_count: 0`
+- SpaceBudget AUTO smoke reports one MME-RS prediction and official evaluator metadata
+- HiRes grid_2x2 smoke reports one XLRS prediction and visual-token statistics
+- OrbitGuard integrity smoke writes `orbitguard_summary.json`
+
+The latest WSL2 Ubuntu validation logs are included in the submission package under `05_reproduction/logs/`.
 
 Optional single-image smoke through the Linux/WSL bash wrapper:
 
@@ -278,7 +306,7 @@ Correct action:
 
 - Use WSL2 Ubuntu with Python 3.12 for the verified path.
 - Do not install `requirements-verified.txt` in native Windows Python 3.14.
-- If using native Windows, install a Windows-compatible PyTorch build first and treat the setup as unverified.
+- If using native Windows, install a Windows-compatible PyTorch build first and treat the setup as unverified. Native Windows is not the formal full-smoke validation environment for this submission.
 
 ### B. PyTorch Build Does Not Support sm_120
 

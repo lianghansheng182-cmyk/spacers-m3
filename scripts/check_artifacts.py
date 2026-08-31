@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check whether external artifacts are placed at the documented paths."""
+"""Check whether SPACERS-M3 artifacts are placed at the documented paths."""
 
 from __future__ import annotations
 
@@ -9,6 +9,8 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_ADAPTER_REL = Path("results/lora/qwen3_vl_2b_lora_v1/adapter_final")
+PACKAGED_ADAPTER_REL = Path("03_model/qwen3_vl_2b_lora_v1_adapter")
 EXPECTED_ADAPTER_SHA256 = {
     "adapter_config.json": "d5be846a7ee1e164dee38cf8a526fcb8de60c2dcd1b96a97e877d38e55b20ede",
     "adapter_model.safetensors": "a5d4949df5715cd04cc9ce18e7b9625934e95393703c80196bbf7c5115fe81d6",
@@ -35,6 +37,44 @@ def count_files(path: Path, pattern: str) -> int:
     return sum(1 for _ in path.glob(pattern)) if path.exists() else 0
 
 
+def resolve_roots(root: Path) -> tuple[Path, Path]:
+    """Return (source_root, package_root).
+
+    The checker can run either inside a Git checkout/source tree or from a
+    fresh submission package. In the package layout, the source tree is
+    `submission_final/02_source_code` and the LoRA adapter is stored beside it
+    under `submission_final/03_model`.
+    """
+
+    root = root.resolve()
+    if (root / "02_source_code/scripts/check_artifacts.py").exists():
+        return root / "02_source_code", root
+    package_root = root.parent if root.name == "02_source_code" else root.parent
+    return root, package_root
+
+
+def adapter_candidates(source_root: Path, package_root: Path) -> list[Path]:
+    candidates = [
+        source_root / DEFAULT_ADAPTER_REL,
+        package_root / PACKAGED_ADAPTER_REL,
+    ]
+    unique: list[Path] = []
+    seen: set[Path] = set()
+    for path in candidates:
+        resolved = path.resolve(strict=False)
+        if resolved not in seen:
+            unique.append(path)
+            seen.add(resolved)
+    return unique
+
+
+def find_adapter_dir(source_root: Path, package_root: Path) -> Path | None:
+    for path in adapter_candidates(source_root, package_root):
+        if path.exists():
+            return path
+    return None
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check SPACERS-M3 local artifacts.")
     parser.add_argument("--root", type=Path, default=REPO_ROOT, help="Repository root.")
@@ -42,15 +82,18 @@ def main() -> int:
     args = parser.parse_args()
 
     root = args.root.resolve()
+    source_root, package_root = resolve_roots(root)
     required_ok = True
 
-    print(f"Repository root: {root}")
-    required_ok &= check_path("mini_eval manifest", root / "datasets/mini_eval/mini_eval.jsonl")
-    required_ok &= check_path("mini_eval images", root / "datasets/mini_eval/images")
-    required_ok &= check_path("VRSBench 90 manifest", root / "datasets/vrsbench_eval_v1/resolved_manifest.jsonl")
-    required_ok &= check_path("VRSBench 90 images", root / "datasets/vrsbench_eval_v1/images")
+    print(f"Input root: {root}")
+    print(f"Source root: {source_root}")
+    print(f"Package root: {package_root}")
+    required_ok &= check_path("mini_eval manifest", source_root / "datasets/mini_eval/mini_eval.jsonl")
+    required_ok &= check_path("mini_eval images", source_root / "datasets/mini_eval/images")
+    required_ok &= check_path("VRSBench 90 manifest", source_root / "datasets/vrsbench_eval_v1/resolved_manifest.jsonl")
+    required_ok &= check_path("VRSBench 90 images", source_root / "datasets/vrsbench_eval_v1/images")
 
-    model_dir = root / "models/Qwen3-VL-2B-Instruct"
+    model_dir = source_root / "models/Qwen3-VL-2B-Instruct"
     required_ok &= check_path("base model directory", model_dir)
     for name in ("config.json", "generation_config.json", "tokenizer_config.json", "preprocessor_config.json"):
         required_ok &= check_path(f"base model {name}", model_dir / name)
@@ -59,8 +102,15 @@ def main() -> int:
         print(("[PASS]" if has_weight else "[MISSING]") + " base model weight file: *.safetensors or *.bin")
         required_ok &= has_weight
 
-    adapter_dir = root / "results/lora/qwen3_vl_2b_lora_v1/adapter_final"
-    required_ok &= check_path("LoRA v1 adapter directory", adapter_dir)
+    print("LoRA v1 adapter candidates:")
+    for candidate in adapter_candidates(source_root, package_root):
+        print(f"  - {candidate}")
+    adapter_dir = find_adapter_dir(source_root, package_root)
+    if adapter_dir is None:
+        required_ok &= check_path("LoRA v1 adapter directory", source_root / DEFAULT_ADAPTER_REL)
+        adapter_dir = source_root / DEFAULT_ADAPTER_REL
+    else:
+        print(f"[PASS] Detected LoRA v1 adapter directory: {adapter_dir.resolve()}")
     for name, expected_sha in EXPECTED_ADAPTER_SHA256.items():
         path = adapter_dir / name
         exists = check_path(f"LoRA v1 {name}", path)
@@ -72,11 +122,11 @@ def main() -> int:
             print(f"{status} LoRA v1 {name} sha256={actual_sha} size_mb={size_mb:.3f}")
 
     raw_required = not args.skip_raw
-    required_ok &= check_path("MME-RealWorld-Lite raw data", root / "data/raw/mme_realworld_lite", required=raw_required)
-    required_ok &= check_path("XLRS-Bench-lite raw data", root / "data/raw/xlrs_bench_lite", required=raw_required)
-    required_ok &= check_path("LEVIR-CC raw data", root / "data/raw/levir_cc", required=raw_required)
+    required_ok &= check_path("MME-RealWorld-Lite raw data", source_root / "data/raw/mme_realworld_lite", required=raw_required)
+    required_ok &= check_path("XLRS-Bench-lite raw data", source_root / "data/raw/xlrs_bench_lite", required=raw_required)
+    required_ok &= check_path("LEVIR-CC raw data", source_root / "data/raw/levir_cc", required=raw_required)
 
-    xlrs_train = root / "data/raw/xlrs_bench_lite/train"
+    xlrs_train = source_root / "data/raw/xlrs_bench_lite/train"
     shard_count = count_files(xlrs_train, "data-*-of-00074.arrow")
     if xlrs_train.exists():
         status = "[PASS]" if shard_count == 74 else "[WARNING]"

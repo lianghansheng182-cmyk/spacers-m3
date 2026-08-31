@@ -22,7 +22,7 @@ Recommended validation environment:
 
 The locked wheel configuration in `requirements-verified.txt` and `requirements-linux-cu130.txt` is for the verified Linux/WSL CUDA 13 environment.
 
-Windows users should prefer WSL2 Ubuntu. The current submission has not been validated in native Windows Python. Do not assume native Windows Python 3.14 can directly install the Linux/Python 3.12/CUDA 13 wheels.
+Windows users should prefer WSL2 Ubuntu or Linux for formal reproduction. Native Windows Python is limited to static checks or a small single-image fallback path when users install their own compatible Windows wheels; it is not the validated full inference or benchmark smoke environment.
 
 Detailed reproduction guide:
 
@@ -56,7 +56,7 @@ bash scripts/setup_linux.sh
 
 `requirements.txt` is a generic Python package list and intentionally does not pin the Linux CUDA wheel URL. Use it only after installing a compatible PyTorch build for your platform.
 
-## External Artifacts
+## Artifacts
 
 Expected final local paths:
 
@@ -65,18 +65,16 @@ Expected final local paths:
 - Raw external benchmark data: `data/raw/`
 - VRSBench internal eval data: `datasets/vrsbench_eval_v1/resolved_manifest.jsonl`
 
-`data/raw/`, model weights, and adapter checkpoints are intentionally excluded from Git.
+In the official submission package, the LoRA v1 adapter is included under `03_model/qwen3_vl_2b_lora_v1_adapter/`. `scripts/check_artifacts.py` detects this packaged adapter directly from `02_source_code/` without requiring `scripts/smoke_test.sh` to run first. The smoke script also links it into the code default path when needed.
 
-Place external artifacts under the repository root before running model inference:
+`data/raw/`, base model weights, and training checkpoints are intentionally excluded from Git. External artifacts for the submission package are only the base model, public benchmark raw data, and any separately hosted large files.
+
+Place external base model and raw benchmark data under the source-code root before running model inference:
 
 ```text
 spacers_m3/
 ├── models/
 │   └── Qwen3-VL-2B-Instruct/
-├── results/
-│   └── lora/
-│       └── qwen3_vl_2b_lora_v1/
-│           └── adapter_final/
 └── data/
     └── raw/
         ├── mme_realworld_lite/
@@ -84,18 +82,20 @@ spacers_m3/
         └── levir_cc/
 ```
 
-The tracked VRSBench mini and 90-sample internal validation images are already under `datasets/`. External benchmark raw data and model artifacts must be supplied separately.
+The tracked VRSBench mini and 90-sample internal validation images are already under `datasets/`. External benchmark raw data and the base model must be supplied separately.
 
 Artifact policy:
 
 - Included with Git/submission: source code, configs, docs, small result summaries, `datasets/mini_eval`, and `datasets/vrsbench_eval_v1`.
-- Supplied separately: `models/Qwen3-VL-2B-Instruct`, LoRA v1 `adapter_final`, and external benchmark raw data under `data/raw/`.
+- Included with final submission package only: LoRA v1 `adapter_final` under `03_model/`.
+- Supplied separately: `models/Qwen3-VL-2B-Instruct` and external benchmark raw data under `data/raw/`.
 - Public benchmark raw data is excluded from Git because of size and redistribution constraints.
-- Model weights and adapter checkpoints are excluded from Git because of size. The final submission package should include the LoRA v1 adapter separately when allowed.
+- Base model weights and training checkpoints are excluded from Git because of size.
 
 LoRA v1 adapter reference:
 
 - Expected directory: `results/lora/qwen3_vl_2b_lora_v1/adapter_final/`
+- Submission package directory: `../03_model/qwen3_vl_2b_lora_v1_adapter/` when running from `02_source_code/`
 - Expected size: about 34 MB
 - Key files: `adapter_config.json`, `adapter_model.safetensors`, `README.md`
 - SHA256 manifest: `docs/lora_v1_adapter_manifest.sha256`
@@ -118,7 +118,7 @@ Benchmark data reference:
 ```bash
 nvidia-smi
 python scripts/check_environment.py
-python scripts/check_artifacts.py --skip-raw
+python scripts/check_artifacts.py
 python scripts/benchmarks/run_benchmark.py --help
 ```
 
@@ -179,6 +179,18 @@ bash scripts/smoke_test.sh
 
 The script runs the environment check, artifact check, INT4 main path, BF16 fallback, SpaceBudget AUTO, HiRes grid_2x2, and OrbitGuard integrity smoke. The individual commands below are kept for debugging.
 
+Expected final smoke output:
+
+- environment profile is printed and saved to `logs/environment_info.txt`
+- `scripts/check_artifacts.py` prints the detected LoRA adapter path and SHA256 values
+- INT4 VRSBench smoke writes one successful prediction with `failure_count: 0`
+- BF16 VRSBench fallback smoke writes one successful prediction with `failure_count: 0`
+- SpaceBudget AUTO MME-RS smoke writes one successful prediction and official evaluator metadata
+- HiRes grid_2x2 XLRS smoke writes one successful prediction and visual-token statistics
+- OrbitGuard integrity smoke writes `orbitguard_summary.json` with healthy/faulted/recovered metrics
+
+The latest WSL2 Ubuntu full-smoke logs are saved under `docs/smoke_logs/` and are copied into `05_reproduction/logs/` in the submission package.
+
 Step 1: environment check.
 
 ```bash
@@ -190,10 +202,16 @@ Expected output: OS, Python, torch, CUDA, GPU, compute capability, and key packa
 Step 2: artifact precheck.
 
 ```bash
-python scripts/check_artifacts.py --skip-raw
+python scripts/check_artifacts.py
 ```
 
-Expected output: `[PASS]` for tracked VRSBench data, base model, and LoRA adapter. Use `python scripts/check_artifacts.py` before full external benchmark runs.
+Expected output: `[PASS]` for tracked VRSBench data, base model, and LoRA adapter. In the submission package, the checker reports the packaged `../03_model/qwen3_vl_2b_lora_v1_adapter/` path and SHA256 values even before `scripts/smoke_test.sh` creates the runtime symlink.
+
+For source-only static checks before public raw data is placed:
+
+```bash
+python scripts/check_artifacts.py --skip-raw
+```
 
 Step 3: minimal INT4 main-path smoke.
 

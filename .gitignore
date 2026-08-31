@@ -53,6 +53,7 @@ results/lora/**/checkpoint-step-*/
 results/reliability/**/protected_cache/
 results/reliability/**/corrupted_adapters/
 results/reliability/**/tmp/
+results/smoke_submission/
 
 # Local smoke-test inputs and temporary downloads
 data/test/demo.jpeg
@@ -62,6 +63,8 @@ submission_final_PRECHECK.zip
 submission_final_PRECHECK.zip.sha256
 submission_final_PRECHECK_v2.zip
 submission_final_PRECHECK_v2.zip.sha256
+submission_final_PRECHECK_v3.zip
+submission_final_PRECHECK_v3.zip.sha256
 *.tmp
 *.temp
 *.part

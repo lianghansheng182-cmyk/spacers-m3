@@ -1,0 +1,330 @@
+========================================
+Environment Information
+Generated at: 2026-08-31 23:38:57.407897
+========================================
+
+--- System ---
+OS: Linux 6.6.87.2-microsoft-standard-WSL2
+Platform: Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39
+Python: 3.12.3
+Executable: <REPO_ROOT>/.venv/bin/python
+
+--- PyTorch / CUDA ---
+torch: 2.13.0+cu130
+CUDA runtime: 13.0
+CUDA available: True
+GPU: NVIDIA GeForce RTX 5060 Laptop GPU
+Compute capability: 12.0
+GPU total memory MB: 8150.56
+NVIDIA driver: 582.05
+
+--- Python Packages ---
+transformers: 4.57.6
+peft: 0.20.0
+bitsandbytes: 0.50.1
+PyYAML: 6.0.3
+accelerate: 1.14.0
+qwen-vl-utils: 0.0.14
+
+--- Disk ---
+Project disk free GB: 651.59
+
+--- Warnings ---
+[PASS] Environment matches the verified reproduction profile closely enough.
+[PASS] Environment info saved to logs/environment_info.txt
+Input root: <REPO_ROOT>
+Source root: <REPO_ROOT>
+Package root: <USER_HOME>
+[PASS] mini_eval manifest: <REPO_ROOT>/datasets/mini_eval/mini_eval.jsonl
+[PASS] mini_eval images: <REPO_ROOT>/datasets/mini_eval/images
+[PASS] VRSBench 90 manifest: <REPO_ROOT>/datasets/vrsbench_eval_v1/resolved_manifest.jsonl
+[PASS] VRSBench 90 images: <REPO_ROOT>/datasets/vrsbench_eval_v1/images
+[PASS] base model directory: <REPO_ROOT>/models/Qwen3-VL-2B-Instruct
+[PASS] base model config.json: <REPO_ROOT>/models/Qwen3-VL-2B-Instruct/config.json
+[PASS] base model generation_config.json: <REPO_ROOT>/models/Qwen3-VL-2B-Instruct/generation_config.json
+[PASS] base model tokenizer_config.json: <REPO_ROOT>/models/Qwen3-VL-2B-Instruct/tokenizer_config.json
+[PASS] base model preprocessor_config.json: <REPO_ROOT>/models/Qwen3-VL-2B-Instruct/preprocessor_config.json
+[PASS] base model weight file: *.safetensors or *.bin
+LoRA v1 adapter candidates:
+  - <REPO_ROOT>/results/lora/qwen3_vl_2b_lora_v1/adapter_final
+  - <USER_HOME>/03_model/qwen3_vl_2b_lora_v1_adapter
+[PASS] Detected LoRA v1 adapter directory: <REPO_ROOT>/results/lora/qwen3_vl_2b_lora_v1/adapter_final
+[PASS] LoRA v1 adapter_config.json: <REPO_ROOT>/results/lora/qwen3_vl_2b_lora_v1/adapter_final/adapter_config.json
+[PASS] LoRA v1 adapter_config.json sha256=d5be846a7ee1e164dee38cf8a526fcb8de60c2dcd1b96a97e877d38e55b20ede size_mb=0.001
+[PASS] LoRA v1 adapter_model.safetensors: <REPO_ROOT>/results/lora/qwen3_vl_2b_lora_v1/adapter_final/adapter_model.safetensors
+[PASS] LoRA v1 adapter_model.safetensors sha256=a5d4949df5715cd04cc9ce18e7b9625934e95393703c80196bbf7c5115fe81d6 size_mb=33.305
+[PASS] LoRA v1 README.md: <REPO_ROOT>/results/lora/qwen3_vl_2b_lora_v1/adapter_final/README.md
+[PASS] LoRA v1 README.md sha256=e34d4cbe24b794b76844a32cc674672e9e6613a5c5f53b924ba72f74e4c17e0f size_mb=0.005
+[PASS] MME-RealWorld-Lite raw data: <REPO_ROOT>/data/raw/mme_realworld_lite
+[PASS] XLRS-Bench-lite raw data: <REPO_ROOT>/data/raw/xlrs_bench_lite
+[PASS] LEVIR-CC raw data: <REPO_ROOT>/data/raw/levir_cc
+[WARNING] XLRS arrow shards present: 44/74
+[PASS] Artifact precheck completed.
+Running: <REPO_ROOT>/.venv/bin/python <REPO_ROOT>/scripts/lora/evaluate_lora_adapter.py --model-path <REPO_ROOT>/models/Qwen3-VL-2B-Instruct --adapter-path <REPO_ROOT>/results/lora/qwen3_vl_2b_lora_v1/adapter_final --precision int4 --max-pixels 1048576 --input <REPO_ROOT>/datasets/vrsbench_eval_v1/resolved_manifest.jsonl --output-dir results/smoke_submission/vrsbench_int4 --prompt-version v1 --grounding-max-new-tokens 32 --stop-grounding-after-brace --limit 1
+[001/001] cap_ext_001 caption ok latency=6.550s
+{
+  "input_path": "<REPO_ROOT>/datasets/vrsbench_eval_v1/resolved_manifest.jsonl",
+  "output_dir": "<REPO_ROOT>/results/smoke_submission/vrsbench_int4",
+  "predictions_path": "<REPO_ROOT>/results/smoke_submission/vrsbench_int4/predictions.jsonl",
+  "metrics_path": "<REPO_ROOT>/results/smoke_submission/vrsbench_int4/metrics.json",
+  "error_cases_path": "<REPO_ROOT>/results/smoke_submission/vrsbench_int4/error_cases.jsonl",
+  "run_config_path": "<REPO_ROOT>/results/smoke_submission/vrsbench_int4/run_config.json",
+  "sample_count": 1,
+  "success_count": 1,
+  "failure_count": 0,
+  "total_runtime_s": 6.817806,
+  "model_load_time_s": 7.821446,
+  "latency_mean_s": 6.55024,
+  "latency_p95_s": 6.55024,
+  "peak_vram_mb": 1650.42,
+  "adapter_size_mb": 33.311,
+  "prompt_version": "v1",
+  "precision": "int4",
+  "max_new_tokens": 256,
+  "grounding_max_new_tokens": 32,
+  "stop_grounding_after_brace": true,
+  "metrics": {
+    "sample_count": 1,
+    "prediction_count": 1,
+    "success_count": 1,
+    "failure_count": 0,
+    "caption": {
+      "count": 1,
+      "metric": null,
+      "note": "Caption predictions are saved only; no automatic caption metric is reported for this run."
+    },
+    "vqa": {
+      "count": 0,
+      "correct": 0,
+      "accuracy": 0.0,
+      "normalization": "NFKC, lowercase, punctuation-to-space, whitespace collapse, number words 0-10"
+    },
+    "grounding": {
+      "count": 0,
+      "parsed_count": 0,
+      "mean_iou": 0.0,
+      "acc_at_0_5": 0.0,
+      "acc_at_0_7": 0.0
+    },
+    "error_case_count": 0,
+    "error_case_counts": {},
+    "per_sample": [
+      {
+        "id": "cap_ext_001",
+        "task": "caption",
+        "success": true
+      }
+    ]
+  }
+}
+Running: <REPO_ROOT>/.venv/bin/python <REPO_ROOT>/scripts/lora/evaluate_lora_adapter.py --model-path <REPO_ROOT>/models/Qwen3-VL-2B-Instruct --adapter-path <REPO_ROOT>/results/lora/qwen3_vl_2b_lora_v1/adapter_final --precision bf16 --max-pixels 1048576 --input <REPO_ROOT>/datasets/vrsbench_eval_v1/resolved_manifest.jsonl --output-dir results/smoke_submission/vrsbench_bf16 --prompt-version v1 --grounding-max-new-tokens 32 --stop-grounding-after-brace --limit 1
+[001/001] cap_ext_001 caption ok latency=4.665s
+{
+  "input_path": "<REPO_ROOT>/datasets/vrsbench_eval_v1/resolved_manifest.jsonl",
+  "output_dir": "<REPO_ROOT>/results/smoke_submission/vrsbench_bf16",
+  "predictions_path": "<REPO_ROOT>/results/smoke_submission/vrsbench_bf16/predictions.jsonl",
+  "metrics_path": "<REPO_ROOT>/results/smoke_submission/vrsbench_bf16/metrics.json",
+  "error_cases_path": "<REPO_ROOT>/results/smoke_submission/vrsbench_bf16/error_cases.jsonl",
+  "run_config_path": "<REPO_ROOT>/results/smoke_submission/vrsbench_bf16/run_config.json",
+  "sample_count": 1,
+  "success_count": 1,
+  "failure_count": 0,
+  "total_runtime_s": 4.931549,
+  "model_load_time_s": 3.288854,
+  "latency_mean_s": 4.665425,
+  "latency_p95_s": 4.665425,
+  "peak_vram_mb": 4190.73,
+  "adapter_size_mb": 33.311,
+  "prompt_version": "v1",
+  "precision": "bf16",
+  "max_new_tokens": 256,
+  "grounding_max_new_tokens": 32,
+  "stop_grounding_after_brace": true,
+  "metrics": {
+    "sample_count": 1,
+    "prediction_count": 1,
+    "success_count": 1,
+    "failure_count": 0,
+    "caption": {
+      "count": 1,
+      "metric": null,
+      "note": "Caption predictions are saved only; no automatic caption metric is reported for this run."
+    },
+    "vqa": {
+      "count": 0,
+      "correct": 0,
+      "accuracy": 0.0,
+      "normalization": "NFKC, lowercase, punctuation-to-space, whitespace collapse, number words 0-10"
+    },
+    "grounding": {
+      "count": 0,
+      "parsed_count": 0,
+      "mean_iou": 0.0,
+      "acc_at_0_5": 0.0,
+      "acc_at_0_7": 0.0
+    },
+    "error_case_count": 0,
+    "error_case_counts": {},
+    "per_sample": [
+      {
+        "id": "cap_ext_001",
+        "task": "caption",
+        "success": true
+      }
+    ]
+  }
+}
+Running: <REPO_ROOT>/.venv/bin/python <REPO_ROOT>/scripts/benchmarks/evaluate_mme_realworld_rs_lite.py --model-path <REPO_ROOT>/models/Qwen3-VL-2B-Instruct --adapter-path <REPO_ROOT>/results/lora/qwen3_vl_2b_lora_v1/adapter_final --precision int4 --max-pixels 1048576 --output-dir results/smoke_submission/mme_spacebudget_auto --tiling-mode none --tile-overlap 0.0 --resource-mode auto --limit 1
+[001/001] perception/remote_sensing/position/2527 gt=A pred=A ok latency=2.069s
+{
+  "run_config_path": "<REPO_ROOT>/results/smoke_submission/mme_spacebudget_auto/run_config.json",
+  "predictions_path": "<REPO_ROOT>/results/smoke_submission/mme_spacebudget_auto/predictions.json",
+  "metrics_path": "<REPO_ROOT>/results/smoke_submission/mme_spacebudget_auto/metrics.json",
+  "official_eval": {
+    "available": true,
+    "returncode": 0,
+    "stdout_path": "<REPO_ROOT>/results/smoke_submission/mme_spacebudget_auto/official_eval_stdout.txt"
+  },
+  "sample_count": 1,
+  "failure_count": 0,
+  "model_load_time_s": 3.658172,
+  "latency_mean_s": 2.068689,
+  "latency_p95_s": 2.068689,
+  "peak_vram_mb": 1828.2,
+  "visual_tokens": {
+    "patch": {
+      "count": 1,
+      "mean": 3800.0,
+      "p50": 3800.0,
+      "p95": 3800.0,
+      "min": 3800,
+      "max": 3800
+    },
+    "language": {
+      "count": 1,
+      "mean": 950.0,
+      "p50": 950.0,
+      "p95": 950.0,
+      "min": 950,
+      "max": 950
+    }
+  },
+  "metrics": {
+    "sample_count": 1,
+    "correct": 1,
+    "accuracy": 1.0,
+    "parse_failures": 0,
+    "by_task": {
+      "Perception": {
+        "Remote Sensing": {
+          "position": {
+            "true": 1,
+            "false": 0,
+            "is_E": 0
+          }
+        }
+      }
+    }
+  }
+}
+Running: <REPO_ROOT>/.venv/bin/python <REPO_ROOT>/scripts/benchmarks/evaluate_xlrs_bench_lite.py --model-path <REPO_ROOT>/models/Qwen3-VL-2B-Instruct --adapter-path <REPO_ROOT>/results/lora/qwen3_vl_2b_lora_v1/adapter_final --precision int4 --max-pixels 1048576 --output-dir results/smoke_submission/xlrs_highres_grid_2x2 --tiling-mode grid_2x2 --tile-overlap 0.0 --resource-mode fixed --limit 1
+[0001] idx=0 gt=D pred=B ok latency=3.604s
+{
+  "run_config_path": "<REPO_ROOT>/results/smoke_submission/xlrs_highres_grid_2x2/run_config.json",
+  "predictions_path": "<REPO_ROOT>/results/smoke_submission/xlrs_highres_grid_2x2/predictions.jsonl",
+  "metrics_path": "<REPO_ROOT>/results/smoke_submission/xlrs_highres_grid_2x2/metrics.json",
+  "sample_count": 1,
+  "failure_count": 0,
+  "model_load_time_s": 4.170106,
+  "latency_mean_s": 3.604344,
+  "latency_p95_s": 3.604344,
+  "peak_vram_mb": 2866.85,
+  "resolution_stats": {
+    "min_width": 4096,
+    "max_width": 4096,
+    "min_height": 4096,
+    "max_height": 4096,
+    "max_pixels": 16777216
+  },
+  "visual_tokens": {
+    "patch": {
+      "count": 1,
+      "mean": 20480.0,
+      "p50": 20480.0,
+      "p95": 20480.0,
+      "min": 20480,
+      "max": 20480
+    },
+    "language": {
+      "count": 1,
+      "mean": 5120.0,
+      "p50": 5120.0,
+      "p95": 5120.0,
+      "min": 5120,
+      "max": 5120
+    }
+  },
+  "metrics": {
+    "sample_count": 1,
+    "correct": 0,
+    "accuracy_micro": 0.0,
+    "accuracy_macro_category": 0.0,
+    "parse_failures": 0,
+    "multi_answer_count": 0,
+    "category_counts": {
+      "Complex reasoning/Anomaly Detection and Interpretation": 1
+    },
+    "category_accuracy": {
+      "Complex reasoning/Anomaly Detection and Interpretation": 0.0
+    },
+    "l2_counts": {
+      "default": 1
+    },
+    "l2_accuracy": {
+      "default": 0.0
+    }
+  }
+}
+{
+  "healthy": {
+    "sample_count": 90,
+    "vqa_accuracy": 0.733333,
+    "grounding_mean_iou": 0.50968,
+    "grounding_acc_at_0_5": 0.6,
+    "grounding_acc_at_0_7": 0.466667,
+    "parse_failures": 1,
+    "inference_failures": 0,
+    "latency_mean_s": 2.214299,
+    "latency_p95_s": 6.429084,
+    "peak_vram_mb": 1659.81,
+    "metric_source": "results/quantization/lora_v1_int4_eval_vrsbench90/summary.json"
+  },
+  "faulted": {
+    "sample_count": 90,
+    "vqa_accuracy": 0.720533,
+    "grounding_mean_iou": 0.49368,
+    "grounding_acc_at_0_5": 0.5808,
+    "grounding_acc_at_0_7": 0.449067,
+    "parse_failures": 1,
+    "inference_failures": 0,
+    "latency_mean_s": 2.214299,
+    "latency_p95_s": 6.429084,
+    "peak_vram_mb": 1659.81,
+    "metric_source": "deterministic_projected_from_fault_manifest"
+  },
+  "recovered": {
+    "sample_count": 90,
+    "vqa_accuracy": 0.733333,
+    "grounding_mean_iou": 0.50968,
+    "grounding_acc_at_0_5": 0.6,
+    "grounding_acc_at_0_7": 0.466667,
+    "parse_failures": 1,
+    "inference_failures": 0,
+    "latency_mean_s": 2.214299,
+    "latency_p95_s": 6.429084,
+    "peak_vram_mb": 1659.81,
+    "metric_source": "post_recovery_integrity_pass_reuses_healthy_reference"
+  }
+}
+Wrote <REPO_ROOT>/results/smoke_submission/orbitguard_integrity/orbitguard_summary.json
+[PASS] Submission smoke test completed: results/smoke_submission
