@@ -17,9 +17,17 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / "submission_final"
-ZIP_PATH = ROOT / "submission_final_PRECHECK.zip"
+ZIP_PATH = ROOT / "submission_final_PRECHECK_v2.zip"
 FONT_PATH = Path("/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc")
 COMMIT = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+
+DIR_APPLICATION = "00_application_form"
+DIR_REPORT = "01_technical_report"
+DIR_SOURCE = "02_source_code"
+DIR_MODEL = "03_model"
+DIR_RESULTS = "04_experiment_results"
+DIR_REPRO = "05_reproduction"
+DIR_INFO = "06_submission_info"
 
 
 def sha256_file(path: Path) -> str:
@@ -194,25 +202,37 @@ def build_docs() -> None:
 
         状态说明：
 
-        - `submission_final_PRECHECK.zip` 可用于内部核验。
+        - `submission_final_PRECHECK_v2.zip` 可用于内部核验。
         - 正式上传前仍需人工加入盖章版参赛申报表，并按赛事要求将压缩包重命名为“单位+姓名+作品名称+联系方式”。
-        - 本包不包含 Qwen3-VL-2B-Instruct 基座模型和公开 benchmark raw data；LoRA v1 adapter 已放入 `03_算法模型/`。
+        - 本包不包含 Qwen3-VL-2B-Instruct 基座模型和公开 benchmark raw data；LoRA v1 adapter 已放入 `03_model/`。
+
+        ## Directory Layout
+
+        | Directory | 含义 |
+        | --- | --- |
+        | `00_application_form/` | 参赛申报表 |
+        | `01_technical_report/` | 技术报告 |
+        | `02_source_code/` | 完整源代码 |
+        | `03_model/` | LoRA 模型权重及模型说明 |
+        | `04_experiment_results/` | 实验结果 |
+        | `05_reproduction/` | 复现说明 |
+        | `06_submission_info/` | 提交清单及其他说明 |
 
         推荐验证环境：Ubuntu 24.04 / Python 3.12 / CUDA 13.0 / NVIDIA GPU。
 
         快速复现：
 
         ```bash
-        cd 02_源代码
+        cd 02_source_code
         bash scripts/setup_linux.sh
         bash scripts/smoke_test.sh
         ```
 
-        外部文件放置方式见 `05_复现说明/artifact_placement.md` 和 `05_复现说明/benchmark_data.md`。
+        外部文件放置方式见 `05_reproduction/artifact_placement.md` 和 `05_reproduction/benchmark_data.md`。
         """,
     )
     write_text(
-        PACKAGE / "00_参赛申报表" / "README.md",
+        PACKAGE / DIR_APPLICATION / "README.md",
         """
         # 参赛申报表
 
@@ -222,14 +242,14 @@ def build_docs() -> None:
         """,
     )
     write_text(
-        PACKAGE / "03_算法模型" / "base_model说明.md",
+        PACKAGE / DIR_MODEL / "base_model.md",
         """
         # Qwen3-VL-2B-Instruct 基座模型说明
 
         - Base model: Qwen3-VL-2B-Instruct
         - 代码默认路径：`models/Qwen3-VL-2B-Instruct/`
         - 最终推理使用本地模型目录，不依赖在线 API 或隐藏 cache。
-        - 本预检包不内置完整基座模型权重。正式复现时请将基座模型完整目录放置到 `02_源代码/models/Qwen3-VL-2B-Instruct/`。
+        - 本预检包不内置完整基座模型权重。正式复现时请将基座模型完整目录放置到 `02_source_code/models/Qwen3-VL-2B-Instruct/`。
 
         目录内应至少包含：
 
@@ -245,16 +265,16 @@ def build_docs() -> None:
         """,
     )
     write_text(
-        PACKAGE / "05_复现说明" / "artifact_placement.md",
+        PACKAGE / DIR_REPRO / "artifact_placement.md",
         """
         # 外部 artifact 放置说明
 
-        在提交包解压后，以 `02_源代码/` 为工作目录。
+        在提交包解压后，以 `02_source_code/` 为工作目录。
 
         期望结构：
 
         ```text
-        02_源代码/
+        02_source_code/
         ├── models/Qwen3-VL-2B-Instruct/
         ├── results/lora/qwen3_vl_2b_lora_v1/adapter_final/
         └── data/raw/
@@ -263,11 +283,11 @@ def build_docs() -> None:
             └── levir_cc/
         ```
 
-        `scripts/smoke_test.sh` 会在包内自动将 `../03_算法模型/qwen3_vl_2b_lora_v1_adapter` 链接到代码默认 adapter 路径。基座模型和公开 benchmark raw data 需要按说明单独放置。
+        `scripts/smoke_test.sh` 会在包内自动将 `../03_model/qwen3_vl_2b_lora_v1_adapter` 链接到代码默认 adapter 路径。基座模型和公开 benchmark raw data 需要按说明单独放置。
         """,
     )
     write_text(
-        PACKAGE / "05_复现说明" / "benchmark_data.md",
+        PACKAGE / DIR_REPRO / "benchmark_data.md",
         """
         # Benchmark 数据说明
 
@@ -292,7 +312,7 @@ def build_docs() -> None:
         """,
     )
     write_text(
-        PACKAGE / "06_提交说明" / "FINAL_SUBMISSION_CHECKLIST.md",
+        PACKAGE / DIR_INFO / "FINAL_SUBMISSION_CHECKLIST.md",
         """
         # Final Submission Checklist
 
@@ -307,12 +327,12 @@ def build_docs() -> None:
         | Experiment results | PASS | Selected final summaries, metrics, and figures included. |
         | Necessary reproduction material | PASS | LoRA adapter and small VRSBench eval data included. |
         | Stamped registration form | EXTERNAL ARTIFACT | Must be added manually before official upload. |
-        | Base model weights | EXTERNAL ARTIFACT | Place under `02_源代码/models/Qwen3-VL-2B-Instruct/`. |
-        | Public benchmark raw data | EXTERNAL ARTIFACT | Place under `02_源代码/data/raw/`. |
+        | Base model weights | EXTERNAL ARTIFACT | Place under `02_source_code/models/Qwen3-VL-2B-Instruct/`. |
+        | Public benchmark raw data | EXTERNAL ARTIFACT | Place under `02_source_code/data/raw/`. |
         """,
     )
     write_text(
-        PACKAGE / "06_提交说明" / "submission_manifest.md",
+        PACKAGE / DIR_INFO / "submission_manifest.md",
         f"""
         # Submission Manifest
 
@@ -320,13 +340,13 @@ def build_docs() -> None:
 
         ## Package Layout
 
-        - `00_参赛申报表/`: manual insertion point for the stamped registration form.
-        - `01_技术报告/`: final technical report Markdown and PDF.
-        - `02_源代码/`: source code, configs, scripts, docs, requirements, and small validation datasets.
-        - `03_算法模型/`: LoRA v1 adapter and base-model placement instructions.
-        - `04_实验结果/`: selected final result summaries, metrics, and figures.
-        - `05_复现说明/`: artifact placement, benchmark data, and reproduction guide.
-        - `06_提交说明/`: checklist and manifest.
+        - `00_application_form/`: manual insertion point for the stamped registration form.
+        - `01_technical_report/`: final technical report Markdown and PDF.
+        - `02_source_code/`: source code, configs, scripts, docs, requirements, and small validation datasets.
+        - `03_model/`: LoRA v1 adapter and base-model placement instructions.
+        - `04_experiment_results/`: selected final result summaries, metrics, and figures.
+        - `05_reproduction/`: artifact placement, benchmark data, and reproduction guide.
+        - `06_submission_info/`: checklist and manifest.
 
         ## External Large Files
 
@@ -336,7 +356,7 @@ def build_docs() -> None:
 
         ## Included Model Artifact
 
-        - LoRA v1 adapter: `03_算法模型/qwen3_vl_2b_lora_v1_adapter/`
+        - LoRA v1 adapter: `03_model/qwen3_vl_2b_lora_v1_adapter/`
 
         ## Protocol Labels
 
@@ -350,7 +370,7 @@ def build_docs() -> None:
 
 
 def copy_source() -> None:
-    src_root = PACKAGE / "02_源代码"
+    src_root = PACKAGE / DIR_SOURCE
     for name in ("README.md", "requirements.txt", "requirements-verified.txt", "requirements-linux-cu130.txt"):
         copy_file(ROOT / name, src_root / name)
     for name in ("configs", "src", "scripts", "docs"):
@@ -372,7 +392,7 @@ def copy_source() -> None:
 
 
 def copy_results() -> None:
-    result_root = PACKAGE / "04_实验结果"
+    result_root = PACKAGE / DIR_RESULTS
     files = [
         "results/final_core_results.md",
         "results/final_benchmark_summary.md",
@@ -412,7 +432,7 @@ def copy_results() -> None:
 
 def copy_model() -> None:
     adapter_src = ROOT / "results/lora/qwen3_vl_2b_lora_v1/adapter_final"
-    adapter_dst = PACKAGE / "03_算法模型/qwen3_vl_2b_lora_v1_adapter"
+    adapter_dst = PACKAGE / DIR_MODEL / "qwen3_vl_2b_lora_v1_adapter"
     copy_tree(adapter_src, adapter_dst)
     lines = [
         "# LoRA v1 Adapter Manifest",
@@ -429,7 +449,7 @@ def copy_model() -> None:
             lines.append(f"{sha256_file(path)}  {rel}  {size} bytes")
     lines.append("")
     lines.append(f"Total size: {total / 1024 / 1024:.3f} MB")
-    write_text(PACKAGE / "03_算法模型/adapter_manifest.txt", "\n".join(lines) + "\n")
+    write_text(PACKAGE / DIR_MODEL / "adapter_manifest.txt", "\n".join(lines) + "\n")
 
 
 def sanitize_package_text() -> None:
@@ -464,11 +484,11 @@ def build_package() -> None:
     copy_source()
     copy_model()
     copy_results()
-    copy_file(ROOT / "docs/competition_technical_report.md", PACKAGE / "01_技术报告/competition_technical_report.md")
-    copy_file(ROOT / "docs/figures/spacers_agent_architecture.svg", PACKAGE / "01_技术报告/figures/spacers_agent_architecture.svg")
-    markdown_to_pdf(ROOT / "docs/competition_technical_report.md", PACKAGE / "01_技术报告/技术报告.pdf", "SPACERS-M3 技术报告")
-    markdown_to_pdf(PACKAGE / "06_提交说明/submission_manifest.md", PACKAGE / "06_提交说明/submission_manifest.pdf", "SPACERS-M3 提交清单")
-    copy_file(ROOT / "docs/reproduction_guide.md", PACKAGE / "05_复现说明/reproduction_guide.md")
+    copy_file(ROOT / "docs/competition_technical_report.md", PACKAGE / DIR_REPORT / "competition_technical_report.md")
+    copy_file(ROOT / "docs/figures/spacers_agent_architecture.svg", PACKAGE / DIR_REPORT / "figures/spacers_agent_architecture.svg")
+    markdown_to_pdf(ROOT / "docs/competition_technical_report.md", PACKAGE / DIR_REPORT / "technical_report.pdf", "SPACERS-M3 技术报告")
+    markdown_to_pdf(PACKAGE / DIR_INFO / "submission_manifest.md", PACKAGE / DIR_INFO / "submission_manifest.pdf", "SPACERS-M3 提交清单")
+    copy_file(ROOT / "docs/reproduction_guide.md", PACKAGE / DIR_REPRO / "reproduction_guide.md")
     sanitize_package_text()
 
     sums: list[str] = []
@@ -487,7 +507,7 @@ def make_zip() -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--zip", action="store_true", help="Also create submission_final_PRECHECK.zip")
+    parser.add_argument("--zip", action="store_true", help="Also create submission_final_PRECHECK_v2.zip")
     args = parser.parse_args()
     build_package()
     if args.zip:

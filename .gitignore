@@ -60,6 +60,8 @@ data/raw/
 submission_final/
 submission_final_PRECHECK.zip
 submission_final_PRECHECK.zip.sha256
+submission_final_PRECHECK_v2.zip
+submission_final_PRECHECK_v2.zip.sha256
 *.tmp
 *.temp
 *.part

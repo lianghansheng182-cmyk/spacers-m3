@@ -9,9 +9,16 @@ if [[ -d ".venv" ]]; then
   source .venv/bin/activate
 fi
 
-PACKAGE_ADAPTER="$ROOT/../03_算法模型/qwen3_vl_2b_lora_v1_adapter"
+PACKAGE_ADAPTER=""
+for candidate in \
+  "$ROOT/../03_model/qwen3_vl_2b_lora_v1_adapter"; do
+  if [[ -d "$candidate" ]]; then
+    PACKAGE_ADAPTER="$candidate"
+    break
+  fi
+done
 DEFAULT_ADAPTER="results/lora/qwen3_vl_2b_lora_v1/adapter_final"
-if [[ ! -e "$DEFAULT_ADAPTER" && -d "$PACKAGE_ADAPTER" ]]; then
+if [[ ! -e "$DEFAULT_ADAPTER" && -n "$PACKAGE_ADAPTER" ]]; then
   mkdir -p "$(dirname "$DEFAULT_ADAPTER")"
   ln -s "$PACKAGE_ADAPTER" "$DEFAULT_ADAPTER"
 fi
