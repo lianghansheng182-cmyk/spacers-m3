@@ -29,6 +29,14 @@ DIR_RESULTS = "04_experiment_results"
 DIR_REPRO = "05_reproduction"
 DIR_INFO = "06_submission_info"
 
+BAIDU_LINK = "https://pan.baidu.com/s/1GrAYgwE0YkL8rRalwX4g4Q?pwd=r0k4"
+BAIDU_CODE = "r0k4"
+BAIDU_FOLDER = "external_uploads"
+BASE_MODEL_ZIP = "Qwen3-VL-2B-Instruct__SpaceRS-M3__base_model.zip"
+BASE_MODEL_SHA256 = "f97c7387001f1d371a0aa12e5232abaf42cb1c84f73fd9c7b4883bba56af70a7"
+RAW_DATA_ZIP = "raw_benchmark_data__SpaceRS-M3.zip"
+RAW_DATA_SHA256 = "9fe29f2dad8455de88dee725122523e50d9537cf64d1db5ccf17ea5ecd651208"
+
 
 def sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
@@ -220,6 +228,23 @@ def build_docs() -> None:
         | `05_reproduction/` | 复现说明 |
         | `06_submission_info/` | 提交清单及其他说明 |
 
+        ## External Uploads
+
+        百度网盘链接：{BAIDU_LINK}
+
+        提取码：`{BAIDU_CODE}`
+
+        分享文件夹：`{BAIDU_FOLDER}`
+
+        访问权限：公开分享链接 + 提取码，永久有效。
+
+        | File | SHA256 | Placement after extraction |
+        | --- | --- | --- |
+        | `{BASE_MODEL_ZIP}` | `{BASE_MODEL_SHA256}` | `submission_final/02_source_code/models/Qwen3-VL-2B-Instruct/` |
+        | `{RAW_DATA_ZIP}` | `{RAW_DATA_SHA256}` | `submission_final/02_source_code/data/raw/` |
+
+        LoRA v1 adapter 已随主提交包放置于 `03_model/qwen3_vl_2b_lora_v1_adapter/`，不是 external artifact。External artifact 仅用于基座模型、公开 benchmark raw data 和其他大容量文件。
+
         推荐验证环境：Ubuntu 24.04 / Python 3.12 / CUDA 13.0 / NVIDIA GPU。
 
         快速复现：
@@ -245,13 +270,23 @@ def build_docs() -> None:
     )
     write_text(
         PACKAGE / DIR_MODEL / "base_model.md",
-        """
+        f"""
         # Qwen3-VL-2B-Instruct 基座模型说明
 
         - Base model: Qwen3-VL-2B-Instruct
         - 代码默认路径：`models/Qwen3-VL-2B-Instruct/`
         - 最终推理使用本地模型目录，不依赖在线 API 或隐藏 cache。
         - 本预检包不内置完整基座模型权重。正式复现时请将基座模型完整目录放置到 `02_source_code/models/Qwen3-VL-2B-Instruct/`。
+
+        ## Baidu Netdisk Artifact
+
+        - Link: {BAIDU_LINK}
+        - Extraction code: `{BAIDU_CODE}`
+        - Shared folder: `{BAIDU_FOLDER}`
+        - File: `{BASE_MODEL_ZIP}`
+        - SHA256: `{BASE_MODEL_SHA256}`
+        - Placement after extraction: `submission_final/02_source_code/models/Qwen3-VL-2B-Instruct/`
+        - Access policy: 公开分享链接 + 提取码，永久有效。
 
         目录内应至少包含：
 
@@ -263,12 +298,12 @@ def build_docs() -> None:
         model.safetensors
         ```
 
-        如后续使用网盘或模型仓库分发，请在正式提交前补充真实下载地址、版本号和校验信息；不要填写占位或虚假链接。
+        LoRA v1 adapter 已随主提交包放置于 `03_model/qwen3_vl_2b_lora_v1_adapter/`，不是 external artifact。
         """,
     )
     write_text(
         PACKAGE / DIR_REPRO / "artifact_placement.md",
-        """
+        f"""
         # 外部 artifact 放置说明
 
         在提交包解压后，以 `02_source_code/` 为工作目录。
@@ -286,11 +321,25 @@ def build_docs() -> None:
         ```
 
         LoRA v1 adapter 已随包放置于 `../03_model/qwen3_vl_2b_lora_v1_adapter/`。`scripts/check_artifacts.py` 会直接识别该路径，不需要先运行 `scripts/smoke_test.sh`。`scripts/smoke_test.sh` 会在需要时将它链接到代码默认 adapter 路径。基座模型和公开 benchmark raw data 需要按说明单独放置。
+
+        ## Baidu Netdisk External Uploads
+
+        - Link: {BAIDU_LINK}
+        - Extraction code: `{BAIDU_CODE}`
+        - Shared folder: `{BAIDU_FOLDER}`
+        - Access policy: 公开分享链接 + 提取码，永久有效。
+
+        | File | SHA256 | Placement after extraction |
+        | --- | --- | --- |
+        | `{BASE_MODEL_ZIP}` | `{BASE_MODEL_SHA256}` | `submission_final/02_source_code/models/Qwen3-VL-2B-Instruct/` |
+        | `{RAW_DATA_ZIP}` | `{RAW_DATA_SHA256}` | `submission_final/02_source_code/data/raw/` |
+
+        External artifact 仅用于基座模型、公开 benchmark raw data 和其他不适合放入主提交 ZIP 的大容量文件。LoRA v1 adapter 已在主提交包内，不需要从网盘下载。
         """,
     )
     write_text(
         PACKAGE / DIR_REPRO / "benchmark_data.md",
-        """
+        f"""
         # Benchmark 数据说明
 
         不随包分发的公开 raw data：
@@ -298,6 +347,16 @@ def build_docs() -> None:
         - MME-RealWorld-Lite：使用 Remote Sensing 相关子集，目录为 `data/raw/mme_realworld_lite/`。
         - XLRS-Bench Lite：目录为 `data/raw/xlrs_bench_lite/`。当前实验结果明确标记为 PARTIAL，使用本地 44 / 74 shards。
         - LEVIR-CC：目录为 `data/raw/levir_cc/`，使用官方 test split。
+
+        ## Baidu Netdisk Raw Data Package
+
+        - Link: {BAIDU_LINK}
+        - Extraction code: `{BAIDU_CODE}`
+        - Shared folder: `{BAIDU_FOLDER}`
+        - File: `{RAW_DATA_ZIP}`
+        - SHA256: `{RAW_DATA_SHA256}`
+        - Placement after extraction: `submission_final/02_source_code/data/raw/`
+        - Access policy: 公开分享链接 + 提取码，永久有效。
 
         随代码保留的小型内部验证数据：
 
@@ -315,7 +374,7 @@ def build_docs() -> None:
     )
     write_text(
         PACKAGE / DIR_INFO / "FINAL_SUBMISSION_CHECKLIST.md",
-        """
+        f"""
         # Final Submission Checklist
 
         | Item | Status | Notes |
@@ -329,8 +388,8 @@ def build_docs() -> None:
         | Experiment results | PASS | Selected final summaries, metrics, and figures included. |
         | Necessary reproduction material | PASS | LoRA adapter and small VRSBench eval data included. |
         | Stamped registration form | EXTERNAL ARTIFACT | Must be added manually before official upload. |
-        | Base model weights | EXTERNAL ARTIFACT | Place under `02_source_code/models/Qwen3-VL-2B-Instruct/`. |
-        | Public benchmark raw data | EXTERNAL ARTIFACT | Place under `02_source_code/data/raw/`. |
+        | Base model weights | EXTERNAL ARTIFACT | Baidu file `{BASE_MODEL_ZIP}`; SHA256 `{BASE_MODEL_SHA256}`; place under `02_source_code/models/Qwen3-VL-2B-Instruct/`. |
+        | Public benchmark raw data | EXTERNAL ARTIFACT | Baidu file `{RAW_DATA_ZIP}`; SHA256 `{RAW_DATA_SHA256}`; place under `02_source_code/data/raw/`. |
         """,
     )
     write_text(
@@ -352,10 +411,22 @@ def build_docs() -> None:
 
         ## External Large Files
 
-        - Qwen3-VL-2B-Instruct base model: not included.
-        - Public benchmark raw data: not included.
+        - Qwen3-VL-2B-Instruct base model: not included in the main ZIP; Baidu file `{BASE_MODEL_ZIP}`, SHA256 `{BASE_MODEL_SHA256}`.
+        - Public benchmark raw data: not included in the main ZIP; Baidu file `{RAW_DATA_ZIP}`, SHA256 `{RAW_DATA_SHA256}`.
         - Stamped registration form: not included in precheck package.
         - LoRA v1 adapter: included in this package, not an external artifact.
+
+        ## Baidu Netdisk External Uploads
+
+        - Link: {BAIDU_LINK}
+        - Extraction code: `{BAIDU_CODE}`
+        - Shared folder: `{BAIDU_FOLDER}`
+        - Access policy: 公开分享链接 + 提取码，永久有效。
+
+        | File | SHA256 | Placement after extraction |
+        | --- | --- | --- |
+        | `{BASE_MODEL_ZIP}` | `{BASE_MODEL_SHA256}` | `submission_final/02_source_code/models/Qwen3-VL-2B-Instruct/` |
+        | `{RAW_DATA_ZIP}` | `{RAW_DATA_SHA256}` | `submission_final/02_source_code/data/raw/` |
 
         ## Included Model Artifact
 
@@ -499,6 +570,7 @@ def build_package() -> None:
     markdown_to_pdf(ROOT / "docs/competition_technical_report.md", PACKAGE / DIR_REPORT / "technical_report.pdf", "SPACERS-M3 技术报告")
     markdown_to_pdf(PACKAGE / DIR_INFO / "submission_manifest.md", PACKAGE / DIR_INFO / "submission_manifest.pdf", "SPACERS-M3 提交清单")
     copy_file(ROOT / "docs/reproduction_guide.md", PACKAGE / DIR_REPRO / "reproduction_guide.md")
+    copy_file(ROOT / "docs/submission_email.md", PACKAGE / DIR_INFO / "submission_email.md")
     sanitize_package_text()
 
     sums: list[str] = []

@@ -15,7 +15,7 @@ Date: 2026-08-29
 | Artifact checker | READY | `scripts/check_artifacts.py` |
 | One-click benchmark dispatcher | READY | `scripts/benchmarks/run_benchmark.py` |
 | One-click single-image inference | READY | `scripts/run_single.sh`, `src/inference/run_single.py` |
-| LoRA v1 adapter | READY AS EXTERNAL ARTIFACT | `results/lora/qwen3_vl_2b_lora_v1/adapter_final/` |
+| LoRA v1 adapter | READY IN SUBMISSION PACKAGE | `03_model/qwen3_vl_2b_lora_v1_adapter/`; Git fallback path `results/lora/qwen3_vl_2b_lora_v1/adapter_final/` |
 | LoRA v1 adapter SHA256 manifest | READY | `docs/lora_v1_adapter_manifest.sha256` |
 | Technical report | READY | `docs/competition_technical_report.md` |
 | Reproduction guide | READY | `docs/reproduction_guide.md` |
@@ -32,9 +32,23 @@ These are required to reproduce local inference but are intentionally not commit
 | Asset | Path | Size / Note |
 | --- | --- | --- |
 | Base model | `models/Qwen3-VL-2B-Instruct/` | Excluded from Git; can be restored from official model source or local artifact storage |
-| LoRA v1 adapter | `results/lora/qwen3_vl_2b_lora_v1/adapter_final/` | About 34 MB; include as submission artifact |
+| LoRA v1 adapter | `03_model/qwen3_vl_2b_lora_v1_adapter/` | About 34 MB; included in the main submission package, not an external artifact |
 | Benchmark raw data | `data/raw/` | Excluded from Git; benchmark downloads or local raw data required for full reruns |
 | VRSBench internal eval manifests | `datasets/mini_eval/`, `datasets/vrsbench_eval_v1/` | Kept as allowed small evaluation data in repository policy |
+
+## Baidu Netdisk External Uploads
+
+Large files required for full reproduction are provided through Baidu Netdisk:
+
+- Link: https://pan.baidu.com/s/1GrAYgwE0YkL8rRalwX4g4Q?pwd=r0k4
+- Extraction code: `r0k4`
+- Shared folder: `external_uploads`
+- Access policy: public share link with extraction code, intended to remain permanently valid.
+
+| File | SHA256 | Placement after extraction |
+| --- | --- | --- |
+| `Qwen3-VL-2B-Instruct__SpaceRS-M3__base_model.zip` | `f97c7387001f1d371a0aa12e5232abaf42cb1c84f73fd9c7b4883bba56af70a7` | `submission_final/02_source_code/models/Qwen3-VL-2B-Instruct/` |
+| `raw_benchmark_data__SpaceRS-M3.zip` | `9fe29f2dad8455de88dee725122523e50d9537cf64d1db5ccf17ea5ecd651208` | `submission_final/02_source_code/data/raw/` |
 
 ## Excluded From Submission Package
 

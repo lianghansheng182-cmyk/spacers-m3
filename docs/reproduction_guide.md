@@ -41,7 +41,23 @@ python -m pip install -r requirements-verified.txt
 
 `requirements.txt` is a generic package list. If you use it, install a platform-compatible PyTorch build first.
 
-## 5. Place The Base Model
+## 5. External Uploads
+
+Large files required for full reproduction are provided through Baidu Netdisk:
+
+- Link: https://pan.baidu.com/s/1GrAYgwE0YkL8rRalwX4g4Q?pwd=r0k4
+- Extraction code: `r0k4`
+- Shared folder: `external_uploads`
+- Access policy: public share link with extraction code, intended to remain permanently valid.
+
+| File | SHA256 | Placement after extraction |
+| --- | --- | --- |
+| `Qwen3-VL-2B-Instruct__SpaceRS-M3__base_model.zip` | `f97c7387001f1d371a0aa12e5232abaf42cb1c84f73fd9c7b4883bba56af70a7` | `submission_final/02_source_code/models/Qwen3-VL-2B-Instruct/` |
+| `raw_benchmark_data__SpaceRS-M3.zip` | `9fe29f2dad8455de88dee725122523e50d9537cf64d1db5ccf17ea5ecd651208` | `submission_final/02_source_code/data/raw/` |
+
+The LoRA v1 adapter is included in the main submission package at `03_model/qwen3_vl_2b_lora_v1_adapter/`. It is not an external artifact. External uploads are only for the base model, raw benchmark data, and other large files that are unsuitable for the main ZIP.
+
+## 6. Place The Base Model
 
 Expected path:
 
@@ -59,9 +75,27 @@ preprocessor_config.json
 model.safetensors
 ```
 
+External ZIP:
+
+```text
+Qwen3-VL-2B-Instruct__SpaceRS-M3__base_model.zip
+```
+
+SHA256:
+
+```text
+f97c7387001f1d371a0aa12e5232abaf42cb1c84f73fd9c7b4883bba56af70a7
+```
+
+For the official submission package, extract the ZIP so the final directory is:
+
+```text
+submission_final/02_source_code/models/Qwen3-VL-2B-Instruct/
+```
+
 The inference code expects the local model directory. Do not rely on a hidden Hugging Face cache for reproducible runs.
 
-## 6. LoRA Adapter
+## 7. LoRA Adapter
 
 In the official submission package, the LoRA v1 adapter is already included at:
 
@@ -93,7 +127,7 @@ SHA256 reference:
 docs/lora_v1_adapter_manifest.sha256
 ```
 
-## 7. Place Benchmark Data
+## 8. Place Benchmark Data
 
 Tracked with Git:
 
@@ -110,13 +144,31 @@ data/raw/xlrs_bench_lite/
 data/raw/levir_cc/
 ```
 
+External ZIP:
+
+```text
+raw_benchmark_data__SpaceRS-M3.zip
+```
+
+SHA256:
+
+```text
+9fe29f2dad8455de88dee725122523e50d9537cf64d1db5ccf17ea5ecd651208
+```
+
+For the official submission package, extract the ZIP so the final raw-data root is:
+
+```text
+submission_final/02_source_code/data/raw/
+```
+
 Notes:
 
 - MME-RealWorld-RS uses the Remote Sensing subset of MME-RealWorld-Lite.
 - XLRS-Bench Lite experiments in this repo are labeled PARTIAL when only 44 / 74 shards are present.
 - LEVIR-CC uses the official split structure with paired A/B images.
 
-## 8. Artifact Precheck
+## 9. Artifact Precheck
 
 Run a fast path check before model loading:
 
@@ -141,7 +193,7 @@ python scripts/check_artifacts.py --skip-raw
 
 If a required artifact is missing, the script prints the exact expected path.
 
-## 9. Environment Check
+## 10. Environment Check
 
 ```bash
 python scripts/check_environment.py
@@ -162,7 +214,7 @@ The script reports:
 
 Warnings are diagnostic. They do not hide the original failure.
 
-## 10. INT4 Smoke
+## 11. INT4 Smoke
 
 For the official submission package, run the complete smoke sequence from the source-code directory:
 
@@ -212,7 +264,7 @@ python scripts/benchmarks/run_benchmark.py vrsbench \
 
 Expected output: one prediction, `failure_count: 0`, and files under `results/smoke/vrsbench_int4/`.
 
-## 11. BF16 Smoke
+## 12. BF16 Smoke
 
 ```bash
 python scripts/benchmarks/run_benchmark.py vrsbench \
@@ -223,7 +275,7 @@ python scripts/benchmarks/run_benchmark.py vrsbench \
 
 Expected output: one prediction, `failure_count: 0`, and files under `results/smoke/vrsbench_bf16/`.
 
-## 12. SpaceBudget AUTO
+## 13. SpaceBudget AUTO
 
 ```bash
 python scripts/benchmarks/run_benchmark.py mme-rs-lite \
@@ -235,7 +287,7 @@ python scripts/benchmarks/run_benchmark.py mme-rs-lite \
 
 Expected output: one MME-RS prediction, resource-mode metadata, visual token statistics, and summary files.
 
-## 13. HiRes-View
+## 14. HiRes-View
 
 ```bash
 python scripts/benchmarks/run_benchmark.py xlrs-lite \
@@ -247,7 +299,7 @@ python scripts/benchmarks/run_benchmark.py xlrs-lite \
 
 Expected output: one XLRS prediction, tiling metadata, visual token statistics, and summary files.
 
-## 14. OrbitGuard-RS
+## 15. OrbitGuard-RS
 
 ```bash
 python scripts/reliability/run_fault_injection.py \
@@ -264,7 +316,7 @@ corruption DETECTED
 recovery PASS
 ```
 
-## 15. Full Benchmark Commands
+## 16. Full Benchmark Commands
 
 VRSBench internal validation:
 
@@ -290,7 +342,7 @@ LEVIR-CC:
 python scripts/benchmarks/run_benchmark.py levir-cc --precision int4
 ```
 
-## 16. Common Failures
+## 17. Common Failures
 
 ### A. Windows Native Python 3.14 Installs Linux Wheels
 

@@ -58,6 +58,22 @@ bash scripts/setup_linux.sh
 
 ## Artifacts
 
+### External Uploads
+
+Large files required for full reproduction are provided through Baidu Netdisk:
+
+- Link: https://pan.baidu.com/s/1GrAYgwE0YkL8rRalwX4g4Q?pwd=r0k4
+- Extraction code: `r0k4`
+- Shared folder: `external_uploads`
+- Access policy: public share link with extraction code, intended to remain permanently valid.
+
+| File | SHA256 | Placement after extraction |
+| --- | --- | --- |
+| `Qwen3-VL-2B-Instruct__SpaceRS-M3__base_model.zip` | `f97c7387001f1d371a0aa12e5232abaf42cb1c84f73fd9c7b4883bba56af70a7` | `submission_final/02_source_code/models/Qwen3-VL-2B-Instruct/` |
+| `raw_benchmark_data__SpaceRS-M3.zip` | `9fe29f2dad8455de88dee725122523e50d9537cf64d1db5ccf17ea5ecd651208` | `submission_final/02_source_code/data/raw/` |
+
+The LoRA v1 adapter is already included in the main submission package under `submission_final/03_model/`; it is not an external artifact. External uploads are only for the base model, raw benchmark data, and other large files that are unsuitable for the main ZIP.
+
 Expected final local paths:
 
 - Base model: `models/Qwen3-VL-2B-Instruct`
@@ -104,11 +120,17 @@ Base model reference:
 
 - Model: `Qwen3-VL-2B-Instruct`
 - Expected directory: `models/Qwen3-VL-2B-Instruct/`
+- External ZIP: `Qwen3-VL-2B-Instruct__SpaceRS-M3__base_model.zip`
+- SHA256: `f97c7387001f1d371a0aa12e5232abaf42cb1c84f73fd9c7b4883bba56af70a7`
+- Submission package placement: `submission_final/02_source_code/models/Qwen3-VL-2B-Instruct/`
 - The main code path uses the local directory and does not depend on an online Hugging Face API. Download the model before running offline inference.
 
 Benchmark data reference:
 
 - VRSBench smoke/internal validation: included under `datasets/mini_eval/` and `datasets/vrsbench_eval_v1/`.
+- External ZIP: `raw_benchmark_data__SpaceRS-M3.zip`
+- SHA256: `9fe29f2dad8455de88dee725122523e50d9537cf64d1db5ccf17ea5ecd651208`
+- Submission package placement: `submission_final/02_source_code/data/raw/`
 - MME-RealWorld-RS Lite: place under `data/raw/mme_realworld_lite/`.
 - XLRS-Bench Lite: place under `data/raw/xlrs_bench_lite/`. Current committed XLRS experiment is PARTIAL, 44 / 74 shards.
 - LEVIR-CC: place under `data/raw/levir_cc/`.
