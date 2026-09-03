@@ -229,6 +229,8 @@ python scripts/check_artifacts.py
 
 Expected output: `[PASS]` for tracked VRSBench data, base model, and LoRA adapter. In the submission package, the checker reports the packaged `../03_model/qwen3_vl_2b_lora_v1_adapter/` path and SHA256 values even before `scripts/smoke_test.sh` creates the runtime symlink.
 
+If the base model or raw benchmark data have not yet been extracted from `external_uploads`, the checker reports them as `[EXPECTED-EXTERNAL]` with the Baidu Netdisk file name, SHA256, and placement path. This is not a main-package defect. Use `--require-external` only when validating a machine after the external files have been placed.
+
 For source-only static checks before public raw data is placed:
 
 ```bash

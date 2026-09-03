@@ -69,7 +69,7 @@ Large files required for full reproduction are provided through Baidu Netdisk:
 | Package Component | Estimated Size |
 | --- | ---: |
 | Git-tracked code, configs, docs, and selected result summaries | 68.71 MB |
-| LoRA v1 adapter external artifact | 33.30 MB |
+| LoRA v1 adapter included in main package | 33.30 MB |
 | Estimated code/results/adapter package | 102.01 MB |
 
 This estimate excludes raw datasets, the base Qwen3-VL model, virtual environments, Git metadata, and local caches.

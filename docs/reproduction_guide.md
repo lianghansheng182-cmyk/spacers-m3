@@ -181,9 +181,10 @@ Expected output includes:
 ```text
 [PASS] mini_eval manifest
 [PASS] VRSBench 90 manifest
-[PASS] base model directory
 [PASS] Detected LoRA v1 adapter directory
 ```
+
+If the base model or raw benchmark data have not yet been extracted from `external_uploads`, the checker reports them as `[EXPECTED-EXTERNAL]` with the Baidu Netdisk file name, SHA256, and placement path. This is not a main-package defect. Use `--require-external` only when validating a machine after the external files have been placed.
 
 For static source-only checks without public raw data:
 

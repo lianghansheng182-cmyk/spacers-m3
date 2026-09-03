@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the XH-202603 preliminary submission precheck package."""
+"""Build the XH-202603 final submission package."""
 
 from __future__ import annotations
 
@@ -17,7 +17,10 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / "submission_final"
-ZIP_PATH = ROOT / "submission_final_PRECHECK_v3.zip"
+FINAL_ZIP_NAME = "中国农业大学 - 梁瀚升 - SpaceRS-M3面向太空智算的多模态遥感解译与星载高效部署系统 - 15146245551.zip"
+FINAL_SHA256_NAME = "中国农业大学 - 梁瀚升 - SpaceRS-M3面向太空智算的多模态遥感解译与星载高效部署系统 - 15146245551.sha256"
+ZIP_PATH = ROOT / FINAL_ZIP_NAME
+SHA256_PATH = ROOT / FINAL_SHA256_NAME
 FONT_PATH = Path("/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc")
 COMMIT = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
 
@@ -200,18 +203,64 @@ def write_text(path: Path, content: str) -> None:
     path.write_text(textwrap.dedent(content).lstrip(), encoding="utf-8")
 
 
-def build_docs() -> None:
+def collect_application_form_files() -> list[tuple[Path, bytes]]:
+    src = PACKAGE / DIR_APPLICATION
+    if not src.exists():
+        return []
+    files: list[tuple[Path, bytes]] = []
+    for path in sorted(src.rglob("*")):
+        if path.is_file() and path.name != "README.md":
+            files.append((path.relative_to(src), path.read_bytes()))
+    return files
+
+
+def restore_application_form_files(files: list[tuple[Path, bytes]]) -> None:
+    dst = PACKAGE / DIR_APPLICATION
+    for rel, data in files:
+        target = dst / rel
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(data)
+
+
+def has_application_pdf() -> bool:
+    return any((PACKAGE / DIR_APPLICATION).glob("*.pdf"))
+
+
+def write_application_form_readme() -> None:
+    if has_application_pdf():
+        content = """
+        # 参赛申报表
+
+        盖章参赛申报表已放入本目录。正式审查时请以本目录内 PDF 为准。
+        """
+    else:
+        content = """
+        # 参赛申报表
+
+        BLOCKER：本目录未检测到盖章参赛申报表 PDF。
+
+        本脚本不会生成或伪造盖章申报表。若本目录只有 README.md，则当前提交包不能作为最终正式提交包发送。
+        """
+    write_text(PACKAGE / DIR_APPLICATION / "README.md", content)
+
+
+def build_docs(application_form_present: bool) -> None:
+    application_status = (
+        "盖章参赛申报表已放入 `00_application_form/`。"
+        if application_form_present
+        else "BLOCKER：未检测到盖章参赛申报表 PDF，`00_application_form/` 不能只有 README.md。"
+    )
     write_text(
         PACKAGE / "README.md",
         f"""
-        # XH-202603 初赛提交包预检版
+        # XH-202603 SpaceRS-M3 初赛正式提交包
 
-        本目录为 SPACERS-M3 初赛提交包的本地预检版，生成自 Git commit `{COMMIT}`。
+        本目录为 XH-202603 SpaceRS-M3 初赛正式提交包，生成自 Git commit `{COMMIT}`。
 
         状态说明：
 
-        - `submission_final_PRECHECK_v3.zip` 可用于内部核验。
-        - 正式上传前仍需人工加入盖章版参赛申报表，并按赛事要求将压缩包重命名为“单位+姓名+作品名称+联系方式”。
+        - 正式 ZIP 文件名：`{FINAL_ZIP_NAME}`
+        - {application_status}
         - 本包不包含 Qwen3-VL-2B-Instruct 基座模型和公开 benchmark raw data；LoRA v1 adapter 已放入 `03_model/`。
         - 外部 artifact 仅包括基座模型、公开 benchmark raw data 和后续可能单独分发的大容量文件；LoRA v1 adapter 已随包提供。
         - 正式复现环境为 WSL2 Ubuntu / Linux。Windows native 仅作为静态检查或有限单图替代流程，不作为正式 full smoke 验证环境。
@@ -259,13 +308,37 @@ def build_docs() -> None:
         """,
     )
     write_text(
-        PACKAGE / DIR_APPLICATION / "README.md",
-        """
-        # 参赛申报表
+        PACKAGE / "00_REVIEW_FIRST.md",
+        f"""
+        # 00 REVIEW FIRST
 
-        EXTERNAL ARTIFACT。
+        请先阅读本文件再进行正式审查。
 
-        当前预检包未伪造盖章申报表。正式提交前请将赛事要求的盖章版参赛申报表放入本目录，并按赛事命名规范重命名最终压缩包。
+        ## Submission Package
+
+        - Package type: XH-202603 SpaceRS-M3 初赛正式提交包
+        - Generated commit: `{COMMIT}`
+        - Expected ZIP name: `{FINAL_ZIP_NAME}`
+        - Application form: {application_status}
+        - Technical report: `01_technical_report/technical_report.pdf`
+        - Source code: `02_source_code/`
+        - LoRA adapter: `03_model/qwen3_vl_2b_lora_v1_adapter/`
+
+        ## External Uploads
+
+        - Link: {BAIDU_LINK}
+        - Extraction code: `{BAIDU_CODE}`
+        - Shared folder: `{BAIDU_FOLDER}`
+        - Access policy: 公开分享链接 + 提取码，永久有效。
+
+        | File | SHA256 | Placement after extraction |
+        | --- | --- | --- |
+        | `{BASE_MODEL_ZIP}` | `{BASE_MODEL_SHA256}` | `submission_final/02_source_code/models/Qwen3-VL-2B-Instruct/` |
+        | `{RAW_DATA_ZIP}` | `{RAW_DATA_SHA256}` | `submission_final/02_source_code/data/raw/` |
+
+        LoRA v1 adapter 已随主提交包放入 `03_model/`，不是 external artifact。
+
+        若无法通过联网方式打开百度网盘链接，请记录为 `BAIDU_LINK_MANUAL_VERIFY_REQUIRED`，并由提交人使用浏览器人工确认。
         """,
     )
     write_text(
@@ -387,9 +460,16 @@ def build_docs() -> None:
         | Running instructions | PASS | Package README and reproduction docs included. |
         | Experiment results | PASS | Selected final summaries, metrics, and figures included. |
         | Necessary reproduction material | PASS | LoRA adapter and small VRSBench eval data included. |
-        | Stamped registration form | EXTERNAL ARTIFACT | Must be added manually before official upload. |
+        | Stamped registration form | {'PASS' if application_form_present else 'BLOCKER'} | {'PDF detected in `00_application_form/`.' if application_form_present else 'No stamped application-form PDF detected in `00_application_form/`.'} |
         | Base model weights | EXTERNAL ARTIFACT | Baidu file `{BASE_MODEL_ZIP}`; SHA256 `{BASE_MODEL_SHA256}`; place under `02_source_code/models/Qwen3-VL-2B-Instruct/`. |
         | Public benchmark raw data | EXTERNAL ARTIFACT | Baidu file `{RAW_DATA_ZIP}`; SHA256 `{RAW_DATA_SHA256}`; place under `02_source_code/data/raw/`. |
+
+        ## External Upload Location
+
+        - Link: {BAIDU_LINK}
+        - Extraction code: `{BAIDU_CODE}`
+        - Shared folder: `{BAIDU_FOLDER}`
+        - Access policy: 公开分享链接 + 提取码，永久有效。
         """,
     )
     write_text(
@@ -401,7 +481,7 @@ def build_docs() -> None:
 
         ## Package Layout
 
-        - `00_application_form/`: manual insertion point for the stamped registration form.
+        - `00_application_form/`: stamped application form PDF.
         - `01_technical_report/`: final technical report Markdown and PDF.
         - `02_source_code/`: source code, configs, scripts, docs, requirements, and small validation datasets.
         - `03_model/`: LoRA v1 adapter and base-model placement instructions.
@@ -413,7 +493,7 @@ def build_docs() -> None:
 
         - Qwen3-VL-2B-Instruct base model: not included in the main ZIP; Baidu file `{BASE_MODEL_ZIP}`, SHA256 `{BASE_MODEL_SHA256}`.
         - Public benchmark raw data: not included in the main ZIP; Baidu file `{RAW_DATA_ZIP}`, SHA256 `{RAW_DATA_SHA256}`.
-        - Stamped registration form: not included in precheck package.
+        - Stamped registration form: {'included in `00_application_form/`.' if application_form_present else 'BLOCKER, no PDF detected in `00_application_form/`.'}
         - LoRA v1 adapter: included in this package, not an external artifact.
 
         ## Baidu Netdisk External Uploads
@@ -557,10 +637,14 @@ def sanitize_package_text() -> None:
 
 
 def build_package() -> None:
+    application_form_files = collect_application_form_files()
+    application_form_present = any(rel.suffix.lower() == ".pdf" for rel, _ in application_form_files)
     if PACKAGE.exists():
         shutil.rmtree(PACKAGE)
     PACKAGE.mkdir(parents=True)
-    build_docs()
+    build_docs(application_form_present)
+    restore_application_form_files(application_form_files)
+    write_application_form_readme()
     copy_source()
     copy_model()
     copy_results()
@@ -583,13 +667,15 @@ def build_package() -> None:
 def make_zip() -> None:
     if ZIP_PATH.exists():
         ZIP_PATH.unlink()
+    if SHA256_PATH.exists():
+        SHA256_PATH.unlink()
     subprocess.run(["zip", "-qr", str(ZIP_PATH), PACKAGE.name], cwd=ROOT, check=True)
-    (ROOT / f"{ZIP_PATH.name}.sha256").write_text(f"{sha256_file(ZIP_PATH)}  {ZIP_PATH.name}\n", encoding="utf-8")
+    SHA256_PATH.write_text(f"{sha256_file(ZIP_PATH)}  {ZIP_PATH.name}\n", encoding="utf-8")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--zip", action="store_true", help="Also create submission_final_PRECHECK_v3.zip")
+    parser.add_argument("--zip", action="store_true", help=f"Also create {FINAL_ZIP_NAME}")
     args = parser.parse_args()
     build_package()
     if args.zip:

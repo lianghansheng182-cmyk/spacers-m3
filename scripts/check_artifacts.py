@@ -16,6 +16,13 @@ EXPECTED_ADAPTER_SHA256 = {
     "adapter_model.safetensors": "a5d4949df5715cd04cc9ce18e7b9625934e95393703c80196bbf7c5115fe81d6",
     "README.md": "e34d4cbe24b794b76844a32cc674672e9e6613a5c5f53b924ba72f74e4c17e0f",
 }
+BAIDU_LINK = "https://pan.baidu.com/s/1GrAYgwE0YkL8rRalwX4g4Q?pwd=r0k4"
+BAIDU_CODE = "r0k4"
+BAIDU_FOLDER = "external_uploads"
+BASE_MODEL_ZIP = "Qwen3-VL-2B-Instruct__SpaceRS-M3__base_model.zip"
+BASE_MODEL_SHA256 = "f97c7387001f1d371a0aa12e5232abaf42cb1c84f73fd9c7b4883bba56af70a7"
+RAW_DATA_ZIP = "raw_benchmark_data__SpaceRS-M3.zip"
+RAW_DATA_SHA256 = "9fe29f2dad8455de88dee725122523e50d9537cf64d1db5ccf17ea5ecd651208"
 
 
 def sha256_file(path: Path) -> str:
@@ -31,6 +38,20 @@ def check_path(label: str, path: Path, *, required: bool = True) -> bool:
     prefix = "[PASS]" if ok else ("[MISSING]" if required else "[OPTIONAL-MISSING]")
     print(f"{prefix} {label}: {path}")
     return ok or not required
+
+
+def check_external_path(label: str, path: Path, artifact: str, sha256: str, placement: str) -> bool:
+    if path.exists():
+        print(f"[PASS] {label}: {path}")
+        return True
+    print(f"[EXPECTED-EXTERNAL] {label}: {path}")
+    print(f"  Baidu link: {BAIDU_LINK}")
+    print(f"  Extraction code: {BAIDU_CODE}")
+    print(f"  Shared folder: {BAIDU_FOLDER}")
+    print(f"  File: {artifact}")
+    print(f"  SHA256: {sha256}")
+    print(f"  Placement after extraction: {placement}")
+    return True
 
 
 def count_files(path: Path, pattern: str) -> int:
@@ -78,7 +99,12 @@ def find_adapter_dir(source_root: Path, package_root: Path) -> Path | None:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check SPACERS-M3 local artifacts.")
     parser.add_argument("--root", type=Path, default=REPO_ROOT, help="Repository root.")
-    parser.add_argument("--skip-raw", action="store_true", help="Do not fail on missing external benchmark raw data.")
+    parser.add_argument("--skip-raw", action="store_true", help="Skip raw benchmark data checks.")
+    parser.add_argument(
+        "--require-external",
+        action="store_true",
+        help="Fail if externally supplied base model or raw benchmark data have not been placed locally.",
+    )
     args = parser.parse_args()
 
     root = args.root.resolve()
@@ -94,13 +120,23 @@ def main() -> int:
     required_ok &= check_path("VRSBench 90 images", source_root / "datasets/vrsbench_eval_v1/images")
 
     model_dir = source_root / "models/Qwen3-VL-2B-Instruct"
-    required_ok &= check_path("base model directory", model_dir)
+    if args.require_external:
+        required_ok &= check_path("base model directory", model_dir)
+    else:
+        required_ok &= check_external_path(
+            "base model directory",
+            model_dir,
+            BASE_MODEL_ZIP,
+            BASE_MODEL_SHA256,
+            "submission_final/02_source_code/models/Qwen3-VL-2B-Instruct/",
+        )
     for name in ("config.json", "generation_config.json", "tokenizer_config.json", "preprocessor_config.json"):
-        required_ok &= check_path(f"base model {name}", model_dir / name)
+        if model_dir.exists():
+            required_ok &= check_path(f"base model {name}", model_dir / name, required=args.require_external)
     if model_dir.exists():
         has_weight = any(model_dir.glob("*.safetensors")) or any(model_dir.glob("*.bin"))
         print(("[PASS]" if has_weight else "[MISSING]") + " base model weight file: *.safetensors or *.bin")
-        required_ok &= has_weight
+        required_ok &= has_weight or not args.require_external
 
     print("LoRA v1 adapter candidates:")
     for candidate in adapter_candidates(source_root, package_root):
@@ -121,10 +157,33 @@ def main() -> int:
             size_mb = path.stat().st_size / 1024 / 1024
             print(f"{status} LoRA v1 {name} sha256={actual_sha} size_mb={size_mb:.3f}")
 
-    raw_required = not args.skip_raw
-    required_ok &= check_path("MME-RealWorld-Lite raw data", source_root / "data/raw/mme_realworld_lite", required=raw_required)
-    required_ok &= check_path("XLRS-Bench-lite raw data", source_root / "data/raw/xlrs_bench_lite", required=raw_required)
-    required_ok &= check_path("LEVIR-CC raw data", source_root / "data/raw/levir_cc", required=raw_required)
+    if args.skip_raw:
+        raw_required = False
+        required_ok &= check_path("MME-RealWorld-Lite raw data", source_root / "data/raw/mme_realworld_lite", required=False)
+        required_ok &= check_path("XLRS-Bench-lite raw data", source_root / "data/raw/xlrs_bench_lite", required=False)
+        required_ok &= check_path("LEVIR-CC raw data", source_root / "data/raw/levir_cc", required=False)
+    elif args.require_external:
+        raw_required = True
+        required_ok &= check_path("MME-RealWorld-Lite raw data", source_root / "data/raw/mme_realworld_lite", required=True)
+        required_ok &= check_path("XLRS-Bench-lite raw data", source_root / "data/raw/xlrs_bench_lite", required=True)
+        required_ok &= check_path("LEVIR-CC raw data", source_root / "data/raw/levir_cc", required=True)
+    else:
+        raw_required = False
+        for label, path in (
+            ("MME-RealWorld-Lite raw data", source_root / "data/raw/mme_realworld_lite"),
+            ("XLRS-Bench-lite raw data", source_root / "data/raw/xlrs_bench_lite"),
+            ("LEVIR-CC raw data", source_root / "data/raw/levir_cc"),
+        ):
+            if path.exists():
+                required_ok &= check_path(label, path, required=False)
+            else:
+                required_ok &= check_external_path(
+                    label,
+                    path,
+                    RAW_DATA_ZIP,
+                    RAW_DATA_SHA256,
+                    "submission_final/02_source_code/data/raw/",
+                )
 
     xlrs_train = source_root / "data/raw/xlrs_bench_lite/train"
     shard_count = count_files(xlrs_train, "data-*-of-00074.arrow")
