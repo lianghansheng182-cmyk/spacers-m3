@@ -50,6 +50,11 @@ Large files required for full reproduction are provided through Baidu Netdisk:
 | `Qwen3-VL-2B-Instruct__SpaceRS-M3__base_model.zip` | `f97c7387001f1d371a0aa12e5232abaf42cb1c84f73fd9c7b4883bba56af70a7` | `submission_final/02_source_code/models/Qwen3-VL-2B-Instruct/` |
 | `raw_benchmark_data__SpaceRS-M3.zip` | `9fe29f2dad8455de88dee725122523e50d9537cf64d1db5ccf17ea5ecd651208` | `submission_final/02_source_code/data/raw/` |
 
+## Reproduction Environment
+
+- Recommended formal environment: WSL2 Ubuntu / Linux.
+- Windows native is limited to static checks or a small single-image fallback path and is not the validated full inference or benchmark smoke environment.
+
 ## Excluded From Submission Package
 
 | Exclusion | Reason |

@@ -323,6 +323,8 @@ def build_docs(application_form_present: bool) -> None:
         - Technical report: `01_technical_report/technical_report.pdf`
         - Source code: `02_source_code/`
         - LoRA adapter: `03_model/qwen3_vl_2b_lora_v1_adapter/`
+        - Formal reproduction environment: WSL2 Ubuntu / Linux
+        - Windows native: static checks or limited single-image fallback only; not the official full inference/smoke environment.
 
         ## External Uploads
 
@@ -464,6 +466,11 @@ def build_docs(application_form_present: bool) -> None:
         | Base model weights | EXTERNAL ARTIFACT | Baidu file `{BASE_MODEL_ZIP}`; SHA256 `{BASE_MODEL_SHA256}`; place under `02_source_code/models/Qwen3-VL-2B-Instruct/`. |
         | Public benchmark raw data | EXTERNAL ARTIFACT | Baidu file `{RAW_DATA_ZIP}`; SHA256 `{RAW_DATA_SHA256}`; place under `02_source_code/data/raw/`. |
 
+        ## Reproduction Environment
+
+        - Recommended formal environment: WSL2 Ubuntu / Linux.
+        - Windows native is limited to static checks or a small single-image fallback path and is not the validated full inference or benchmark smoke environment.
+
         ## External Upload Location
 
         - Link: {BAIDU_LINK}
@@ -495,6 +502,11 @@ def build_docs(application_form_present: bool) -> None:
         - Public benchmark raw data: not included in the main ZIP; Baidu file `{RAW_DATA_ZIP}`, SHA256 `{RAW_DATA_SHA256}`.
         - Stamped registration form: {'included in `00_application_form/`.' if application_form_present else 'BLOCKER, no PDF detected in `00_application_form/`.'}
         - LoRA v1 adapter: included in this package, not an external artifact.
+
+        ## Reproduction Environment
+
+        - Recommended formal environment: WSL2 Ubuntu / Linux.
+        - Windows native is limited to static checks or a small single-image fallback path and is not the validated full inference or benchmark smoke environment.
 
         ## Baidu Netdisk External Uploads
 
